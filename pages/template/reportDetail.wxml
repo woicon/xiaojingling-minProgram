@@ -1,0 +1,29 @@
+<template name="detail">
+    <view class='s-item'>
+        <view class='s-title'>微信实收/笔</view>
+        <view class='s-num'>{{item.wxAmt}}/{{item.wxNum}}</view>
+    </view>
+    <view class='s-item'>
+        <view class='s-title'>支付宝实收/笔</view>
+        <view class='s-num'>{{item.zfbAmt}}/{{item.zfbNum}}</view>
+    </view>
+
+    <view class='s-item'>
+        <view class='s-title'>实收合计/笔</view>
+        <view class='s-num'>{{item.zfbAmt + item.wxAmt}}/{{item.zfbNum + item.wxNum}}</view>
+    </view>
+
+    <view class='s-item'>
+        <view class='s-title'>微信退款/笔</view>
+        <view class='s-num'>{{item.wxRefundAmt}}/{{item.wxRefundNum}}</view>
+    </view>
+    <view class='s-item'>
+        <view class='s-title'>支付宝退款/笔</view>
+        <view class='s-num'>{{item.zfbRefundAmt}}/{{item.zfbRefundAmt}}</view>
+    </view>
+
+    <view class='s-item'>
+        <view class='s-title'>退款合计/笔</view>
+        <view class='s-num'>{{item.zfbRefundAmt + item.wxRefundAmt}}/{{item.zfbRefundNum + item.zfbRefundNum}}</view>
+    </view>
+</template>

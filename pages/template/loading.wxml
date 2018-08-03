@@ -1,0 +1,13 @@
+<template name="bottomloading">
+    <view class='loading-bottom'>
+        <view>1</view>
+        <view>2</view>
+        <view>3</view>
+    </view>
+</template>
+<template name="errorPage">
+    <view class='empty'>
+        <view class='ico icon-warn'></view>
+        <view class='txt'>{{errorMsg}}</view>
+    </view>
+</template>

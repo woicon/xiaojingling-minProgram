@@ -1,0 +1,52 @@
+<view class='detail'>
+<view wx:key="shopReport" wx:for="{{detail}}" class='bline {{currIndex == index?"dopen":""}}' bindtap='_toggleDetail' data-index="{{index}}">
+    <view class='shop-item'>
+        <view class='s-name'>{{item.merchantName}}</view>
+        <view class='s-item'>
+            <view class='s-title'>实收金额/笔</view>
+            <view class='s-num'>{{item.totalTradeAmt}}/{{item.totalTradeCnt}}</view>
+        </view>
+        <view class='item-arr'></view>
+    </view>
+    <view class="r-detail" wx:if="{{currIndex == index}}">
+        <view class='s-item'>
+            <view class='s-title'>微信实收/笔</view>
+            <view class='s-num'>{{item.wechatTradeAmt}}/{{item.wxRefundNum}}</view>
+        </view>
+        <view class='s-item'>
+            <view class='s-title'>支付宝实收/笔</view>
+            <view class='s-num'>{{item.alipayTradeAmt}}/{{item.alipayTradeAmt}}</view>
+        </view>
+        <view class='s-item'>
+            <view class='s-title'>实收合计/笔</view>
+            <view class='s-num'>{{item.totalTradeAmt}}/{{item.totalTradeCnt}}</view>
+        </view>
+        <view class='s-item'>
+            <view class='s-title'>微信退款/笔</view>
+            <view class='s-num'>{{item.wechatRefundAmt}}/{{item.wechatRefundCnt}}</view>
+        </view>
+        <view class='s-item'>
+            <view class='s-title'>支付宝退款/笔</view>
+            <view class='s-num'>{{item.alipayRefundAmt}}/{{item.alipayRefundCnt}}</view>
+        </view>
+        <view class='s-item'>
+            <view class='s-title'>退款合计/笔</view>
+            <view class='s-num'>{{item. totalRefundAmt}}/{{item.totalRefundAmt}}</view>
+        </view>
+        
+        <view class='s-item'>
+            <view class='s-title'>会员订单金额/笔</view>
+            <view class='s-num'>{{item.memberOrderAmt}}/{{item.memberOrderCnt}}</view>
+        </view>
+         <view class='s-item'>
+            <view class='s-title'>会员消费/笔</view>
+            <view class='s-num'>{{item.memberActualAmt}}/{{item.memberActualCnt}}</view>
+        </view>
+        <view class='s-item'>
+            <view class='s-title'>会员实退/笔</view>
+            <view class='s-num'>{{item.memberRefundActualAmt}}/{{item.memberRefundActualCnt}}</view>
+        </view>
+    </view>
+</view>
+</view>
+<view class="viewall" bindtap='viewMore' wx:if="{{shopReport.length >5}}">查看更多</view>

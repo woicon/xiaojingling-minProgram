@@ -1,0 +1,18 @@
+<!-- footbar.wxml -->
+<template name="tabBar">
+  <view class="footbar {{isPX?'pxview':''}}">
+    <block wx:for="{{tabBar}}" wx:key="pagetab">
+        <view 
+        data-url="{{item.link}}"
+        class="tabbar-item {{tabCurr == index ?'active':''}}"
+        hover-class="footer-hover"
+        data-id="{{index}}"
+        data-name="{{item.icon}}"
+        data-title="{{item.name}}"
+        bindtap='{{tabCurr == index ? "" : "goPage"}}'>
+            <view class="icon icon-{{tabCurr == index?item.icon+'-sel':item.icon}}"></view>
+            {{item.name}}
+        </view>
+    </block>
+  </view>
+</template>

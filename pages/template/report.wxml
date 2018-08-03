@@ -1,0 +1,144 @@
+<import src="../../pages/temp/reportDetail.wxml" />
+<import src="../../pages/temp/loading.wxml" />
+<template name="report">
+    <scroll-view scroll-y class='scroll-report {{isPX?"pxScroll":""}}'>
+        <view wx:if="{{store}}" class='store'>
+            <picker bindchange="storeChange" value="{{selStore}}" range="{{store}}" range-key="fullNameCn">
+                <view class="picker">
+                    <view class='ico icon-home-sel'></view>{{store[selStore].fullNameCn}}</view>
+            </picker>
+        </view>
+        <block wx:if="{{isPageLoad}}">
+            <view class='pageloading'>
+                <template is="bottomloading" />
+            </view>
+        </block>
+        <block wx:else>
+            <block wx:if="{{member.identity!= 5}}">
+                <view class='r'>
+                    <view class='r-head'>
+                        <view>
+                            <view class='ico icon-money'></view>
+                            <view>订单金额
+                                <view>{{reTotal.orderAmt}}</view>
+                            </view>
+                        </view>
+                        <view>
+                            <view class='ico icon-moneys'></view>
+                            <view>实收金额
+                                <view>{{reTotal.realAmt}}</view>
+                            </view>
+                        </view>
+                    </view>
+
+                    <view class='r-grid'>
+                        <view class='bline'>
+                            <view class='ico icon-iorders'></view>
+                            <view>订单数
+                                <view class='value'>{{reTotal.orderNum}}</view>
+                            </view>
+                        </view>
+                        <view class='bline lline'>
+                            <view class='ico icon-refund'></view>
+                            <view>退款金额(元)/笔
+                                <view class='value'>{{reTotal.refundAmt}}/{{reTotal.refundNum}}</view>
+                            </view>
+                        </view>
+
+                        <view>
+                            <view class='ico icon-fee'></view>
+                            <view>
+                                <view>手续费</view>
+                                <view class='value'>{{reTotal.feesAmt}}</view>
+                            </view>
+                        </view>
+                        <view class='lline'>
+                            <view class='ico icon-bag'></view>
+                            <view>
+                                <view>结算金额(元)</view>
+                                <view class='value'>{{reTotal.totalAmt}}</view>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+                <view class="r-info">
+                    <view class='ico icon-warn'></view>
+                    实收金额=订单金额-退款金额 结算金额=实收金额-手续费
+                </view>
+
+                <view class='r-title'>支付方式统计</view>
+                <view class='rs'>
+                    <view class='rs-title'>
+                        <view class="ico icon-weixin weixin"></view> <view>微信支付</view></view>
+                    <view class='rs-block'>
+                        <view class='bline'>订单金额
+                            <text>{{reTotal.wxOrderAmt}}</text>
+                        </view>
+                        <view class='bline lline'>退款金额/笔数
+                            <text>{{multiple.wxRefundAmt}}/{{multiple.wxRefundNum}}</text>
+                        </view>
+                        <view class='bline lline'>实收金额
+                            <text>{{multiple.wxAmt}}</text>
+                        </view>
+                        <view >实收笔数
+                            <text>{{multiple.wxNum-multiple.wxRefundNum}}</text>
+                        </view>
+                        <view class='lline'>手续费
+                            <text>{{multiple.wxFeesAmt}}</text>
+                        </view>
+                        <view class='lline'>结算金额
+                            <text>{{multiple.wxSettlementAmt}}</text>
+                        </view>
+                    </view>
+                </view>
+
+                <view class='rs'>
+                    <view class='rs-title'>
+                        <view class='ico icon-alipay alipay'></view> <view>支付宝支付</view></view>
+                    <view class='rs-block'>
+                        <view class='bline'>订单金额
+                            <text>{{reTotal.zfbOrderAmt}}</text>
+                        </view>
+                        <view class='bline lline'>退款金额/笔数
+                            <text>{{multiple.zfbRefundAmt}}/{{multiple.zfbRefundNum}}</text>
+                        </view>
+                        <view class='bline lline'>实收金额
+                            <text>{{multiple.zfbAmt}}</text>
+                        </view>
+                        <view >实收笔数
+                            <text>{{multiple.zfbNum-multiple.zfbRefundNum}}</text>
+                        </view>
+                        <view class='lline'>手续费
+                            <text>{{multiple.zfbFeesAmt}}</text>
+                        </view>
+                        <view class='lline'>结算金额
+                            <text>{{multiple.zfbSettlementAmt}}</text>
+                        </view>
+                    </view>
+                </view>
+            </block>
+
+            <block wx:if="{{terminal && terminal.length!=0}}">
+                <view class='r-title'>款台统计</view>
+                <detail details="{{terminal}}"></detail>
+            </block>
+
+            <block wx:if="{{cashier && cashier.length!=0}}">
+                <view class='r-title' wx:if="{{member.identity!=5}}">收银员统计</view>
+                <detail details="{{cashier}}"></detail>
+            </block>
+
+            <block wx:if="{{department && department.length!=0}}">
+                <view class='r-title'>门店统计</view>
+                <detail details="{{department}}"></detail>
+            </block>
+
+            <block wx:if="{{cashier.length === 0 && member.identity == 5}}">
+                <view class='empty'>
+                    <view class='ico icon-icos'></view>
+                    <view class='txt'>暂时没有数据</view>
+                </view>
+            </block>
+        </block>
+    </scroll-view>
+</template>

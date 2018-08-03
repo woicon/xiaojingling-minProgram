@@ -1,0 +1,44 @@
+{
+    "pages": [
+        "pages/report/report",
+        "pages/order/order",
+        "pages/member/member",
+        "pages/index/index",
+        "pages/pos/pos",
+        "pages/login/login"
+    ],
+    "window": {
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#0ec695",
+        "navigationBarTitleText": "收款搭档",
+        "navigationBarTextStyle": "white",
+        "backgroundColor": "#fafafa"
+    },
+    "tabBar": {
+        "backgroundColor": "#ffffff",
+        "borderStyle": "white",
+        "selectedColor": "#0ec695",
+        "color": "#979797",
+        "list": [
+            {
+                "pagePath": "pages/report/report",
+                "text": "收款报表",
+                "iconPath": "assets/images/report.png",
+                "selectedIconPath": "assets/images/report-sel.png"
+            },
+            {
+                "pagePath": "pages/order/order",
+                "text": "收款账单",
+                "iconPath": "assets/images/order.png",
+                "selectedIconPath": "assets/images/order-sel.png"
+            },
+           
+            {
+                "pagePath": "pages/member/member",
+                "text": "个人中心",
+                "iconPath": "assets/images/member.png",
+                "selectedIconPath": "assets/images/member-sel.png"
+            }
+        ]
+    }
+}
