@@ -6,30 +6,44 @@ Page({
         isPageLoad: true,
         srcollLoading: false,
         reportTab: 1,
-        reportDate: new Date().Format('yyyyMMdd'),
-        reportDateFormat: new Date().Format('yyyy-MM-dd')
+        reportDate: null,
+        reportDateFormat: null,
+        disNext: true
     },
     onLoad: function(options) {
         app.checkLogin()
-        this.getReport(this.reportParmas())
+        const nowDate = new Date()
+        this.setData({
+            reportDate: new Date().Format('yyyyMMdd'),
+            taday: base.formatDate(nowDate, 'yyyy-MM-dd'),
+            yestaday: base.formatDate(nowDate.getTime() - base.dayValue, 'yyyy-MM-dd'),
+            reportDateFormat: new Date().Format('yyyy-MM-dd')
+        })
     },
     reportParmas(searchDate) {
         return {
-            beginDate: this.data.searchDate || new Date().Format('yyyyMMdd'),
-            endDate: this.data.searchDate || new Date().Format('yyyyMMdd')
+            beginDate: searchDate,
+            endDate: searchDate
         }
     },
-    getReport: function(parmas, role) {
+    getReport(reportDate,role) {
         let login = wx.getStorageSync("login")
+        let parmas
+        if(this.data.searchDate){
+            parmas = this.data.searchDate
+        }else{
+            parmas = this.reportParmas(reportDate)
+        }
         this.setData({
             srcollLoading: true
         })
-        // 0总部 1门店 2员工 3店长
-        let report
-        switch (role || login.role) {
+        //0总部 1门店 2员工 3店长
+        let roles = role || app.commonParmas('role')
+        switch (roles) {
             case 0:
+                console.log("总部")
                 //获取门店
-                report = [api.trade(parmas), api.tradeMerchant(parmas), api.merchantList({})]
+                let report = [api.trade(parmas), api.tradeMerchant(parmas), api.merchantList({})]
                 Promise.all(report).then(res => {
                     console.log(res)
                     let store = res[2].merchantList
@@ -40,7 +54,7 @@ Page({
                         isPageLoad: false,
                         trade: res[0].statistics,
                         department: res[1],
-                        srcollLoading:false,
+                        srcollLoading: false,
                         store: store,
                         selStore: 0,
                     })
@@ -48,42 +62,65 @@ Page({
                 break
             case 1:
                 console.log("门店报表")
+                parmas.merchantCode = app.commonParmas('merchantCode')
                 Promise.all([api.trade(parmas), api.tradeOperator(parmas)]).then(res => {
                     console.log(res)
                     this.setData({
-                        // isPageLoad: false,
-                        // trade: res[0].statistics,
-                        // department: res[1],
+                        isPageLoad: false,
+                        trade: res[0].statistics,
+                        cashier: res[1].statisticsList,
                         srcollLoading: false,
-                        // store: store,
-                        // selStore: 0,
+                        department: null
                     })
                 })
                 break
             case 2:
-
+                console.log("门店报表")
+                parmas.merchantCode = app.commonParmas('merchantCode')
+                Promise.all([api.tradeOperator(parmas)]).then(res => {
+                    console.log(res)
+                    this.setData({
+                        isPageLoad: false,
+                        cashier: res[1].statisticsList,
+                        srcollLoading: false,
+                       
+                    })
+                })
                 break
             case 3:
-
+                console.log("门店报表")
+                parmas.merchantCode = app.commonParmas('merchantCode')
+                Promise.all([api.trade(parmas), api.tradeOperator(parmas)]).then(res => {
+                    console.log(res)
+                    this.setData({
+                        isPageLoad: false,
+                        trade: res[0].statistics,
+                        cashier: res[1].statisticsList,
+                        srcollLoading: false
+                    })
+                })
                 break
         }
-
     },
     stepDate: function(e) {
+        console.log(e)
         let that = this
-        let reportDate = that.data.reportDate
+        let reportDate = this.data.reportDateFormat
         const currDate = new Date(reportDate)
         const ms = base.dayValue
         let _prportDate = null
         const tadayMs = new Date().getTime()
-        let disNext = that.data.disNext
+        let disNext = this.data.disNext
         let activeDate = null
+        let reportDateFormat = null
         if (e.target.id === 'next') {
             this.setData({
                 srcollLoading: true
             })
             activeDate = currDate.getTime() + ms
-            // reportDate = base.formatDate(activeDate, 'yyyy-MM-dd')
+            reportDate = base.formatDate(activeDate, 'yyyyMMdd')
+            reportDateFormat = base.formatDate(activeDate, "yyyy-MM-dd")
+            console.log(activeDate)
             this.getReport(reportDate)
             this.nextView(activeDate)
         } else if (e.target.id === 'prev') {
@@ -91,45 +128,65 @@ Page({
                 srcollLoading: true
             })
             activeDate = currDate.getTime() - ms
-            reportDate = base.formatDate(activeDate, 'yyyy-MM-dd')
+            reportDate = base.formatDate(activeDate, 'yyyyMMdd')
+            reportDateFormat = base.formatDate(activeDate, "yyyy-MM-dd")
             this.getReport(reportDate)
             this.nextView(activeDate)
         }
-        that.setData({
-            reportDate: reportDate
+
+        this.setData({
+            reportDate: reportDate,
+            reportDateFormat: reportDateFormat
+        })
+    },
+    nextView: function(csTime) {
+        let nowTime = new Date().getTime()
+        const dayValue = base.dayValue
+        let disNext = new Date().Format('yyyy-MM-dd') == new Date(csTime).Format('yyyy-MM-dd') ? true : false
+        let reportTab = null
+        if (nowTime > csTime) {
+            reportTab = 2
+        }
+        if (new Date(nowTime - dayValue).Format('yyyy-MM-dd') == new Date(csTime).Format('yyyy-MM-dd')) {
+            reportTab = 0
+        }
+        if (disNext) {
+            reportTab = 1
+        }
+       // console.log(new Date(nowTime - dayValue).Format('yyyy-MM-dd') + "<><><" + new Date(csTime).Format('yyyy-MM-dd'))
+        this.setData({
+            disNext: disNext,
+            reportTab: reportTab
         })
     },
     toggleReport: function(e) {
         let that = this
         let event = e.target.dataset
-        let reportDate = that.data.reportDate
-
-
-        if (event.index === 0) {
-            that.getReport(that.data.taday)
-        }
-        let rDate = null
+        let reportDate = this.data.reportDateFormat
         switch (event.index) {
             case 0:
-                that.getReport(that.data.yestaday)
-                rDate = that.data.yestaday
+         
                 that.setData({
-                    reportDate: that.data.yestaday,
+                    reportDateFormat: that.data.yestaday,
+                    reportDate: base.formatDate(that.data.yestaday,'yyyyMMdd'),
                     searchDates: null,
                     searchDate: null,
                     disPrv: false,
                     disNext: false
                 })
+                that.getReport(base.formatDate(that.data.yestaday, 'yyyyMMdd'))
                 break
             case 1:
-                that.getReport(that.data.taday)
+                
                 that.setData({
-                    reportDate: that.data.taday,
+                    reportDateFormat: that.data.taday,
+                    reportDate: base.formatDate(that.data.taday, 'yyyyMMdd'),
                     searchDates: null,
                     searchDate: null,
                     disPrv: false,
                     disNext: true
                 })
+                that.getReport(base.formatDate(that.data.taday, 'yyyyMMdd'))
                 break
             case 2:
                 wx.navigateTo({
@@ -158,35 +215,28 @@ Page({
     },
     storeChange: function(e) {
         console.log(e)
-        let parmas = this.reportParmas()
-        parmas.merchantCode = this.data.store[e.detail.value].merchantCode
-        console.log(parmas)
-        this.getReport(parmas, 1)
+        if(e.detail.value == 0){
+            this.getReport(this.data.reportDate)
+            wx.setNavigationBarTitle({
+                title: app.commonParmas("merchantName"),
+            })
+        }else{
+            let parmas = this.data.searchDate || this.reportParmas(this.data.reportDate)
+            parmas.merchantCode = this.data.store[e.detail.value].merchantCode
+            this.getReport(this.data.reportDate, 1)
+            wx.setNavigationBarTitle({
+                title: this.data.store[e.detail.value].merchantName,
+            })
+        }
         this.setData({
             selStore: e.detail.value
         })
+
     },
     onReady: function() {
 
     },
-    onShow: function() {
-
-    },
-
-    onHide: function() {
-
-    },
-
-    onUnload: function() {
-
-    },
-    onPullDownRefresh: function() {
-
-    },
-    onReachBottom: function() {
-
-    },
-    onShareAppMessage: function() {
-
+    onShow() {
+        this.getReport(this.data.searchDate || this.data.reportDate)
     }
 })

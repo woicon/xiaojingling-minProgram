@@ -13,25 +13,24 @@
         </view>
         <view class='datebar' bindtap='stepDate'>
             <view wx:if="{{!disPrv}}" class='ico prev' id='prev'></view>
-            <view class='datevalue'> {{searchDateFormat || reportDateFormat}} </view>
+            <view class='datevalue'> {{searchDates || reportDateFormat}} </view>
             <view wx:if="{{!disNext}}" class='ico next' id="next"></view>
         </view>
     </view>
 
     <scroll-view scroll-y class='scroll-report {{isPX?"pxScroll":""}}'>
-        
+        <view wx:if="{{store}}" class='store'>
+            <picker bindchange="storeChange" value="{{selStore}}" range="{{store}}" range-key="merchantName">
+                <view class="picker">
+                    <view class='ico icon-home-sel'></view>{{store[selStore].merchantName}}</view>
+            </picker>
+        </view>
         <block wx:if="{{srcollLoading}}">
             <view class='pageloading'>
                 <template is="bottomloading" />
             </view>
         </block>
         <block wx:else>
-            <view wx:if="{{store}}" class='store'>
-                <picker bindchange="storeChange" value="{{selStore}}" range="{{store}}" range-key="merchantName">
-                    <view class="picker">
-                        <view class='ico icon-home-sel'></view>{{store[selStore].merchantName}}</view>
-                </picker>
-            </view>
 
             <block wx:if="{{member.identity!= 5}}">
                 <view class='r'>

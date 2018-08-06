@@ -1,6 +1,6 @@
 const sign = require('../libs/getSign/getSign.js')
 const app = getApp()
-const API = "http://api.liantuofu.com/open/" //正式环境
+const API = "https://api.liantuofu.com/open/" //正式环境
 //const API = "http://intshop.51ebill.com/open/"  //灰度环境
 //const API ="http://wdtest.liantuo.com/open/"  //本地调试
 
@@ -33,7 +33,7 @@ function ajax(url, parmas, signs, method) {
                     })
                 }else if(data.data.code == 'FAILED'){
                     wx.showToast({
-                        title: data.data.msg + data.data.subMsg,
+                        title:  data.data.subMsg,
                         icon:"none"
                     })
                     currPage.setData({

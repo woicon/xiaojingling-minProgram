@@ -5,7 +5,9 @@
         "pages/member/member",
         "pages/index/index",
         "pages/pos/pos",
-        "pages/login/login"
+        "pages/reportDate/reportDate",
+        "pages/login/login",
+        "pages/orderSing/orderSing"
     ],
     "window": {
         "backgroundTextStyle": "light",

@@ -26,6 +26,12 @@ Page({
     },
     onLoad: function(options) {
         app.checkLogin()
+        let role = app.commonParmas('role')
+        if(role != 0){
+            wx.redirectTo({
+                url: '/pages/orderSing/orderSing',
+            })     
+        }
         wx.setNavigationBarTitle({
             title: '订单记录',
         })
@@ -42,43 +48,6 @@ Page({
         billBeginTime: base.startDate(15, 'yyyyMMddhhmmss'),
         merchantCode: app.commonParmas('merchantCode')
     },
-    summaryParmas: {
-        endDate: base.startDate(0, 'yyyyMMdd'), //new Date().Format('yyyyMMddhhmmss'),
-        beginDate: base.startDate(15, 'yyyyMMdd'),
-        pageSize: 10,
-        merchantCode: app.commonParmas('merchantCode')
-    },
-    orderInit(parmas, isMore) {
-        if (app.commonParmas('role') == 0) {
-            api.tradeSummaryMerchant(this.summaryParmas)
-                .then(res => {
-                    if (isMore) {
-                        //分页加载更多
-                        let _tradeMerchant = this.data.tradeMerchant
-                        _tradeMerchant.statisticsList = _tradeMerchant.statisticsList.concat(res.statisticsList)
-                        _tradeMerchant.pageNumber = res.pageNumber
-                        let summaryHasMore = (res.pageNumber = _tradeMerchant.totalPage) ? false : true
-                        this.setData({
-                            summaryHasMore: summaryHasMore,
-                            tradeMerchant: _tradeMerchant,
-                            isPageLoad: false
-                        })
-                    } else {
-                        this.setData({
-                            tradeMerchant: res,
-                            isPageLoad: false
-                        })
-                    }
-                })
-        } else {
-            let summaryParmas = this.summaryParmas
-            let billParmas = this.billParmas
-            this.getBill({
-                summaryParmas: summaryParmas,
-                billParmas: billParmas
-            })
-        }
-    },
     getBill(arg) {
         //获取账单
         let summary = () => {
@@ -89,7 +58,6 @@ Page({
                     })
                 })
         }
-
         let bill = () => {
             return api.bill(arg.billParmas)
                 .then(res => {
@@ -125,6 +93,43 @@ Page({
         }
 
     },
+    summaryParmas: {
+        endDate: base.startDate(0, 'yyyyMMdd'), //new Date().Format('yyyyMMddhhmmss'),
+        beginDate: base.startDate(15, 'yyyyMMdd'),
+        pageSize: 10,
+        //  merchantCode: app.commonParmas('merchantCode')
+    },
+    orderInit(parmas, isMore) {
+        if (app.commonParmas('role') == 0) {
+            api.tradeSummaryMerchant(this.summaryParmas)
+                .then(res => {
+                    if (isMore) {
+                        //分页加载更多
+                        let _tradeMerchant = this.data.tradeMerchant
+                        _tradeMerchant.statisticsList = _tradeMerchant.statisticsList.concat(res.statisticsList)
+                        _tradeMerchant.pageNumber = res.pageNumber
+                        let summaryHasMore = (res.pageNumber = _tradeMerchant.totalPage) ? false : true
+                        this.setData({
+                            summaryHasMore: summaryHasMore,
+                            tradeMerchant: _tradeMerchant,
+                            isPageLoad: false
+                        })
+                    } else {
+                        this.setData({
+                            tradeMerchant: res,
+                            isPageLoad: false
+                        })
+                    }
+                })
+        } else {
+            let summaryParmas = this.summaryParmas
+            let billParmas = this.billParmas
+            this.getBill({
+                summaryParmas: summaryParmas,
+                billParmas: billParmas
+            })
+        }
+    },
     moreSummary() {
         this.setData({
             orderIsBottm: true
@@ -151,11 +156,14 @@ Page({
         }
     },
     orderPage(e) {
-        this.setData({
-            isPageLoad: true
+        // this.setData({
+        //     isPageLoad: true
+        // })
+        // console.log(e)
+        // this.getBill(e.currentTarget.id)
+        wx.navigateTo({
+            url: `/pages/orderSing/orderSing?id=${e.currentTarget.id}`,
         })
-        console.log(e)
-        this.getBill(e.currentTarget.id)
     },
     orderStatus(e) {
         console.log(e)

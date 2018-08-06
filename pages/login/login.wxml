@@ -1,18 +1,19 @@
 <form bindsubmit="login" bindreset="formReset">
     <view class="login-page">
         <view class='logo-img'>
-            <image mode="aspectFit" src='../../assets/images/logo.png'></image>
+            收款搭档
+            <!-- <image mode="aspectFit" src='../../assets/images/logo.png'></image> -->
         </view>
         <view class="login">
             <view bindtap='focusInput' data-index="0" class='{{focus==0?"focus":""}}'>
                 <view class='ico icon-user'></view>
-                <input type="text" bindinput='loginInput' value='wangshang' name="userName" id="userName" bindfocus='loginFocus' bindblur='loginBlur' placeholder="用户名" confirm-type='next' />
-                <view class='input-clear icon-clear' data-id="loginName" bindtap='clearInput' wx:if="{{focus==0 && login.loginName!=''}}" hover-class='input-clear-touch'></view>
+                <input type="text" bindinput='loginInput' value='{{login.userName}}' name="userName" id="userName" bindfocus='loginFocus' bindblur='loginBlur' placeholder="用户名" confirm-type='next' />
+                <view class='input-clear icon-clear' data-id="userName" bindtap='clearInput' wx:if="{{focus==0 && login.userName!=''}}" hover-class='input-clear-touch'></view>
             </view>
             <view bindtap='focusInput' data-index="1" class='{{focus==1?"focus":""}}'>
                 <view class='ico icon-lock'></view>
-                <input type="password" bindinput='loginInput' value='111qqq' name="passWord" id="passWord" bindfocus='loginFocus' bindblur='loginBlur' placeholder="密码" />
-                <view class='input-clear icon-clear' data-id="password" bindtap='clearInput' wx:if="{{focus==1 && login.password!=''}}" hover-class='input-clear-touch'></view>
+                <input type="password" bindinput='loginInput' value='{{login.passWord}}' name="passWord" id="passWord" bindfocus='loginFocus' bindblur='loginBlur' placeholder="密码" />
+                <view class='input-clear icon-clear' data-id="passWord" bindtap='clearInput' wx:if="{{focus==1 && login.passWord!=''}}" hover-class='input-clear-touch'></view>
             </view>
         </view>
         <view class="button-group">

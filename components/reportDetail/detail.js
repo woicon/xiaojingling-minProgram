@@ -1,8 +1,5 @@
 // components/reportDetail/detail.js
 Component({
-    /**
-     * 组件的属性列表
-     */
     properties: {
         details: { // 属性名
             type: Array, // 类型（必填），目前接受的类型包括：String, Number, Boolean, Object, Array, null（表示任意类型）

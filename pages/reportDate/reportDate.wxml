@@ -1,0 +1,58 @@
+<!--pages/reportDate/reportDate.wxml-->
+<view class='tab'>
+    <view wx:for="{{['按日期','按时间']}}" wx:key="dates" bindtap='toggleTab' data-index="{{index}}" class='{{tabCurr == index ? "active":""}}'>{{item}}</view>
+</view>
+<view class='date-choose'>
+    <block wx:if="{{tabCurr == 0}}">
+        <view class='c-item'>
+            <picker mode="{{pickerMode}}" start="{{startDate}}" value='{{startDate}}' bindchange="changeStartDate" end="{{endDate}}">
+                <view class='inputtime'>
+                    <view>开始时间</view>
+                    <view>{{beginTime || "请选择"}}</view>
+                </view>
+            </picker>
+        </view>
+        <view class='c-item {{beginTime ? "":"disable"}}'>
+            <picker mode="{{pickerMode}}" disabled='{{beginTime ? false:true}}' value='{{endDate}}' bindtap='tapEnd' start="{{beginTime}}" end="{{endDate}}" bindchange="changeEndDate">
+                <view class='inputtime'>
+                    <view>结束时间</view>
+                    <view>{{endTime || "请选择"}}</view>
+                </view>
+            </picker>
+        </view>
+    </block>
+
+    <block wx:elif="{{tabCurr == 1}}">
+        <view class="c-item">
+            <picker mode="multiSelector" id='startTime' value="{{stTime}}" bindchange="changeDateTime" bindcolumnchange="changeDateTimeColumn" range="{{dateTimeArray}}">
+                <view class="inputtime">
+                    <view>选择开始时间</view>
+                    <view>
+                        {{sTime || "请选择"}}
+                        <!-- {{dateTimeArray[0][startTime[0]]}} {{dateTimeArray[1][startTime[1]]}}:{{dateTimeArray[2][startTime[2]]}}:00 -->
+                    </view>
+                </view>
+            </picker>
+        </view>
+        <view class='c-item  {{sTime ? "":"disable"}}'>
+            <picker mode="multiSelector" bindtap='endTimes' id='endTime' value="{{etTime}}" disabled='{{sTime ? false : true}}' bindchange="changeDateTime" bindcolumnchange="changeDateTimeColumn" range="{{dateTimeArray}}">
+                <view class="inputtime">
+                    <view>选择结束时间</view>
+                    <view>
+                        {{eTime || "请选择"}}
+                        <!-- {{dateTimeArray[0][endTime[0]]}} {{dateTimeArray[1][endTime[1]]}}:{{dateTimeArray[2][endTime[2]]}}:00 -->
+                    </view>
+                </view>
+            </picker>
+        </view>
+    </block>
+    <view class='r-info'>
+        <view class='ico icon-warn'></view>
+        <view>
+            <view>最多可查询{{warn[tabCurr]}}数据 </view>
+            <view wx:if="{{tabCurr == 0}}">可选时间范围 {{startDate}}至{{endDate}}</view>
+            <view wx:if="{{tabCurr == 1}}">可选时间范围 {{dateTimeArray[0][0]}}至{{dateTimeArray[0][1]}}</view>
+        </view>
+    </view>
+    <view class='button {{reportTime == null?"button-disable":""}}' bindtap='goBack'>确定</view>
+</view>

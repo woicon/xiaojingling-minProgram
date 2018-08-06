@@ -1,0 +1,29 @@
+/* pages/reportDate/reportDate.wxss */
+
+.date-choose {
+    background: #fff;
+    padding: 0 40rpx;
+}
+
+.c-item {
+    font-size: 28rpx;
+    border-bottom: 1px solid #eee;
+}
+
+.c-item.disable {
+    opacity: 0.5;
+}
+
+.c-item picker {
+    padding: 30rpx 0;
+}
+
+.r-info {
+    margin: 40rpx 0;
+}
+
+.inputtime {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

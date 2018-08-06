@@ -32,8 +32,13 @@ let startDate = (num, format) => {
     let dayValue = 24 * 60 * 60 * 1000
     return new Date(new Date().getTime() - dayValue * num).Format(format)
 }
+
+function formatDate(dates, types) {
+    return new Date(dates || '').Format(types)
+}
 module.exports = {
     formatTime: formatTime,
+    formatDate: formatDate,
     dayValue: 24 * 60 * 60 * 1000,
     startDate: startDate
 }

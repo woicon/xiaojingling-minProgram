@@ -1,0 +1,92 @@
+<import src="../../pages/template/loading.wxml" />
+<view wx:if="{{isPageLoad}}" class='empty'>
+    <template is="bottomloading" />
+</view>
+<block wx:elif="{{error}}">
+    <template is="errorPage" data="{{errorMsg:errorMsg}}" />
+</block>
+
+<block wx:else>
+    <view class='o-summary'>
+        <view class='rline'> 今日订单总金额
+            <view class='os-value'>{{summary.todayOrderAmt}}</view>
+        </view>
+        <view class='rline'>今日订单笔数
+            <view class='os-value'>{{summary.todayOrderCnt}}</view>
+        </view>
+        <view>今日实收金额
+            <view class='os-value'>{{summary.todayOrderAmt}}</view>
+        </view>
+    </view>
+    <view class='o-search {{showSearch? "o-search-show":""}} bline' style='{{summary || userType == 5?"top:0":""}}'>
+        <view class='ico icon-search'></view>
+        <view class='o-input'>
+            <input bindconfirm='searchOrder' placeholder='输入订单号搜索' value='{{searchValue}}' bindblur='searchBlur' bindinput='searchInput' bindfocus="searchFocus" confirm-type="search"></input>
+        </view>
+        <view class='search-del icon-clear' wx:if="{{cancelSearch}}" catchtap='normalSearch' hover-class='search-del-touch'></view>
+    </view>
+    <view class='o-bar bline' wx:if="{{bill}}">
+        <picker id='orderIndex' bindchange="orderStatus" class='rline' range="{{orderStatusSel}}" value="{{orderIndex}}" >
+            <view hover-class='bar-touch'> {{orderStatusSel[orderIndex]}}</view>
+        </picker>
+        <picker id='payIndex' bindchange="orderStatus" class='rline' range="{{payTypeSel}}" value="{{payIndex}}">
+            <view hover-class='bar-touch'>{{payTypeSel[payIndex]}}</view>
+        </picker>
+        <view bindtap='toggleSearch' class='ico icon-search' hover-class='bar-touch'></view>
+    </view>
+            
+    <block wx:if="{{bill}}">
+        <scroll-view scroll-y class='scroll-order' bindscrolltolower="moreBill">
+            <view class='o-list'>
+                <view class='o-item' wx:for="{{bill.orderDetails}}" wx:if="{{item.orderStatus != 'PAYERROR'}}" bindtap='viewDetail' id="{{item.orderNo}}" wx:key="orderlist" data-detail="{{item}}">
+                    <view class='o-type'>
+                        <block wx:if="{{item.orderStatus == 'SUCCESS'}}">
+                            <block wx:if="{{item.payType == 'ALIPAY'}}">
+                                <view class='ico alipay icon-alipay'></view>
+                            </block>
+                            <block wx:elif="{{item.payType == 'WXPAY'}}">
+                                <view class='ico weixin icon-weixin'></view>
+                            </block>
+                            <block wx:elif="{{item.payType == 'MPAY'}}">
+                                <view class='ico vip icon-vip'></view>
+                            </block>
+                            <view class='o-names'>{{payType[item.payType]}}</view>
+                        </block>
+                        <block wx:else>
+                            <view class='typeico'>
+                                <text>{{orderStatus[item.orderStatus]}}</text>
+                            </view>
+                            <view class='o-names dis'>{{orderStatus[item.orderStatus]}}</view>
+                        </block>
+                    </view>
+                    <view class='o-no'>
+                        <view class='o-date'>{{item.payTime}}</view>
+                        <view class='o-line'>{{item.outTradeNo}}</view>
+                    </view>
+                    <view class='o-price'>
+                        <view class='o-amt' wx:if="{{item.orderStatus != 'SUCCESS'}}">¥0.00</view>
+                        <view class='o-amt' wx:else>¥{{item.receiptAmount}}</view>
+                        <view class='o-tah'>{{orderStatus[item.orderStatus]}}</view>
+                    </view>
+                </view>
+            </view>
+            <view wx:if="{{orderIsBottm}}" class='getmore f-c-c'>
+                <view wx:if="{{orderHasMore}}">
+                    <template is="bottomloading" />
+                </view>
+                <view wx:else>没有更多</view>
+            </view>
+        </scroll-view>
+    </block>
+    <view class='empty' wx:elif="{{bill.orderDetails==null}}">
+        <view class='ico icon-orders'></view>
+        <view class='txt'>没有查询到对应的数据</view>
+    </view>
+    <view class='empty' wx:else>
+        <view class='ico icon-orders'></view>
+        <view class='txt'>没有订单记录</view>
+    </view>
+    <view wx:if="{{searchLoad}}" class='empty'>
+        <template is="bottomloading" />
+    </view>
+</block>

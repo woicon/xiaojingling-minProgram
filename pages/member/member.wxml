@@ -1,2 +1,47 @@
-<!--pages/member/member.wxml-->
-<text>pages/member/member.wxml</text>
+<view class='auth' wx:if="{{!userInfo}}">
+    <view class='auth-txt'>为了更好的体验，需要您授权此app获取昵称，头像等信息！</view>
+    <button open-type='getUserInfo' bindgetuserinfo='getUserInfo'>确认授权</button>
+</view>
+<block wx:else>
+    <view class='m-head'>
+        <view class='m-img'>
+            <image src='{{userInfo.avatarUrl}}'></image>
+        </view>
+        <view class='m-info'>
+            <view class='m-name'>{{member.merchantName}}</view>
+            <view class="m-ts">账号：{{member.operatorName}} </view>
+        </view>
+    </view>
+    <view class='m-list'>
+        <!-- <view bindtap='toAgent' hover-class='nav-touch'>
+            <view class='ico icon-myservices'></view>
+            <view class='m-name'>我的服务商</view>
+        </view> -->
+        <!-- <view bindtap='toPayPlat' hover-class='nav-touch'>
+            <view class='ico icon-info'></view>
+            <view class='m-name'>签约信息</view>
+        </view> -->
+        <view class='phones' bindtap='callServ' hover-class='nav-touch'>
+            <view class='ico icon-call'></view>
+            <view class='m-name'> 客服热线</view>
+            <text>4000-122-155</text>
+        </view>
+        <!-- <navigator url='/pages/help/help' hover-class='nav-touch'>
+            <view class='ico icon-book'></view>
+            <view class='m-name'>收款小课堂</view>
+        </navigator> -->
+        <!-- <navigator wx:if="{{!isCore}}" url='/pages/desk/desk' hover-class='nav-touch'>
+            <view class='ico icon-setting'></view>
+            <view class='m-name'>桌码设置</view>
+        </navigator> -->
+        <view class='phones' hover-class='nav-touch'>
+            <view class='ico icon-about'></view>
+            <view class='m-name'>关于</view>
+            <text>{{version}}</text>
+        </view>
+        <view class='exit' bindtap='exitSys' hover-class='nav-touch'>
+            <view class='ico icon-exit'></view>
+            <view class='m-name'>退出账号</view>
+        </view>
+    </view>
+</block>
