@@ -27,12 +27,15 @@ Date.prototype.Format = function(fmt) { //author: meizz
         if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)))
     return fmt
 }
+    
 //格式化开始时间
 let startDate = (num, format) => {
     let dayValue = 24 * 60 * 60 * 1000
     return new Date(new Date().getTime() - dayValue * num).Format(format)
 }
-
+function strDateFormat(str) {
+    return str.replace(/^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/, "$1-$2-$3 $4:$5:$6");
+}
 function formatDate(dates, types) {
     return new Date(dates || '').Format(types)
 }
@@ -40,5 +43,6 @@ module.exports = {
     formatTime: formatTime,
     formatDate: formatDate,
     dayValue: 24 * 60 * 60 * 1000,
-    startDate: startDate
+    startDate: startDate,
+    strDateFormat: strDateFormat
 }

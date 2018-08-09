@@ -104,6 +104,14 @@
         </block>
     </view>
     <!-- 0总部 1门店 2员工 3店长 -->
+    <block wx:if="{{detail.receiptAmount > 0}}">
+        <view class='button-group' wx:if="{{role == 3 || role == 1 }}">
+            <view wx:if="{{detail.orderStatus == 'SUCCESS'}}" class='button button-red f-c-c checkbtn ' hover-class='checkbtn-hover ' bindtap='goRefund'>
+                <template is="bottomloading" wx:if="{{btnLoading}}" />
+                <block wx:else>退款</block>
+            </view>
+        </view>
+    </block>
     <!-- <view class='button-group' wx:if="{{role != 0 }}">
         <view wx:if="{{detail.orderStatus == 'NOTPAY'}}" class='button  button-red f-c-c checkbtn {{btnLoading?"button-disable":""}}' bindtap='{{btnLoading?"":"checkPay"}}'>
             <template is="bottomloading" wx:if="{{btnLoading}}" />

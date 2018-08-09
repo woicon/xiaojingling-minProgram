@@ -82,13 +82,17 @@ Page({
         }
     },
     billParmas() {
-        return {
+        let parmas = {
             pageNumber: 1,
             pageSize: 20,
             billEndTime: base.startDate(0, 'yyyyMMddhhmmss'), //new Date().Format('yyyyMMddhhmmss'),
             billBeginTime: base.startDate(15, 'yyyyMMddhhmmss'),
             merchantCode: this.data.merchantCode
         }
+        if (this.data.role == 1) {
+            parmas.operatorId = app.commonParmas("operatorId")
+        }
+        return parmas
     },
     getBill(arg) {
         if (arg.isSelect) {
@@ -105,6 +109,16 @@ Page({
                     })
                 })
         }
+        function toDate(bill){
+            if (bill) {
+                let str = bill.orderDetails
+                for (let i in str) {
+                    if (str[i].payTime) {
+                        str[i].payTime = base.strDateFormat(str[i].payTime)
+                    }
+                }
+            }
+        }
         let bill = () => {
             return api.bill(arg.billParmas)
                 .then(res => {
@@ -114,6 +128,7 @@ Page({
                         bill.orderDetails = bill.orderDetails.concat(res.orderDetails)
                         bill.pageNumber = res.pageNumber
                         let orderHasMore = (res.pageNumber == bill.totalPage) ? false : true
+                        toDate(bill)
                         this.setData({
                             bill: bill,
                             isPageLoad: false,
@@ -123,6 +138,7 @@ Page({
                     } else {
                         let orderHasMore = (res.totalPage > 1) ? true : false
                         let bill = res.code != 'FAILED' ? res : null
+                        toDate(bill)
                         this.setData({
                             bill: bill,
                             isPageLoad: false,

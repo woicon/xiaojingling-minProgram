@@ -110,9 +110,7 @@ Page({
                 break
         }
     },
-    stepDate: function(e) {
-        console.log(e)
-        let that = this
+    stepDate(e) {
         let reportDate = this.data.reportDateFormat
         const currDate = new Date(reportDate)
         const ms = base.dayValue
@@ -141,10 +139,12 @@ Page({
             this.getReport(reportDate)
             this.nextView(activeDate)
         }
-        this.setData({
-            reportDate: reportDate,
-            reportDateFormat: reportDateFormat
-        })
+        if (e.target.id) {
+            this.setData({
+                reportDate: reportDate,
+                reportDateFormat: reportDateFormat
+            })
+        }
     },
     nextView: function(csTime) {
         let nowTime = new Date().getTime()
@@ -160,38 +160,36 @@ Page({
         if (disNext) {
             reportTab = 1
         }
-        // console.log(new Date(nowTime - dayValue).Format('yyyy-MM-dd') + "<><><" + new Date(csTime).Format('yyyy-MM-dd'))
         this.setData({
             disNext: disNext,
             reportTab: reportTab
         })
     },
     toggleReport: function(e) {
-        let that = this
         let event = e.target.dataset
         let reportDate = this.data.reportDateFormat
         switch (event.index) {
             case 0:
-                that.setData({
-                    reportDateFormat: that.data.yestaday,
-                    reportDate: base.formatDate(that.data.yestaday, 'yyyyMMdd'),
+                this.setData({
+                    reportDateFormat: this.data.yestaday,
+                    reportDate: base.formatDate(this.data.yestaday, 'yyyyMMdd'),
                     searchDates: null,
                     searchDate: null,
                     disPrv: false,
                     disNext: false
                 })
-                that.getReport(base.formatDate(that.data.yestaday, 'yyyyMMdd'))
+                this.getReport(base.formatDate(this.data.yestaday, 'yyyyMMdd'))
                 break
             case 1:
-                that.setData({
-                    reportDateFormat: that.data.taday,
-                    reportDate: base.formatDate(that.data.taday, 'yyyyMMdd'),
+                this.setData({
+                    reportDateFormat: this.data.taday,
+                    reportDate: base.formatDate(this.data.taday, 'yyyyMMdd'),
                     searchDates: null,
                     searchDate: null,
                     disPrv: false,
                     disNext: true
                 })
-                that.getReport(base.formatDate(that.data.taday, 'yyyyMMdd'))
+                this.getReport(base.formatDate(this.data.taday, 'yyyyMMdd'))
                 break
             case 2:
                 wx.navigateTo({
@@ -199,12 +197,12 @@ Page({
                 })
                 break
         }
-        that.setData({
+        this.setData({
             reportTab: e.target.dataset.index
         })
     },
     moreDepartment() {
-        let parmas = this.reportParmas()
+        let parmas = this.reportParmas(this.data.reportDate)
         parmas.pageNumber = this.data.department.pageNumber + 1
         api.tradeMerchant(parmas)
             .then(res => {
@@ -219,7 +217,24 @@ Page({
             })
     },
     moreCashier() {
+        let cashier = this.data.cashier
+        let parmas = this.reportParmas(this.data.reportDate)
+        parmas.merchantCode = app.commonParmas("merchantCode")
+        parmas.pageNumber = cashier.pageNumber + 1
+        api.tradeOperator(parmas)
+            .then(res => {
+                console.log(res)
+                if (res.code != 'FAILED') {
+                    cashier.statisticsList = cashier.statisticsList.concat(res.statisticsList)
+                    cashier.pageNumber = parmas.pageNumber
 
+                } else {
+                    cashier.pageNumber = parmas.pageNumber
+                }
+                this.setData({
+                    cashier: cashier
+                })
+            })
     },
     storeChange: function(e) {
         console.log(e)
@@ -239,10 +254,9 @@ Page({
         this.setData({
             selStore: e.detail.value
         })
-
     },
     onReady: function() {
-
+        
     },
     onShow() {
         this.getReport(this.data.searchDate || this.data.reportDate)

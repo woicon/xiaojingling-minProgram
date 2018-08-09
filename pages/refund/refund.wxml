@@ -1,0 +1,102 @@
+<view class='d'>
+    <view class='d-head'>
+        <view class='retype'>
+            <view wx:if="{{detail.payType == 'ALIPAY'}}" class='ico alipay icon-alipay'></view>
+            <view wx:elif="{{detail.payType == 'WXPAY'}}" class='ico weixin icon-weixin'></view>
+            <view wx:elif="{{detail.payType == 'MPAY'}}" class='ico vip icon-vip'></view>
+            <view class='d-name'>{{payType[detail.payType]}}收款 </view>
+        </view>
+        <view class='d-price'>
+            <view>实收</view>
+            <view class='price'>
+                <text>¥</text>
+                <block>
+                    {{detail.receiptAmount}}
+                </block>
+            </view>
+        </view>
+    </view>
+    <view class='re bline'>
+        <view class='refamt'>
+            <input type="digit" bindinput='refInput' value='{{refAmt}}' placeholder='输入退款金额'></input>
+        </view>
+        <!-- {{preAmt}} -->
+        <view bindtap='refundAll' class='refall' hover-class='refall-touch'>全部退款</view>
+    </view>
+    <!-- // bindtap='selectMrk' -->
+    <view class='rmk'  bindtap='selectMrk'>
+        <view class='rmk-title'>退款原因 <text wx:if="{{mrk}}">(50/{{markNum}})</text></view>
+        <view class='rmk-value' wx:if="{{!mrk}}">{{selMrk}}</view>
+    </view>
+    <view class='rmk-text' wx:if="{{mrk}}"><textarea disabled='{{diableTextarea}}' bindinput='mrkInput' placeholder='输入退款原因'></textarea> </view>
+    <view class='d-list'>
+        <view class='bline'>交易状态
+            <view class='value'>{{orderStatus[detail.orderStatus]}}</view>
+        </view>
+         <view class='bline'>交易金额
+            <view class='value'>{{detail.totalAmount}}</view>
+        </view>
+         <view class='bline'>交易时间
+            <view class='value'>{{detail.payTime}}</view>
+        </view>
+        <view class='bline' id="{{detail.orderNo}}" bindtap='clipOrderNo'>订单编号
+            <view class='value d-no'>
+                <text>{{detail.outTradeNo}}</text>
+            </view>
+        </view>
+
+    </view>
+    <view class='button-group'>
+        <view class='button  button-red f-c-c checkbtn' bindtap='goRefund'>
+            确定退款
+        </view>
+    </view>
+</view>
+
+<view class='ma-form' wx:if="{{checkMa}}">
+    <view class="ma-warp">
+        <view class='ma-title'>店长审批
+            <view class='title-sub'>此操作需要店长审批</view>
+        </view>
+        <form bindsubmit='refundReq'>
+            <view>
+                <input placeholder='管理员账号' name="managerLoginName" type='text' value='{{refKey?refKey.managerLoginName:""}}'></input>
+            </view>
+            <view>
+                <input placeholder='密码' name="managerPassword" value='{{refKey?refKey.managerPassword:""}}' type='password'></input>
+            </view>
+            <view wx:if="{{userType == 1 || userType == 4}}" class='checkbox {{savePwd?"checked":""}}' bindtap='togglePwd'>
+                <view class='check-ico'></view>
+                <view>
+                    <view>记住退款密码</view>
+                    <view>
+                        <text>风险提示：下次退款无需输入密码</text>
+                    </view>
+                </view>
+            </view>
+            <view class='button-groups'>
+                <button class='button button-grey' hover-class='button-grey-touch' bindtap='hideMa'>取消</button>
+                <button class='button' form-type="submit">确定</button>
+            </view>
+        </form>
+    </view>
+</view>
+
+
+<!-- <view class='mrk' wx:if="{{mrk}}">
+    <view class='mrk-warp'>
+        <view class='mrk-list' bindtap='selMrk'>
+            <view wx:for="{{mrkList}}" wx:key="mrklist" data-tag="{{item}}" data-index="{{index}}" class='mrk-item {{mrkToggle[index]?"mrk-active":""}}'>
+                {{item}}
+                <view class='check-ico'></view>
+            </view>
+        </view>
+        <view class='mrk-add'>
+            <input class='mrk-text' maxlength='99' bindinput='mrkInput' value='{{newMrk}}' placeholder='输入备注'></input>
+            <view bindtap='addMrk' class='add-btn'>
+                <text> 添加</text>
+            </view>
+        </view>
+        <button class='button' bindtap='mrkSubmit'>确定</button>
+    </view>
+</view> -->

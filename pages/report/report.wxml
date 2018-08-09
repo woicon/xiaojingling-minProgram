@@ -33,37 +33,44 @@
                     <view class='r-head'>
                         <view>
                             <view class='ico icon-money'></view>
-                            <view>订单金额
-                                <view>{{trade.totalOrderAmt}}</view>
+                            <view>订单金额/笔
+                                <view>{{trade.totalOrderAmt}}/{{trade.totalOrderCnt}}</view>
                             </view>
                         </view>
                         <view>
                             <view class='ico icon-moneys'></view>
-                            <view>实收金额
-                                <view>{{trade.totalTradeAmt}}</view>
+                            <view>实收金额/笔
+                                <view>{{trade.totalTradeAmt}}/{{trade.totalTradeCnt}}</view>
                             </view>
                         </view>
                     </view>
 
                     <view class='r-grid'>
-                        <view class='bline'>
+                        <!-- <view class='bline'>
                             <view class='ico icon-iorders'></view>
                             <view>订单数
                                 <view class='value'>{{trade.totalOrderCnt}}</view>
                             </view>
-                        </view>
-                        <view class='bline lline'>
+                        </view> -->
+                        <view class='bline'>
                             <view class='ico icon-refund'></view>
                             <view>退款金额(元)/笔
-                                <view class='value'>{{trade.totalRefundAmt}}/{{trade.totalRefundCnt}}</view>
+                                <view class='value'>{{trade.totalRefundAmt}}</view>
                             </view>
                         </view>
-
-                        <view>
+                       
+                        <view class='bline lline'>
                             <view class='ico icon-fee'></view>
                             <view>
                                 <view>手续费</view>
                                 <view class='value'>{{trade.totalTradeFee}}</view>
+                            </view>
+                        </view>
+                        <view>
+                            <view class='ico icon-fee'></view>
+                            <view>
+                                <view>优惠金额/笔</view>
+                                <view class='value'>{{trade.wechatDiscountableAmt}}/{{trade.wechatDiscountableCnt}}</view>
                             </view>
                         </view>
                         <view class='lline'>
@@ -95,7 +102,7 @@
                         <view class='bline lline'>实收金额
                             <text>{{trade.wechatTradeAmt}}</text>
                         </view>
-                        <view>实收笔数
+                        <view class="">实收笔数
                             <text>{{trade.wechatTradeCnt}}</text>
                         </view>
                         <view class='lline'>手续费
@@ -104,6 +111,7 @@
                         <view class='lline'>结算金额
                             <text>{{trade.wechatSettleAmt}}</text>
                         </view>
+                      
                     </view>
                 </view>
                 <view class='rs'>
@@ -132,8 +140,36 @@
                         </view>
                     </view>
                 </view>
+
+                <view class='rs'>
+                    <view class='rs-title'>
+                        <view class='ico icon-vip vip'></view>
+                        <view>会员支付</view>
+                    </view>
+                    <view class='rs-block'>
+                        <view class='bline'>消费金额/笔
+                            <text>{{trade.memberOrderAmt}}/{{trade.memberTradeCnt}}</text>
+                        </view>
+                        <view class='bline lline'>退款金额/笔数
+                            <text>{{trade.memberRefundAmt}}/{{trade.memberRefundCnt}}</text>
+                        </view>
+                        <view class='bline lline'>实充消费金额/笔
+                            <text>{{trade.memberActualAmt}}/{{trade.memberActualCnt}}</text>
+                        </view>
+                        <view>优惠金额/笔
+                            <text>{{trade.memberDiscountableAmt}}/{{trade.memberDiscountableCnt}}</text>
+                        </view>
+                        <view class='lline'>赠送消费金额/笔
+                            <text>{{trade.memberGiveAmt}}/{{trade.memberGiveCnt}}</text>
+                        </view>
+                        <view class='lline'>实付金额/笔
+                            <text>{{trade.memberTradeAmt}}/{{trade.memberTradeCnt}}</text>
+                        </view>
+                    </view>
+                </view>
+
             </block>
-            
+
             <!-- <block wx:if="{{terminal && terminal.length!=0}}">
                 <view class='r-title'>款台统计</view>
                 <detail details="{{terminal}}"></detail>
@@ -142,7 +178,7 @@
             <block wx:if="{{cashier && cashier.length!=0}}">
                 <view class='r-title' wx:if="{{role!=2}}">收银员统计</view>
                 <detail details="{{cashier.statisticsList}}"></detail>
-                <view class='more' bindtap='moreCashier' wx:if="{{cashier.totalPage>1 && cashier.pageNumber < cashier.totalPage}}">查看更多</view>
+                <view class='more' bindtap='moreCashier' wx:if="{{cashier.totalPage > 1 && cashier.pageNumber < cashier.totalPage}}">查看更多</view>
             </block>
 
             <block wx:elif="{{department && department.length!=0}}">

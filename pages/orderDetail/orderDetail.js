@@ -4,6 +4,7 @@ let app = getApp()
 Page({
     data: {
         isPageLoad: true,
+        btnLoading:false,
         orderStatus: {
             'NOTPAY': '未支付',
             'SUCCESS': '已完成',
@@ -30,7 +31,6 @@ Page({
         })
     },
     checkOrder() {
-
         api.payQuery(options)
             .then(res => {
                 console.log(res)
@@ -53,9 +53,16 @@ Page({
             }
         })
     },
-    goRefund(e) {
-        this.setData({
-            btnLoading: true
+    // goRefund(e) {
+    //     this.setData({
+    //         btnLoading: true
+    //     })
+    // },
+    goRefund: function (e) {
+        console.log(this.data.detail)
+        wx.setStorageSync("refundDetail", this.data.detail)
+        wx.redirectTo({
+            url: '/pages/refund/refund',
         })
     },
     onReady: function() {

@@ -8,7 +8,8 @@
         "pages/reportDate/reportDate",
         "pages/orderDetail/orderDetail",
         "pages/login/login",
-        "pages/orderSing/orderSing"
+        "pages/orderSing/orderSing",
+        "pages/refund/refund"
     ],
     "window": {
         "backgroundTextStyle": "light",
