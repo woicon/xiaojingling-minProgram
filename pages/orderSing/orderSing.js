@@ -6,17 +6,20 @@ Page({
         isPageLoad: true,
         orderIsBottm: false,
         orderHasMore: true,
+        searchParmas: {},
+        cancelSearch: true,
+        payIndex: 0,
+        orderIndex: 0,
         orderStatus: {
             'NOTPAY': '未支付',
-            'SUCCESS': '支付成功',
-            'REFUND': '转入退款',
+            'SUCCESS': '已完成 ',
+            'REFUND': '已退款',
             'CLOSED': '已关闭',
-            'REVOKED': '已撤销'
+            'REVOKED': '已撤销',
+            'PAYERROR': '失败'
         },
-        orderStatusSel: ['全部支付状态', '未支付', '支付成功', '转入退款', '已关闭', '已撤销'],
-        orderIndex: 0,
+        orderStatusSel: ['全部支付状态', '未支付', '已完成', '已退款', '已关闭', '已撤销'],
         payTypeSel: ['全部支付方式', '微信', '支付宝 ', '会员'],
-        payIndex: 0,
         payType: {
             WXPAY: '微信',
             ALIPAY: '支付宝 ',
@@ -24,29 +27,34 @@ Page({
         }
     },
     onLoad: function(options) {
-        console.log(options)
         this.setData({
-            merchantCode: options.merchantCode
-        })
-        this.getBill({
-            billParmas: this.billParmas,
-            summaryParmas:this.summaryParmas
+            merchantCode: options.id || app.commonParmas('merchantCode'),
+            role: app.commonParmas('role')
         })
     },
-    summaryParmas: {
-        endDate: base.startDate(0, 'yyyyMMdd'), //new Date().Format('yyyyMMddhhmmss'),
-        beginDate: base.startDate(15, 'yyyyMMdd'),
-        pageSize: 10,
-        merchantCode: app.commonParmas('merchantCode')
+    summaryParmas() {
+        return {
+            endDate: base.startDate(0, 'yyyyMMdd'), //new Date().Format('yyyyMMddhhmmss'),
+            beginDate: base.startDate(15, 'yyyyMMdd'),
+            pageSize: 10,
+            merchantCode: this.data.merchantCode
+        }
     },
-    billParmas: {
-        pageNumber: 1,
-        pageSize: 20,
-        billEndTime: base.startDate(0, 'yyyyMMddhhmmss'), //new Date().Format('yyyyMMddhhmmss'),
-        billBeginTime: base.startDate(15, 'yyyyMMddhhmmss'),
-        merchantCode: app.commonParmas('merchantCode')
+    billParmas() {
+        return {
+            pageNumber: 1,
+            pageSize: 20,
+            billEndTime: base.startDate(0, 'yyyyMMddhhmmss'), //new Date().Format('yyyyMMddhhmmss'),
+            billBeginTime: base.startDate(15, 'yyyyMMddhhmmss'),
+            merchantCode: this.data.merchantCode
+        }
     },
     getBill(arg) {
+        if (arg.isSelect) {
+            this.setData({
+                searchLoad: true
+            })
+        }
         //获取账单
         let summary = () => {
             return api.tradeSummaryMerchant(arg.summaryParmas)
@@ -72,10 +80,13 @@ Page({
                             role: 3
                         })
                     } else {
+                        let orderHasMore = (res.totalPage > 1) ? true : false
+                        let bill = res.code != 'FAILED' ? res : null
                         this.setData({
-                            bill: res,
+                            bill: bill,
                             isPageLoad: false,
-                            role: 3
+                            orderHasMore: orderHasMore,
+                            searchLoad: false
                         })
                     }
                 })
@@ -95,7 +106,7 @@ Page({
             orderIsBottm: true
         })
         if (this.data.orderHasMore) {
-            let billParmas = this.billParmas
+            let billParmas = this.billParmas()
             billParmas.pageNumber = this.data.bill.pageNumber + 1
             console.log(billParmas)
             this.getBill({
@@ -104,11 +115,91 @@ Page({
             })
         }
     },
+    orderStatus(e) {
+        console.log(e)
+        this.setData({
+            [e.target.id]: e.detail.value
+        })
+        let billParmas = this.billParmas()
+
+        function getValues(arr) {
+            let ars = []
+            for (let i in arr) {
+                ars.push(i)
+            }
+            return ars[Number(e.detail.value) - 1]
+        }
+        let searchParmas = this.data.searchParmas
+        if (e.detail.value == 0) {
+            if (e.target.id == 'orderIndex') {
+                delete searchParmas.orderStatus
+            } else if (e.target.id == 'payIndex') {
+                delete searchParmas.payType
+            }
+        } else {
+            if (e.target.id == 'orderIndex') {
+                console.log(getValues(this.data.orderStatus))
+                searchParmas.orderStatus = getValues(this.data.orderStatus)
+            } else if (e.target.id == 'payIndex') {
+                searchParmas.payType = getValues(this.data.payType)
+            }
+        }
+        billParmas = Object.assign(billParmas, searchParmas)
+        this.getBill({
+            isSelect: true,
+            billParmas: billParmas
+        })
+    },
+    normalSearch(e) {
+        this.getBill({
+            billParmas: this.billParmas(),
+            summaryParmas: this.summaryParmas()
+        })
+        this.setData({
+            searchValue: "",
+            cancelSearch: true,
+            showSearch: false
+        })
+    },
+    toggleSearch(e) {
+        this.setData({
+            showSearch: true
+        })
+    },
+    //订单搜索
+    searchOrder(e) {
+        if (e.detail.value != '') {
+            let billParmas = this.billParmas()
+            billParmas.outTradeNo = e.detail.value
+
+            this.getBill({
+                billParmas: billParmas,
+                isSelect: true
+            })
+            // wx.navigateTo({
+            //     url: `/pages/orderDetail/orderDetail?merchantCode=${this.data.merchantCode}&outTradeNo=${e.detail.value}`
+            // })
+        } else {
+            wx.showToast({
+                title: '请输入搜索订单号',
+            })
+        }
+    },
+    viewDetail(e) {
+        let outTradeNo = e.currentTarget.dataset.detail.outTradeNo
+        wx.setStorageSync("orderDetail", e.currentTarget.dataset.detail)
+        wx.navigateTo({
+            url: `/pages/orderDetail/orderDetail?merchantCode=${this.data.merchantCode}&outTradeNo=${outTradeNo}`
+        })
+    },
     onReady: function() {
 
     },
     onShow: function() {
-
+        this.getBill({
+            billParmas: this.billParmas(),
+            summaryParmas: this.summaryParmas()
+        })
     },
 
     onHide: function() {

@@ -16,7 +16,7 @@ function ajax(url, parmas, signs, method) {
         }
         sParmas = Object.assign(parmas, commonParmas)
     }
-    //console.log(`${url}==>请求参数`,sParmas)
+    console.log(`${url}==>请求参数`,sParmas)
     const signParmas = signs ? parmas : sign(sParmas)
     return new Promise((res, rej) => {
         wx.request({
@@ -32,15 +32,16 @@ function ajax(url, parmas, signs, method) {
                         error:false
                     })
                 }else if(data.data.code == 'FAILED'){
-                    wx.showToast({
-                        title:  data.data.subMsg,
-                        icon:"none"
-                    })
+                    // wx.showToast({
+                    //     title: data.data.msg || data.data.subMsg,
+                    //     icon:"none"
+                    // })
                     currPage.setData({
                         error:true,
                         isPageLoad:false,
                         errorMsg: data.data.msg
                     })
+                    res(data.data)
                 }
             },
             fail: function(error) {
@@ -77,7 +78,7 @@ module.exports = {
     //账单查询
     bill:parmas => ajax('bill', parmas),
     //订单查询
-    payQuery: parmas => ajax('pay/query', parmas),
+    payQuery: (parmas) => ajax('pay/query', parmas),
     //门店查询 /merchant/list
     merchantList: parmas => ajax('merchant/list', parmas)
 }

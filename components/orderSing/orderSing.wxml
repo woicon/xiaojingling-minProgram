@@ -2,7 +2,6 @@
 <view wx:if="{{isPageLoad}}" class='empty'>
     <template is="bottomloading" />
 </view>
-
 <block wx:else>
     <view class='o-summary'>
         <view class='rline'> 今日订单总金额

@@ -14,9 +14,16 @@ Page({
         api.login(parmas)
             .then(res => {
                 wx.setStorageSync("login", res)
-                wx.reLaunch({
-                    url: '/pages/report/report',
-                })
+                if(res.code == 'FAILED'){
+                    wx.showToast({
+                        title: res.subMsg,
+                        icon:'none'
+                    })
+                } else if (res.code == 'SUCCESS'){
+                    wx.reLaunch({
+                        url: '/pages/report/report',
+                    })
+                }
             })
     },
     clearInput (e) {

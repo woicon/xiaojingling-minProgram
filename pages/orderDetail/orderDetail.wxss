@@ -1,0 +1,122 @@
+.d-head{
+    padding:50rpx 40rpx;
+    display: flex;
+    justify-content:space-between;
+    align-items:center;
+    background:#fff;
+}
+.flex-c-b{
+     display: flex;
+    justify-content:space-between;
+    align-items:center;
+}
+.d-list{
+    margin:24rpx 0;
+    padding:0 40rpx;
+    font-size:26rpx;
+    color:#555; 
+    background:#fff;
+}
+.d-list>view{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:32rpx 0;
+}
+.d-no{
+
+    overflow:hidden;
+    text-align:right;
+    display: flex;
+    align-items:center;
+}
+.d-no text{
+    width:420rpx;
+    word-break:break-all;
+    font-size:22rpx;
+    text-align:right;
+    flex-grow:2;
+}
+.d-name{
+    margin-left:14rpx;
+    font-size:56rpx;
+    color:#444;
+    font-weight:800;
+}
+
+.d-btn{
+    padding:0 25rpx;
+    line-height:56rpx;
+    font-size:22rpx;
+    background:#0ec695;
+    color:#fff;
+    margin-left:14rpx;
+    border-radius:4rpx;
+    flex-shrink:0;
+
+
+}
+.d-price{
+    text-align:right;
+    font-size:24rpx;
+    color:#999;
+    display: flex;
+    align-items:center;
+    justify-content:flex-end;
+}
+.d-price text{
+    font-size:24rpx;
+    margin-right:10rpx;
+}
+.price{
+    color:#FF541B;
+    font-weight:800;
+    font-size:44rpx;
+    margin-left:14rpx;
+     display: flex;
+    align-items:center;
+}
+.value{
+    color:#333;
+    font-size:27rpx;
+    flex-shrink:0;
+    width:540rpx;   
+    text-align:right;
+}
+.ico{
+    margin-right:8rpx;
+    font-size:60rpx;
+}
+.ico.money{
+    color:#0ec695;
+}
+
+.weixin{
+    color:#23b300;
+}
+.alipay{
+    color:#1394ff;
+}
+.vip{
+    color:#f56b6b;
+}
+.d-name{
+    font-size:32rpx;
+}
+
+.button-group{
+    margin:0 50rpx;
+}
+
+.checkbtn{
+    padding:0;
+    height:80rpx;
+    line-height:80rpx;
+}
+
+.checkbtn .loading-bottom view{
+    background:#fff;
+}
+.checkbtn-hover{
+    background:#DA2525;
+}

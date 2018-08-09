@@ -1,0 +1,128 @@
+<!--pages/payPlat/payPlat.wxml-->
+<import src="../../pages/template/loading.wxml" />
+<view wx:if="{{isPageLoad}}" class='flex-c-c'>
+    <template is="bottomloading" />
+</view>
+
+<view class='d' wx:else>
+    <view class='d-head'>
+        <view class="flex-c-b">
+            <block wx:if="{{detail.orderStatus == 'SUCCESS'}}">
+                <block wx:if="{{detail.payType == 'ALIPAY'}}">
+                    <view class='ico alipay icon-alipay'></view>
+                </block>
+                <block wx:elif="{{detail.payType == 'WXPAY'}}">
+                    <view class='ico weixin icon-weixin'></view>
+                </block>
+                <block wx:elif="{{detail.payType == 'MPAY'}}">
+                    <view class='ico vip icon-vip'></view>
+                </block>
+                <!-- <view class='o-names'>{{payType[detail.payType]}}</view>  -->
+            </block>
+            <block wx:else>
+                <view class='typeico'>
+                    <text>{{orderStatus[detail.orderStatus]}}</text>
+                </view>
+            </block>
+            <view class='d-name'>
+                {{payType[detail.payType]}}
+            </view>
+        </view>
+
+        <view class='d-price'>
+            <view>实收</view>
+            <view class='price'>
+                <text>¥</text>
+                <block>
+                    {{detail.receiptAmount}}
+                </block>
+            </view>
+        </view>
+    </view>
+    <view class='d-list'>
+        <view class='bline'> 订单金额
+            <view class='value'>¥{{detail.totalAmount}}</view>
+        </view>
+        <view class='bline'>优惠金额
+            <view class='value'>¥{{detail.discountAmount}}</view>
+        </view>
+
+
+        <view class='bline' wx:if="{{detail.payTime}}">交易时间
+            <view class='value'>{{detail.payTime}}</view>
+        </view>
+        <view class='bline'>交易状态
+            <view class='value'>{{orderStatus[detail.orderStatus]}}</view>
+        </view>
+
+        <view class='bline' wx:if="{{detail.outTradeNo}}" id="{{detail.outTradeNo}}" bindtap='clipOrderNo'>订单编号
+            <view class='value d-no'>
+                <text>{{detail.outTradeNo}}</text>
+                <view class='d-btn' hover-class='d-btn-touch'>复制</view>
+            </view>
+        </view>
+
+
+        <view class='bline' wx:if="{{detail.settleAmount}}" id="{{detail.settleAmount}}"> 第三方实际结算金额
+            <view class='value'>
+                <text>{{detail.settleAmount}}</text>
+            </view>
+        </view>
+
+        <view class='bline d-list-block' wx:if="{{detail.feeAmount}}" id="{{detail.feeAmount}}">
+            第三方实际手续费金额
+            <view class='value'>
+                <text>{{detail.feeAmount}}</text>
+            </view>
+        </view>
+        <view class='bline  d-list-block' wx:if="{{detail.outTransactionId}}" id="{{detail.outTransactionId}}" bindtap='clipOrderNo'>第三方交易订单号
+            <view class='value d-no'>
+                <text>{{detail.outTransactionId}}</text>
+                <view class='d-btn' hover-class='d-btn-touch'>复制</view>
+            </view>
+        </view>
+
+        <block wx:if='{{ detail.orderStatus == "RUNDED"}}'>
+            <view class='bline'>退款方式
+                <view class='value'>{{detail.receiveMethodCn}}退款</view>
+            </view>
+            <view class='bline'>退款金额
+                <view class='value'>{{detail.refundAmt}}</view>
+            </view>
+            <view wx:if="{{detail.approveStatus != 7}}" class='{{detail.refundRmk != null ? "bline":""}}'>退款时间
+                <view class='value'>{{detail.gmtRefunded}}</view>
+            </view>
+            <view wx:if="{{detail.approveStatus ==7}}">退款状态
+                <view class='value'>{{detail.refundStatusCn}}</view>
+            </view>
+            <view wx:elif="{{message}}">
+                {{message}}
+            </view>
+            <view wx:if="{{detail.refundRmk != null}}">退款原因
+                <view class='value'>{{detail.refundRmk}}</view>
+            </view>
+        </block>
+    </view>
+    <!-- 0总部 1门店 2员工 3店长 -->
+    <!-- <view class='button-group' wx:if="{{role != 0 }}">
+        <view wx:if="{{detail.orderStatus == 'NOTPAY'}}" class='button  button-red f-c-c checkbtn {{btnLoading?"button-disable":""}}' bindtap='{{btnLoading?"":"checkPay"}}'>
+            <template is="bottomloading" wx:if="{{btnLoading}}" />
+            <block wx:else>支付检测</block>
+        </view>
+
+        <view wx:elif="{{detail.orderStatus == 2}}" class=' button button-red f-c-c checkbtn {{btnLoading? "button-disable": ""}} ' bindtap='{{btnLoading? "": "refundQuery"}} '>
+            <template is="bottomloading" wx:if="{{btnLoading}}" />
+            <block wx:else>退款检测</block>
+        </view>
+
+        <view wx:elif="{{detail.orderStatus == 3}}" class='button button-red f-c-c checkbtn {{btnLoading? "button-disable": ""}} ' bindtap='{{btnLoading? "": "refundAgain"}} '>
+            <template is="bottomloading" wx:if="{{btnLoading}}" />
+            <block wx:else>再次退款</block>
+        </view>
+
+        <view wx:if="{{detail.orderStatus == 'SUCCESS'}}" class='button button-red f-c-c checkbtn ' hover-class='checkbtn-hover ' bindtap='goRefund '>
+            <template is="bottomloading" wx:if="{{btnLoading}}" />
+            <block wx:else>退款</block>
+        </view>
+    </view> -->
+</view>

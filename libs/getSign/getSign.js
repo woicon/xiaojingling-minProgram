@@ -50,7 +50,7 @@ module.exports = (parmas, key) => {
     delete parmas.sign
     let loginInfo = wx.getStorageSync("login")
     let singParmas = `${parseParam(sortObj(parmas))}&key=${loginInfo.key}`
-    console.log(singParmas)
+   // console.log(singParmas)
     parmas.sign = md5(singParmas)
     return parmas
 }

@@ -6,6 +6,7 @@
         "pages/index/index",
         "pages/pos/pos",
         "pages/reportDate/reportDate",
+        "pages/orderDetail/orderDetail",
         "pages/login/login",
         "pages/orderSing/orderSing"
     ],
@@ -30,7 +31,7 @@
             },
             {
                 "pagePath": "pages/order/order",
-                "text": "收款账单",
+                "text": "交易流水",
                 "iconPath": "assets/images/order.png",
                 "selectedIconPath": "assets/images/order-sel.png"
             },

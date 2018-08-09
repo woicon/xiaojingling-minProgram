@@ -33,7 +33,7 @@
 }
 
 .logo-img image {
-    height: 200rpx;
+    height: 190rpx;
 }
 
 .login>view:after {

@@ -11,7 +11,7 @@
     <view class="r-detail" wx:if="{{currIndex == index}}">
         <view class='s-item'>
             <view class='s-title'>微信实收/笔</view>
-            <view class='s-num'>{{item.wechatTradeAmt}}/{{item.wxRefundNum}}</view>
+            <view class='s-num'>{{item.wechatTradeAmt}}/{{item.wechatTradeCnt}}</view>
         </view>
         <view class='s-item'>
             <view class='s-title'>支付宝实收/笔</view>

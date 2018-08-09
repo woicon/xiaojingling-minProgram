@@ -17,23 +17,19 @@ Page({
             reportDate: new Date().Format('yyyyMMdd'),
             taday: base.formatDate(nowDate, 'yyyy-MM-dd'),
             yestaday: base.formatDate(nowDate.getTime() - base.dayValue, 'yyyy-MM-dd'),
-            reportDateFormat: new Date().Format('yyyy-MM-dd')
+            reportDateFormat: new Date().Format('yyyy-MM-dd'),
+            role: app.commonParmas('role')
         })
     },
-    reportParmas(searchDate) {
-        return {
-            beginDate: searchDate,
-            endDate: searchDate
+    reportParmas(date) {
+        return this.data.searchDate ? this.data.searchDate : {
+            beginDate: date,
+            endDate: date
         }
     },
-    getReport(reportDate,role) {
+    getReport(reportDate, role) {
         let login = wx.getStorageSync("login")
-        let parmas
-        if(this.data.searchDate){
-            parmas = this.data.searchDate
-        }else{
-            parmas = this.reportParmas(reportDate)
-        }
+        let parmas = this.reportParmas(reportDate)
         this.setData({
             srcollLoading: true
         })
@@ -41,7 +37,7 @@ Page({
         let roles = role || app.commonParmas('role')
         switch (roles) {
             case 0:
-                console.log("总部")
+                console.log("总部:::::")
                 //获取门店
                 let report = [api.trade(parmas), api.tradeMerchant(parmas), api.merchantList({})]
                 Promise.all(report).then(res => {
@@ -61,42 +57,54 @@ Page({
                 })
                 break
             case 1:
-                console.log("门店报表")
+                console.log("门店角色:::::")
                 parmas.merchantCode = app.commonParmas('merchantCode')
                 Promise.all([api.trade(parmas), api.tradeOperator(parmas)]).then(res => {
                     console.log(res)
+                    if (res[1].code != 'FAILED') {
+                        var cashier = res[1]
+                    }
+                    if (res[0].code != 'FAILED') {
+                        var trade = res[0].statistics
+                    }
                     this.setData({
                         isPageLoad: false,
-                        trade: res[0].statistics,
-                        cashier: res[1].statisticsList,
+                        trade: trade,
+                        cashier: cashier,
                         srcollLoading: false,
                         department: null
                     })
                 })
                 break
             case 2:
-                console.log("门店报表")
+                console.log("员工角色:::::::")
                 parmas.merchantCode = app.commonParmas('merchantCode')
-                Promise.all([api.tradeOperator(parmas)]).then(res => {
-                    console.log(res)
+                parmas.operatorId = app.commonParmas('operatorId')
+                api.tradeOperator(parmas).then(res => {
                     this.setData({
                         isPageLoad: false,
-                        cashier: res[1].statisticsList,
+                        cashier: res,
                         srcollLoading: false,
-                       
                     })
                 })
                 break
             case 3:
-                console.log("门店报表")
+                console.log("店长角色:::::")
                 parmas.merchantCode = app.commonParmas('merchantCode')
                 Promise.all([api.trade(parmas), api.tradeOperator(parmas)]).then(res => {
                     console.log(res)
+                    if (res[1].code != 'FAILED') {
+                        var cashier = res[1]
+                    }
+                    if (res[0].code != 'FAILED') {
+                        var trade = res[0].statistics
+                    }
                     this.setData({
                         isPageLoad: false,
-                        trade: res[0].statistics,
-                        cashier: res[1].statisticsList,
-                        srcollLoading: false
+                        trade: trade,
+                        cashier: cashier,
+                        srcollLoading: false,
+                        department: null
                     })
                 })
                 break
@@ -133,7 +141,6 @@ Page({
             this.getReport(reportDate)
             this.nextView(activeDate)
         }
-
         this.setData({
             reportDate: reportDate,
             reportDateFormat: reportDateFormat
@@ -153,7 +160,7 @@ Page({
         if (disNext) {
             reportTab = 1
         }
-       // console.log(new Date(nowTime - dayValue).Format('yyyy-MM-dd') + "<><><" + new Date(csTime).Format('yyyy-MM-dd'))
+        // console.log(new Date(nowTime - dayValue).Format('yyyy-MM-dd') + "<><><" + new Date(csTime).Format('yyyy-MM-dd'))
         this.setData({
             disNext: disNext,
             reportTab: reportTab
@@ -165,10 +172,9 @@ Page({
         let reportDate = this.data.reportDateFormat
         switch (event.index) {
             case 0:
-         
                 that.setData({
                     reportDateFormat: that.data.yestaday,
-                    reportDate: base.formatDate(that.data.yestaday,'yyyyMMdd'),
+                    reportDate: base.formatDate(that.data.yestaday, 'yyyyMMdd'),
                     searchDates: null,
                     searchDate: null,
                     disPrv: false,
@@ -177,7 +183,6 @@ Page({
                 that.getReport(base.formatDate(that.data.yestaday, 'yyyyMMdd'))
                 break
             case 1:
-                
                 that.setData({
                     reportDateFormat: that.data.taday,
                     reportDate: base.formatDate(that.data.taday, 'yyyyMMdd'),
@@ -213,14 +218,17 @@ Page({
                 })
             })
     },
+    moreCashier() {
+
+    },
     storeChange: function(e) {
         console.log(e)
-        if(e.detail.value == 0){
+        if (e.detail.value == 0) {
             this.getReport(this.data.reportDate)
             wx.setNavigationBarTitle({
                 title: app.commonParmas("merchantName"),
             })
-        }else{
+        } else {
             let parmas = this.data.searchDate || this.reportParmas(this.data.reportDate)
             parmas.merchantCode = this.data.store[e.detail.value].merchantCode
             this.getReport(this.data.reportDate, 1)
