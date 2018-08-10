@@ -1,7 +1,7 @@
 
 .r {
     background: #fff;
-    padding: 30rpx 0 10rpx;
+    padding:0 0;
 }
 
 .r-head {
@@ -16,7 +16,6 @@
     display: flex;
     align-items: center;
     font-size: 24rpx;
-    color: #fff;
     padding: 30rpx 20rpx;
 }
 
@@ -43,7 +42,7 @@
 
 .report-head {
     height: 180rpx;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
     position: absolute;
     left: 0;
     top: 0;
@@ -52,11 +51,11 @@
 }
 
 .r-head>view:first-child {
-    background: #ff6d50;
+    /* background: #ff6d50; */
 }
 
 .r-head>view:last-child {
-    background: #658ccf;
+   /*  background: #658ccf; */
 }
 
 .r-head>view view view {
@@ -98,7 +97,7 @@
 }
 
 .datevalue {
-    font-size: 28rpx;
+    font-size:32rpx;
     color: #555;
     position: absolute;
     left: 0;
@@ -107,6 +106,10 @@
     bottom: 0;
     text-align: center;
     z-index: 0;
+    padding:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
 .datebar .next {
@@ -116,15 +119,15 @@
 .r-grid {
     overflow: hidden;
     background: #fff;
-    margin: 20rpx 30rpx;
+    margin: 0 0;
     display: flex;
     flex-wrap: wrap;
 }
 
 .r-grid .ico {
     font-size: 46rpx;
-    margin-right: 20rpx;
-    margin-left: 20rpx;
+    margin-right:30rpx;
+    margin-left:30rpx;
 }
 
 .r-grid .value {
@@ -139,16 +142,16 @@
     align-items: center;
     width: 50%;
     font-size: 24rpx;
-    padding: 24rpx 0;
+    padding:30rpx 0;
     color: #777;
 }
 
 .r-title {
     padding: 0 20rpx;
     font-size: 28rpx;
-    color: #0ec695;
+    color: #35B253;
     margin: 50rpx 0 20rpx;
-    border-left: 20rpx solid #0ec695;
+    /* border-left: 20rpx solid #35B253; */
     line-height: 28rpx;
     font-weight: 800;
 }
@@ -217,7 +220,7 @@
 /*//member*/
 
 .m-head {
-    background: #0ec695;
+    background: #35B253;
     display: flex;
     align-items: center;
     padding: 60rpx 40rpx;

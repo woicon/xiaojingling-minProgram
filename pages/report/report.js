@@ -13,6 +13,9 @@ Page({
     onLoad: function(options) {
         app.checkLogin()
         const nowDate = new Date()
+        wx.setNavigationBarTitle({
+            title: '收款报表',
+        })
         this.setData({
             reportDate: new Date().Format('yyyyMMdd'),
             taday: base.formatDate(nowDate, 'yyyy-MM-dd'),

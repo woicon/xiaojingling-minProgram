@@ -165,7 +165,7 @@
 .rmk-text textarea{
     min-height:120rpx;
     height:120rpx;
-    padding:20rpx 0;
+    padding:0 0;
     font-size:28rpx;
     width:100%;
     line-height:1.8;
@@ -176,6 +176,7 @@
     align-items: center;
     justify-content: flex-end;
     padding:15rpx 0;
+    width:300rpx;
 }
 
 .mrk-warp {

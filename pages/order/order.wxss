@@ -140,14 +140,13 @@
     text-overflow: ellipsis;
 }
 
-.o-type text {
-    font-size: 22rpx;
-    display: block;
-}
-
 .o-no {
     font-size: 24rpx;
     width: 100%;
+    height:80rpx;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
     color: #444;
 }
 
@@ -155,6 +154,10 @@
     width: 150rpx;
     font-size: 24rpx;
     text-align: right;
+        height:80rpx;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
 }
 
 .o-btns {
@@ -168,15 +171,13 @@
 }
 
 .o-amt {
-    font-size:30rpx;
+    font-size:32rpx;
     color: #ff541b;
-    margin-bottom: 14rpx;
     font-weight: 800;
 }
 
 .o-date {
     color: #444;
-    margin-bottom: 10rpx;
     font-size: 26rpx;
 }
 
@@ -325,11 +326,10 @@
 
 .o-type .ico {
     color: #fff;
-    font-size: 64rpx;
+    font-size: 66rpx;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 4rpx;
 }
 
 .o-type .ico:before {

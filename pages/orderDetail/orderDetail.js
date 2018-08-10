@@ -14,15 +14,18 @@ Page({
             'PAYERROR': '失败'
         },
         orderStatusSel: ['全部支付状态', '未支付', '已完成', '已退款', '已关闭', '已撤销'],
-        payTypeSel: ['全部支付方式', '微信', '支付宝 ', '会员'],
+        payTypeSel: ['全部支付方式', '微信', '支付宝', '会员'],
         payType: {
             WXPAY: '微信',
-            ALIPAY: '支付宝 ',
+            ALIPAY: '支付宝',
             MPAY: '会员'
         }
     },
 
     onLoad(options) {
+        wx.setNavigationBarTitle({
+            title: '订单详情',
+        })
         this.setData({
             checkParmas: options,
             detail: wx.getStorageSync("orderDetail"),

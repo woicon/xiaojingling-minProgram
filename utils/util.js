@@ -39,10 +39,19 @@ function strDateFormat(str) {
 function formatDate(dates, types) {
     return new Date(dates || '').Format(types)
 }
+//随机获取五位数
+function randomNum(num) {
+    let rand = [];
+    for (let i = 0; i <= num; i++) {
+        rand.push(Math.floor(Math.random() * 10))
+    }
+    return rand.join('')
+}
 module.exports = {
     formatTime: formatTime,
     formatDate: formatDate,
     dayValue: 24 * 60 * 60 * 1000,
     startDate: startDate,
-    strDateFormat: strDateFormat
+    strDateFormat: strDateFormat,
+    randomNum: randomNum
 }

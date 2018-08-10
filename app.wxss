@@ -330,7 +330,7 @@ page {
 }
 
 .footbar .active {
-    color: #0ec695;
+    color: #35B253;
 }
 
 .pxview {
@@ -343,7 +343,7 @@ page {
     text-align: center;
     font-size: 32rpx;
     margin: 30rpx 0;
-    background: #0ec695;
+    background: #35B253;
     color: #fff;
     padding: 0 0;
     height: 88rpx;
@@ -430,10 +430,10 @@ page {
 .tab>view {
     display: inline-block;
     padding: 0 44rpx;
-    border: 1px solid #0ec695;
+    border: 1px solid #35B253;
     margin-left: -1rpx;
     font-size: 28rpx;
-    color: #0ec695;
+    color: #35B253;
     line-height: 54rpx;
 }
 
@@ -446,7 +446,7 @@ page {
 }
 
 .tab .active {
-    background: #0ec695;
+    background: #35B253;
     color: #fff;
 }
 
@@ -639,18 +639,22 @@ page {
     text-align: center;
     border: 1px solid #ccc;
     position: absolute;
-    left: -3px;
-    right: -3px;
+    left: -4px;
+    right: -4px;
     top: 50%;
-    line-height: 36rpx;
-    height: 38rpx;
-    margin-top: -19rpx;
-    background: #fff;
+    height:44rpx;
+    margin-top: -22rpx;
+    background: #fafafa;
     border-radius: 3px;
     z-index: 2;
     font-weight: 700;
     color: #ccc;
     transform: rotate(-45deg);
+    box-sizing:border-box;
+    font-size:25rpx;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
 .typeico:after {
@@ -717,18 +721,21 @@ page {
 .o-search-show {
     display: flex;
 }
-.mask{
-    position:fixed;
-    left:0;
-    right:0;
-    bottom:0;
-    top:0;
-    background:rgba(0, 0, 0, .6);
-    display:none;
+
+.mask {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: none;
 }
-.mask.show{
-    display:block;
+
+.mask.show {
+    display: block;
 }
+
 .o-search .ico {
     color: #666;
 }
@@ -769,7 +776,7 @@ page {
 }
 
 .o-summary {
-    background: #0ec695;
+    background:#35B253;
     color: rgba(255, 255, 255, 0.7);
     display: flex;
     font-size: 23rpx;
@@ -790,5 +797,5 @@ page {
 }
 
 .o-summary>view::after {
-    border-color: rgba(255, 255, 255, 0.2);
+    border-right: 1px solid rgba(255, 255, 255, 0.5) !important;
 }

@@ -7,8 +7,9 @@ Page({
         mrkList: ["撤销重新下单", "商品不合格"],
         mrkToggle: [false, false],
         mrk: false,
-        markNum:0,
+        markNum: 0,
         savePwd: false,
+        diableTextarea: false,
         orderStatus: {
             'NOTPAY': '未支付',
             'SUCCESS': '已完成 ',
@@ -25,37 +26,14 @@ Page({
             MPAY: '会员'
         }
     },
-    onLoad: function(options) {
-        try {
-            let detail = wx.getStorageSync("refundDetail")
-            let refKey = wx.getStorageSync("refKey")
-            let userType = wx.getStorageSync("userType")
-            const preAmt = detail.realAmt
-            let data = {
-                preAmt: preAmt,
-                detail: detail,
-                userType: userType
-            }
-            if (userType == 1 || userType == 4) {
-                data.refKey = {}
-                //data.savePwd = true
-                data.refKey.managerLoginName = app.member("loginName")
-            }
-            if (refKey) {
-                data.refKey = refKey
-                data.savePwd = true
-            }
-            this.setData(data)
-        } catch (error) {
-
-        }
-    },
-    togglePwd: function() {
+    onLoad: function (options) {
         this.setData({
-            savePwd: !this.data.savePwd
+            detail: wx.getStorageSync("refundDetail"),
+            role: app.commonParmas("role")
         })
     },
-    refInput: function(e) {
+
+    refInput: function (e) {
         console.log(e)
         console.log(e)
         let total = this.data.refAmt
@@ -71,31 +49,71 @@ Page({
             refAmt: newTotal
         })
     },
-    refundAll: function() {
+    refundAll: function () {
         this.setData({
             refAmt: this.data.detail.receiptAmount
         })
     },
-    goRefund: function(e) {
+    goRefund(e) {
+        let that = this
+        let nowDate = new Date()
+        wx.showModal({
+            title: "确定是否退款吗？",
+            content: `退款金额${that.data.refAmt}元`,
+            success (res) {
+                if (res.confirm) {
+                    that.refundReq()
+                } else if (res.cancel) {
+                    wx.showToast({
+                        title: '退款取消',
+                        icon: 'none'
+                    })
+                }
+            }
+        })
+    },
+    refundReq() {
         if (this.data.refAmt) {
+            let detail = this.data.detail
             let refAmt = this.data.refAmt
-            if (Number(refAmt).toFixed(2) > Number(this.data.detail.receiptAmount).toFixed(2)) {
+            if (Number(refAmt).toFixed(2) > Number(detail.receiptAmount).toFixed(2)) {
                 wx.showToast({
                     title: '退款金额不能大于订单实收金额',
                     icon: 'none'
                 })
             } else {
-                // this.setData({
-                //     checkMa: true
-                // })
+                let nowDate = new Date()
                 let parmas = {
-                    refundNo: this.data.detail.outTradeNo,//	[string]	是	退款请求单号	
-                    refundAmount: this.data.refAmt, //	[double]	是	退款金额
-                    merchantCode: this.data.detail.merchantCode, //
+                    refundNo:`${nowDate.Format("yyyyMMddhhmmss")}${nowDate.getTime()}${base.randomNum(4)}`,
+                    refundAmount: this.data.refAmt,
+                    merchantCode: detail.merchantCode
+                }
+                if (detail.outTradeNo) {
+                    parmas.outTradeNo = detail.outTradeNo
+                } else if (detail.outTransactionId) {
+                    parmas.outTransactionId = detail.outTransactionId
+                }
+                //退款原因
+                if (this.data.refundReason && this.data.refundReason.length > 0) {
+                    parmas.refundReason = this.data.refundReason
                 }
                 api.refund(parmas)
                     .then(res => {
                         console.log(res)
+                        wx.showModal({
+                            title: res.msg || res.subMsg,
+                            content: res.subMsg || res.msg,
+                            showCancel:false,
+                            success(data){
+                                if ((data.confirm)){
+                                    if (res.code == "SUCCESS"){
+                                        wx.switchTab({
+                                            url: '/pages/order/order',
+                                        })
+                                    }
+                                }
+                            }
+                        })
                     })
             }
         } else {
@@ -105,122 +123,13 @@ Page({
             })
         }
     },
-    hideMa: function(e) {
+    hideMa: function (e) {
         console.log(e)
         this.setData({
             checkMa: false
         })
     },
-    refundReq: function(e) {
-        console.log(e)
-        let value = e.detail.value
-        if (value.managerLoginName == '' || value.managerPassword == '') {
-            wx.showToast({
-                title: '请输入店长管理员账号密码',
-                icon: 'none'
-            })
-        } else {
-            console.log(this.data.refAmt)
-            wx.showLoading({
-                title: '退款中',
-                mask: true
-            })
-            this.setData({
-                checkMa: false
-            })
-            let detail = this.data.detail
-            let refParmas = {
-                cashierNo: detail.cashierNo,
-                orderNo: this.data.detail.orderNo,
-                codeName: app.member("codeName"),
-                departmentNo: app.member("departmentNo"),
-                cashierCn: detail.cashierName,
-                refundAmt: Number(this.data.refAmt)
-            }
-            if (this.data.selMrk) {
-                refParmas.refundRmk = this.data.selMrk
-            }
-            const parmas = Object.assign(refParmas, e.detail.value)
-            api.refund(parmas)
-                .then(res => {
-                    wx.hideLoading()
-                    console.log("::REFUND::", res)
-                    let userType = wx.getStorageSync("userType")
-                    if (this.data.savePwd) {
-                        wx.setStorageSync('refKey', e.detail.value)
-                        let refKey = {}
-
-                        if (wx.getStorageSync("refKey")) {
-                            refKey = e.detail.value
-                        }
-                        this.setData({
-                            refKey: refKey,
-                            savePwd: true
-                        })
-                    } else {
-                        //wx.removeStorage("refKey")
-                        wx.removeStorageSync("refKey")
-                        let refKey = {}
-                        if (userType == 1 || userType == 4) {
-                            refKey.managerLoginName = app.member("loginName")
-                        }
-                        this.setData({
-                            refKey: refKey
-                        })
-                    }
-                    let nowDate = new Date().Format("yyyy-MM-dd hh:mm:ss")
-                    let data = res.data
-                    if (data.isSuccess == 'F') {
-                        wx.showModal({
-                            title: data.internalMsg,
-                            content: data.message,
-                            showCancel: false,
-                        })
-                    } else if (data.isSuccess == 'S') {
-                        wx.showModal({
-                            title: "提示",
-                            content: data.internalMsg,
-                            showCancel: false,
-                            success: (res) => {
-                                if (res.confirm) {
-                                    wx.setStorageSync("refDate", nowDate)
-                                    let detail = wx.getStorageSync("refundDetail")
-
-                                    detail.refundAmt = Number(-this.data.refAmt)
-                                    //detail.
-                                    if (this.data.selMrk) {
-                                        detail.refundRmk = this.data.selMrk
-                                    }
-                                    detail.gmtRefunded = nowDate
-                                    wx.setStorageSync("refundDetail", detail)
-                                    if (data.code == '000202') {
-                                        wx.redirectTo({
-                                            url: '/pages/orderDetail/orderDetail?isRef=true' //退款成功
-                                        })
-                                    } else if (data.code == '000203') {
-                                        wx.redirectTo({
-                                            url: '/pages/orderDetail/orderDetail?isRef=true&refundStatus=2' //检测
-                                        })
-                                    } else if (data.code == '000204') {
-                                        wx.redirectTo({
-                                            url: '/pages/orderDetail/orderDetail?isRef=true&refundStatus=3' //再次退款
-                                        })
-                                    }
-                                }
-                            }
-                        })
-                    }
-                })
-        }
-    },
-
-    refundApproval: function(parmas) {
-        api.refundApproval(pramas)
-            .then(res => {
-
-            })
-    },
-    selMrk: function(e) {
+    selMrk: function (e) {
         let mrkToggle = this.data.mrkToggle
         let mrkList = this.data.mrkList
         mrkToggle[e.target.dataset.index] = !mrkToggle[e.target.dataset.index]
@@ -236,63 +145,62 @@ Page({
             selMrk: mrks
         })
     },
-    mrkSubmit: function() {
+    mrkSubmit: function () {
         this.setData({
             mrk: false
         })
     },
-    selectMrk: function() {
+    selectMrk() {
         this.setData({
             mrk: !this.data.mrk
         })
     },
-    addMrk: function(e) {
-        if (this.data.newMrk.length != 0) {
-            let mrkList = this.data.mrkList
-            let mrkToggle = this.data.mrkToggle
-            mrkToggle[mrkToggle.length] = false
-            mrkList.push(this.data.newMrk)
-            this.setData({
-                mrkList: mrkList,
-                newMrk: '',
-                mrkToggle: mrkToggle
-            })
-
-        }
-    },
-    mrkInput: function(e) {
-        let markNum = e.detail.value.length
-        let diableTextarea =(markNum  <= 50) ? true:false
+    mrkOk() {
         this.setData({
-            mark: e.detail.value,
-            markNum:e.detail.value.length,
-            diableTextarea: diableTextarea
+            mrk: false
         })
     },
-    onReady: function() {
+    mrkInput(e) {
+        let markNum = e.detail.value.length
+        if (markNum <= 50) {
+            this.setData({
+                refundReason: e.detail.value,
+                markNum: e.detail.value.length
+            })
+        } else {
+            wx.showToast({
+                title: '不超过50',
+                icon: "none"
+            })
+            this.setData({
+                diableTextarea: true
+            })
+        }
+    },
+    onReady() {
         wx.setNavigationBarTitle({
             title: '退款',
         })
     },
-    onShow: function() {
+    onShow: function () {
 
     },
 
-    onHide: function() {},
+    onHide: function () { },
 
-    onUnload: function() {
-
-    },
-
-    onPullDownRefresh: function() {
+    onUnload: function () {
 
     },
 
-    onReachBottom: function() {
+    onPullDownRefresh: function () {
 
     },
 
-    onShareAppMessage: function() {
+    onReachBottom: function () {
+
+    },
+
+    onShareAppMessage: function () {
 
     }
 })

@@ -74,17 +74,17 @@
                                 <block wx:elif="{{item.payType == 'MPAY'}}">
                                     <view class='ico vip icon-vip'></view>
                                 </block>
-                                <view class='o-names'>{{payType[item.payType]}}</view>
+                                <!-- <view class='o-names'>{{payType[item.payType]}}</view> -->
                             </block>
                             <block wx:else>
                                 <view class='typeico'>
                                     <text>{{orderStatus[item.orderStatus]}}</text>
                                 </view>
-                                <view class='o-names dis'>{{orderStatus[item.orderStatus]}}</view>
+                                <!-- <view class='o-names dis'>{{orderStatus[item.orderStatus]}}</view> -->
                             </block>
                         </view>
                         <view class='o-no'>
-                            <view class='o-date'>{{item.payTime}}</view>
+                            <view class='o-date'>{{item.payTime || '交易金额：¥'+item.totalAmount}}</view>
                             <view class='o-line'>{{item.outTradeNo}}</view>
                         </view>
                         <view class='o-price'>

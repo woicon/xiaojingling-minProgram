@@ -13,7 +13,7 @@
     ],
     "window": {
         "backgroundTextStyle": "light",
-        "navigationBarBackgroundColor": "#0ec695",
+        "navigationBarBackgroundColor": "#35B253",
         "navigationBarTitleText": "收款搭档",
         "navigationBarTextStyle": "white",
         "backgroundColor": "#fafafa"
@@ -21,7 +21,7 @@
     "tabBar": {
         "backgroundColor": "#ffffff",
         "borderStyle": "white",
-        "selectedColor": "#0ec695",
+        "selectedColor": "#35B253",
         "color": "#979797",
         "list": [
             {

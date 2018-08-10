@@ -31,7 +31,7 @@ Page({
     onLoad: function(options) {
         app.checkLogin()
         wx.setNavigationBarTitle({
-            title: '订单记录',
+            title: '交易流水',
         })
     },
 
@@ -88,6 +88,9 @@ Page({
             billEndTime: base.startDate(0, 'yyyyMMddhhmmss'), //new Date().Format('yyyyMMddhhmmss'),
             billBeginTime: base.startDate(15, 'yyyyMMddhhmmss'),
             merchantCode: this.data.merchantCode
+        }
+        if (this.data.searchParmas){
+            parmas = Object.assign(parmas,this.data.searchParmas)
         }
         if (this.data.role == 1) {
             parmas.operatorId = app.commonParmas("operatorId")
@@ -173,7 +176,8 @@ Page({
     },
     orderStatus(e) {
         this.setData({
-            [e.target.id]: e.detail.value
+            [e.target.id]: e.detail.value,
+            orderIsBottm:false,
         })
         let billParmas = this.billParmas()
 
@@ -223,6 +227,9 @@ Page({
     },
     //订单搜索
     searchOrder(e) {
+        this.setData({
+            orderIsBottm: false
+        })
         if (e.detail.value != '') {
             let billParmas = this.billParmas()
             billParmas.outTradeNo = e.detail.value
@@ -251,10 +258,7 @@ Page({
     onReady: function() {
 
     },
-    getOrder: function() {
-
-    },
-    onShow: function() {
+    onShow() {
         let role = app.commonParmas("role")
         this.setData({
             role: app.commonParmas('role'),

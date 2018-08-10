@@ -8,7 +8,7 @@
         <view class='tab'>
             <view wx:for="{{['昨日','今日','其他']}}" bindtap='toggleReport' wx:key="reportTab" class='{{reportTab == index ? "active":""}}' data-index="{{index}}">{{item}}</view>
         </view>
-        <view class='datebar' bindtap='stepDate'>
+        <view class='datebar bline' bindtap='stepDate'>
             <view wx:if="{{!disPrv}}" class='ico prev' id='prev'></view>
             <view class='datevalue'> {{searchDates || reportDateFormat}} </view>
             <view wx:if="{{!disNext}}" class='ico next' id="next"></view>
@@ -29,22 +29,7 @@
         </block>
         <block wx:else>
             <block wx:if="{{role!= 2}}">
-                <view class='r'>
-                    <view class='r-head'>
-                        <view>
-                            <view class='ico icon-money'></view>
-                            <view>订单金额/笔
-                                <view>{{trade.totalOrderAmt}}/{{trade.totalOrderCnt}}</view>
-                            </view>
-                        </view>
-                        <view>
-                            <view class='ico icon-moneys'></view>
-                            <view>实收金额/笔
-                                <view>{{trade.totalTradeAmt}}/{{trade.totalTradeCnt}}</view>
-                            </view>
-                        </view>
-                    </view>
-
+                <view class='r bline'>
                     <view class='r-grid'>
                         <!-- <view class='bline'>
                             <view class='ico icon-iorders'></view>
@@ -52,6 +37,18 @@
                                 <view class='value'>{{trade.totalOrderCnt}}</view>
                             </view>
                         </view> -->
+                          <view class='bline'>
+                            <view class='ico icon-money'></view>
+                            <view>订单金额/笔
+                                <view class='value'>{{trade.totalOrderAmt}}/{{trade.totalOrderCnt}}</view>
+                            </view>
+                        </view>
+                        <view class='bline lline'>
+                            <view class='ico icon-moneys'></view>
+                            <view>实收金额/笔
+                                <view class='value'>{{trade.totalTradeAmt}}/{{trade.totalTradeCnt}}</view>
+                            </view>
+                        </view>
                         <view class='bline'>
                             <view class='ico icon-refund'></view>
                             <view>退款金额(元)/笔

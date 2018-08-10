@@ -41,28 +41,11 @@ Page({
             n = n.toString()
             return n[1] ? n : '0' + n
         }
-        // let dates = obj.dateTimeArray[2]
-        // console.log(dates)
-        // let nowMonth = formatNumber(now.getMonth() + 1)
-        // console.log(nowMonth)
-        // let nowYear = now.getFullYear()
-        // let newYear = dates.map(n => {
-        //     return `${nowYear}-${nowMonth}-${n}`
-        // })
-
         let st = new Date(now.getTime() - 1000 * 60 * 60 * 24).Format('yyyy-MM-dd')
         let et = new Date().Format('yyyy-MM-dd')
-
         let newYear = [st, et]
-        // console.log(newYear, ":::", st, ":::", et)
-        // newYear.splice(et, 100)
-        // console.log(newYear)
-        // newYear.splice(0, st - 1)
-        //console.log(newYear)
-        // console.log(obj.dateTimeArray)
         obj.dateTimeArray.splice(0, 3, newYear)
-        // console.log(obj.dateTimeArray)
-        // console.log(obj.dateTime)
+
         let points = obj.dateTimeArray[1]
         let seconds = obj.dateTimeArray[2]
         let dateTimeArray = obj.dateTimeArray

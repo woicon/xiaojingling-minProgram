@@ -9,7 +9,7 @@
         </view>
         <view class='m-info'>
             <view class='m-name'>{{member.merchantName}}</view>
-            <view class="m-ts">账号：{{member.operatorName}} </view>
+            <view class="m-ts">账号：{{member.operatorName}}</view>
         </view>
     </view>
     <view class='m-list'>
@@ -37,7 +37,7 @@
         <view class='phones' hover-class='nav-touch'>
             <view class='ico icon-about'></view>
             <view class='m-name'>关于</view>
-            <text>{{version}}</text>
+            <text>{{version||'0.0.1'}}</text>
         </view>
         <view class='exit' bindtap='exitSys' hover-class='nav-touch'>
             <view class='ico icon-exit'></view>

@@ -1,4 +1,5 @@
 const sign = require('../libs/getSign/getSign.js')
+const base = require('../utils/util.js')
 const app = getApp()
 const API = "https://api.liantuofu.com/open/" //正式环境
 //const API = "http://intshop.51ebill.com/open/"  //灰度环境
@@ -9,7 +10,7 @@ function ajax(url, parmas, signs, method) {
         let loginInfo = wx.getStorageSync("login")
         let commonParmas = {
             appId: loginInfo.appId,
-            random: randomNum(4),
+            random: base.randomNum(4),
             //key: loginInfo.key
             // merchantCode: loginInfo.merchantCode
         }
@@ -55,14 +56,7 @@ function ajax(url, parmas, signs, method) {
         })
     })
 }
-//随机获取五位数
-function randomNum(num) {
-    let rand = [];
-    for (let i = 0; i <= num; i++) {
-        rand.push(Math.floor(Math.random() * 10))
-    }
-    return rand.join('')
-}
+
 module.exports = {
     //登录
     login: parmas => ajax('login', parmas, true, "GET", ),
@@ -81,5 +75,5 @@ module.exports = {
     //门店查询 /merchant/list
     merchantList: parmas => ajax('merchant/list', parmas),
     //订单退款
-    refund: parmas => ajax('refund/', parmas)
+    refund: parmas => ajax('refund', parmas)
 }

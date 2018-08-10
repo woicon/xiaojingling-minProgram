@@ -23,12 +23,16 @@
     justify-content:space-between;
     padding:32rpx 0;
 }
-.d-no{
-
+.d-list>view:last-child::before{
+    border:none;
+}
+.value.d-no{
     overflow:hidden;
     text-align:right;
     display: flex;
     align-items:center;
+    color:#888;
+    margin-top:8rpx;
 }
 .d-no text{
     width:420rpx;
@@ -79,9 +83,12 @@
 .value{
     color:#333;
     font-size:27rpx;
-    flex-shrink:0;
-    width:540rpx;   
+    flex-shrink:0; 
     text-align:right;
+}
+.value.price{
+    display:block;
+    
 }
 .ico{
     margin-right:8rpx;
@@ -106,6 +113,7 @@
 
 .button-group{
     margin:0 50rpx;
+    padding-bottom:200rpx;
 }
 
 .checkbtn{

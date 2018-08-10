@@ -118,7 +118,8 @@ Page({
     orderStatus(e) {
         console.log(e)
         this.setData({
-            [e.target.id]: e.detail.value
+            [e.target.id]: e.detail.value,
+            orderIsBottm: false
         })
         let billParmas = this.billParmas()
 
@@ -168,6 +169,9 @@ Page({
     },
     //订单搜索
     searchOrder(e) {
+        this.setData({
+            orderIsBottm:false
+        })
         if (e.detail.value != '') {
             let billParmas = this.billParmas()
             billParmas.outTradeNo = e.detail.value
