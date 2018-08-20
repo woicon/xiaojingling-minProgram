@@ -3,16 +3,32 @@
     <button open-type='getUserInfo' bindgetuserinfo='getUserInfo'>确认授权</button>
 </view>
 <block wx:else>
-    <view class='m-head'>
-        <view class='m-img'>
-            <image src='{{userInfo.avatarUrl}}'></image>
+    <view class='m-head-warp'>
+        <view class='m-head'>
+            <view class='m-img'>
+                <image src='{{userInfo.avatarUrl}}'></image>
+            </view>
+            <view class='m-info' bindtap='clipNo' data-id="{{member.merchantCode}}">
+                <view class='m-name'>{{member.merchantName}}</view>
+                <view class="m-ts">编号：{{member.merchantCode}} </view>
+                <!-- <text>复制</text> -->
+            </view>
         </view>
-        <view class='m-info'>
-            <view class='m-name'>{{member.merchantName}}</view>
-            <view class="m-ts">账号：{{member.operatorName}}</view>
+
+        <view class='b' wx:if="{{bag}}">
+            <view class='banks'>
+                <view>我的钱包</view>
+                <view class='banks-text'>{{bag[0].accountHolder}} {{bag[0].bankName}} 尾号 {{bag[0].endNum}}</view>
+            </view>
+            <view class='button' hover-class='button-touch' catchtap='getKsUrl'>提现</view>
         </view>
     </view>
     <view class='m-list'>
+        <navigator url='/pages/setAudio/setAudio' hover-class='nav-touch' wx:if="{{member.role!=0}}">
+            <view class='ico icon-setting'></view>
+            <view class='m-name'>云喇叭设置</view>
+        </navigator>
+
         <!-- <view bindtap='toAgent' hover-class='nav-touch'>
             <view class='ico icon-myservices'></view>
             <view class='m-name'>我的服务商</view>
@@ -34,6 +50,7 @@
             <view class='ico icon-setting'></view>
             <view class='m-name'>桌码设置</view>
         </navigator> -->
+
         <view class='phones' hover-class='nav-touch'>
             <view class='ico icon-about'></view>
             <view class='m-name'>关于</view>

@@ -9,6 +9,8 @@
         "pages/orderDetail/orderDetail",
         "pages/login/login",
         "pages/orderSing/orderSing",
+        "pages/setAudio/setAudio",
+        "pages/txH5/txH5",
         "pages/refund/refund"
     ],
     "window": {

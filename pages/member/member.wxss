@@ -26,11 +26,14 @@
     border-radius: 90rpx;
 }
 
+.m-head-warp {
+    background: #35b253;
+}
+
 .m-head {
-    background: #0ec695;
+    padding: 60rpx 40rpx;
     display: flex;
     align-items: center;
-    padding: 60rpx 40rpx;
 }
 
 .m-img {
@@ -64,7 +67,7 @@
 
 .m-list>view text, .m-list>navigator text {
     color: #888;
-    margin-right:10rpx;
+    margin-right: 10rpx;
 }
 
 .m-list>view::before, .m-list>navigator::before {
@@ -114,4 +117,44 @@
 .m-ts {
     font-size: 24rpx;
     margin-top: 10rpx;
+}
+.m-ts text{
+    background: rgba(0, 0, 0, .2);
+    padding:6rpx 15rpx;
+    display:inline-block;
+    margin-left:14rpx;
+}
+.b {
+    background: rgba(0, 0, 0, 0.1);
+    padding:32rpx 60rpx;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #fff;
+}
+
+.b .ico {
+    flex-basis: 60rpx;
+    flex-shrink: 0;
+}
+
+.banks {
+    font-size: 30rpx;
+    flex-grow:2;
+}
+
+.banks-text {
+    color: #fff;
+    font-size: 23rpx;
+    margin-top: 10rpx;
+}
+
+.b .button {
+    font-size: 26rpx;
+    padding: 5rpx 30rpx;
+    height: 50rpx;
+    line-height: 50rpx;
+    background: transparent;
+    border: 1px solid #fff;
+    margin: 0;
 }

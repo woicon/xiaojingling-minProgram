@@ -2,19 +2,43 @@
 <view wx:if="{{isPageLoad}}" class='empty'>
     <template is="bottomloading" />
 </view>
-
 <block wx:elif="{{role == 0}}">
-    <view class='o-bar so-bar bline'>
-        <view>门店名称</view>
-        <view>昨日实收金额</view>
-        <view>今日实收金额</view>
-    </view>
+
     <scroll-view scroll-y class='summary-scroll' bindscrolltolower="moreSummary">
-        <view class='m-list sm-list bline'>
-            <view wx:for="{{tradeMerchant.statisticsList}}" wx:key="summary" bindtap='orderPage' class='sm-item' id="{{item.merchantCode}}" data-departmentName="{{item.merchantName}}">
-                <view class='sm-name'>{{item.merchantName}}</view>
-                <view>¥{{item.todayTradeAmt}}</view>
+        <view class='store'>
+            <view wx:for="{{tradeMerchant.statisticsList}}" wx:key="summary" bindtap='orderPage' class='store-item' hover-class='store-item-touch' id="{{item.merchantCode}}" data-departmentName="{{item.merchantName}}">
+                <!-- <view class='sm-name'>{{item.merchantName}}</view>
                 <view>¥{{item.yesterdayTradeAmt}}</view>
+                <view>¥{{item.todayTradeAmt}}</view>
+            </view> -->
+                <view class='store-name'>{{item.merchantName}}</view>
+                <view class='store-grid'>
+                    <view>
+                        <view>今日实收金额(元)</view>
+                        <view class='s-number price'>{{item.todayTradeAmt}}</view>
+                    </view>
+                    <view>
+                        <view>今日订单金额(元)</view>
+                        <view class='s-number'>{{item.todayOrderAmt}}</view>
+                    </view>
+                    <view>
+                        <view>今日订单笔数(笔)</view>
+                        <view class='s-number'>{{item.todayOrderCnt}}</view>
+                    </view>
+                    <view>
+                        <view>昨日实收金额(元)</view>
+                        <view class='s-number price'>{{item.yesterdayTradeAmt}}</view>
+                    </view>
+                    <view>
+                        <view>昨日订单金额(元)</view>
+                        <view class='s-number'>{{item.yesterdayOrderAmt}}</view>
+                    </view>
+
+                    <view>
+                        <view>昨日订单笔数(笔)</view>
+                        <view class='s-number'>{{item.yesterdayOrderCnt}}</view>
+                    </view>
+                </view>
             </view>
         </view>
         <view wx:if="{{orderIsBottm}}" class='getmore f-c-c'>
@@ -61,8 +85,14 @@
             </view>
             <block wx:else>
                 <view class='o-list' wx:if="{{bill}}">
-                    <!-- wx:if="{{item.orderStatus != 'PAYERROR'}}"-->
-                    <view class='o-item' wx:for="{{bill.orderDetails}}" bindtap='viewDetail' id="{{item.orderNo}}" wx:key="orderlist" data-detail="{{item}}">
+                    <!-- wx:if="{{item.orderStatus != 'PAYERROR'}}"  wx:if="{{item.orderStatus != 'REVOKED'}}"-->
+                    <view class='o-item' 
+                    hover-class='o-item-touch'
+                    wx:for="{{bill.orderDetails}}" 
+                    bindtap='viewDetail' 
+                    id="{{item.orderNo}}" 
+                    wx:key="orderlist" 
+                    data-detail="{{item}}">
                         <view class='o-type'>
                             <block wx:if="{{item.orderStatus == 'SUCCESS'}}">
                                 <block wx:if="{{item.payType == 'ALIPAY'}}">
@@ -83,13 +113,13 @@
                                 <!-- <view class='o-names dis'>{{orderStatus[item.orderStatus]}}</view> -->
                             </block>
                         </view>
-                        <view class='o-no'>
-                            <view class='o-date'>{{item.payTime || '交易金额：¥'+item.totalAmount}}</view>
+                        <view class='o-no {{!item.payTime ? "f-l-c" : ""}}'>
+                            <view class='o-date' wx:if="{{item.payTime}}">{{item.payTime}}</view>
                             <view class='o-line'>{{item.outTradeNo}}</view>
                         </view>
                         <view class='o-price'>
-                            <view class='o-amt' wx:if="{{item.orderStatus != 'SUCCESS'}}">¥0.00</view>
-                            <view class='o-amt' wx:else>¥{{item.receiptAmount}}</view>
+                            <!-- <view class='o-amt' wx:if="{{item.orderStatus != 'SUCCESS'}}">¥0.00</view> -->
+                            <view class='o-amt'>¥{{item.receiptAmount}}</view>
                             <view class='o-tah'>{{orderStatus[item.orderStatus]}}</view>
                         </view>
                     </view>

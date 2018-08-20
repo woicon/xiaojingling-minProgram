@@ -5,13 +5,15 @@
     color: #555;
     background: #fff;
 }
-.d-head{
+
+.d-head {
     display: flex;
-    align-items:center;
-    justify-content:space-between;
-    background:#fff;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
     padding: 50rpx 40rpx 10rpx;
 }
+
 .d-list>view {
     display: flex;
     align-items: center;
@@ -117,6 +119,11 @@
     padding: 0;
     height: 80rpx;
     line-height: 80rpx;
+    transition: 0.5s;
+}
+
+.checkbtn.disable {
+    opacity: 0.4;
 }
 
 .checkbtn .loading-bottom view {
@@ -153,30 +160,33 @@
     align-items: center;
     justify-content: space-between;
     color: #555;
-    position:relative;
-}
-.rmk-text{
-    background:#fff;
+    position: relative;
 }
 
-.rmk-text{
-    padding:0 40rpx;
+.rmk-text {
+    background: #fff;
 }
-.rmk-text textarea{
-    min-height:120rpx;
-    height:120rpx;
-    padding:0 0;
-    font-size:28rpx;
-    width:100%;
-    line-height:1.8;
-    color:#444;
+
+.rmk-text {
+    padding: 0 40rpx;
 }
+
+.rmk-text textarea {
+    min-height: 120rpx;
+    height: 120rpx;
+    padding: 0 0;
+    font-size: 28rpx;
+    width: 100%;
+    line-height: 1.8;
+    color: #444;
+}
+
 .rmk-value {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    padding:15rpx 0;
-    width:300rpx;
+    padding: 15rpx 0;
+    width: 300rpx;
 }
 
 .mrk-warp {
@@ -226,7 +236,7 @@
     align-items: center;
     justify-content: center;
     margin-left: 10rpx;
-    flex-shrink:0;
+    flex-shrink: 0;
     margin-right: 0;
 }
 
@@ -296,17 +306,15 @@
 }
 
 .rmk-title {
-    flex-shrink:0;
-    line-height:80rpx;
+    flex-shrink: 0;
+    line-height: 80rpx;
 }
 
 .rmk-value {
-
     text-align: right;
-
-    margin-right:10rpx;
-    margin-left:20rpx;
-    flex-grow:2;
+    margin-right: 10rpx;
+    margin-left: 20rpx;
+    flex-grow: 2;
 }
 
 .rmk::after {
@@ -318,7 +326,7 @@
     border-left: none;
     border-bottom: none;
     transform: rotate(45deg);
-    flex-shrink:0;
+    flex-shrink: 0;
 }
 
 .ma-title {
@@ -332,7 +340,6 @@
     display: flex;
     background: #fff;
     align-items: center;
-    
 }
 
 .ma-warp input {
@@ -359,23 +366,26 @@
     font-size: 26rpx;
     padding: 15rpx 20rpx;
     background: #eee;
-    color:#555;
-    flex-shrink:1;
-    width:150rpx;
-    text-align:center;
-    transition:.4s;
-    border-radius:2px;
+    color: #555;
+    flex-shrink: 1;
+    width: 150rpx;
+    text-align: center;
+    transition: 0.4s;
+    border-radius: 2px;
 }
-.refall-touch{
-    opacity:.5;
+
+.refall-touch {
+    opacity: 0.5;
 }
-.refamt { 
- width:400rpx;
+
+.refamt {
+    width: 400rpx;
 }
-.refamt input{
-    color:#444;
-    font-size:36rpx;
-    font-weight:700;
+
+.refamt input {
+    color: #444;
+    font-size: 36rpx;
+    font-weight: 700;
 }
 
 .button-groups .button:first-child {
@@ -430,7 +440,7 @@
     justify-content: center;
     margin-right: 12rpx;
     border-radius: 2px;
-    flex-grow:0;
+    flex-grow: 0;
 }
 
 .check-ico::after {

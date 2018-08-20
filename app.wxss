@@ -66,13 +66,11 @@ page {
 }
 
 [class^="icon-"], [class*=" icon-"] {
-    /* use !important to prevent issues with browser extensions that change fonts */
     font-family: 'member' !important;
     font-style: normal;
     font-weight: normal;
     font-variant: normal;
     text-transform: none;
-    /* Better Font Rendering =========== */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -339,15 +337,15 @@ page {
 
 .button {
     display: block;
-    border-radius: 2px;
+    border-radius: 5rpx;
     text-align: center;
     font-size: 32rpx;
-    margin: 30rpx 0;
+    margin: 30rpx 0 0;
+    padding:0 0;
+    height:78rpx;
+    line-height:78rpx;
     background: #35B253;
     color: #fff;
-    padding: 0 0;
-    height: 88rpx;
-    line-height: 88rpx;
     border: none;
 }
 
@@ -362,7 +360,7 @@ page {
 }
 
 .button-touch {
-    background: #0f9e78;
+    background: #22933D;
 }
 
 .btnbar {
@@ -382,7 +380,7 @@ page {
     width: 40%;
     padding: 26rpx 0;
     font-size: 32rpx;
-    background: #27cfb1;
+    background: #35B253;
     color: #fff;
     margin: 0 5px;
     border-radius: 4rpx;
@@ -404,7 +402,7 @@ page {
 }
 
 .button-hover {
-    background: #0dbf9e;
+    background: #22933D;
 }
 
 .button-red {
@@ -540,9 +538,13 @@ page {
 .f-c-c {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: center !important;
 }
-
+.f-l-c {
+    display: flex;
+    align-items: left;
+    justify-content: center !important;
+}
 .pageloading {
     position: fixed;
     left: 0;

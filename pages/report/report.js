@@ -61,15 +61,11 @@ Page({
                 break
             case 1:
                 console.log("门店角色:::::")
-                parmas.merchantCode = app.commonParmas('merchantCode')
+                parmas.merchantCode = wx.getStorageSync("storeCode") || app.commonParmas('merchantCode')
                 Promise.all([api.trade(parmas), api.tradeOperator(parmas)]).then(res => {
                     console.log(res)
-                    if (res[1].code != 'FAILED') {
-                        var cashier = res[1]
-                    }
-                    if (res[0].code != 'FAILED') {
-                        var trade = res[0].statistics
-                    }
+                    var cashier =  (res[1].code != 'FAILED') ? res[1] : null
+                    var trade =  (res[0].code != 'FAILED') ? res[0].statistics : null
                     this.setData({
                         isPageLoad: false,
                         trade: trade,
@@ -243,12 +239,15 @@ Page({
         console.log(e)
         if (e.detail.value == 0) {
             this.getReport(this.data.reportDate)
+            wx.removeStorageSync("storeCode")
             wx.setNavigationBarTitle({
                 title: app.commonParmas("merchantName"),
             })
         } else {
-            let parmas = this.data.searchDate || this.reportParmas(this.data.reportDate)
-            parmas.merchantCode = this.data.store[e.detail.value].merchantCode
+            //let parmas = this.data.searchDate || this.reportParmas(this.data.reportDate)
+            console.log("merchantCode::::",this.data.store[e.detail.value])
+            //parmas.merchantCode = this.data.store[e.detail.value].merchantCode
+            wx.setStorageSync("storeCode", this.data.store[e.detail.value].merchantCode)
             this.getReport(this.data.reportDate, 1)
             wx.setNavigationBarTitle({
                 title: this.data.store[e.detail.value].merchantName,

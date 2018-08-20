@@ -1,7 +1,7 @@
 var api = require('../../openApi/api.js')
 Page({
     data: {
-        login:{}
+        login: {}
     },
     onLoad: function(options) {
         wx.setNavigationBarColor({
@@ -14,19 +14,45 @@ Page({
         api.login(parmas)
             .then(res => {
                 wx.setStorageSync("login", res)
-                if(res.code == 'FAILED'){
+                if (res.code == 'FAILED') {
                     wx.showToast({
                         title: res.subMsg,
-                        icon:'none'
+                        icon: 'none'
                     })
-                } else if (res.code == 'SUCCESS'){
-                    wx.reLaunch({
-                        url: '/pages/report/report',
-                    })
+                } else if (res.code == 'SUCCESS') {
+                    this.loginSi(parmas)
+                        .then(res => {
+                            wx.reLaunch({
+                                url: '/pages/report/report',
+                            })
+                        })
                 }
             })
     },
-    clearInput (e) {
+    loginSi: function(parmas) {
+        let arg = {
+            loginName:parmas.userName,
+            password:parmas.passWord
+        }
+        return api.loginSi(arg)
+            .then((res) => {
+                console.log("::::LOGIN&SI::::", res)
+                let loginData = res
+                if (loginData.state == -1) {
+                    wx.showToast({
+                        title: loginData.obj,
+                        icon: "none"
+                    })
+                } else if (loginData.state == 1) {
+                    wx.setStorageSync("loginData", loginData.obj)
+                    wx.setStorageSync("siKey", loginData.partnerKey)
+                }
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    },
+    clearInput(e) {
         console.log(e)
         let login = this.data.login
         login[e.target.dataset.id] = ''
@@ -34,7 +60,7 @@ Page({
             login: login
         })
     },
-    loginInput (e) {
+    loginInput(e) {
         console.log(e)
         const login = this.data.login
         login[e.target.id] = e.detail.value
@@ -44,14 +70,14 @@ Page({
             loginDisable: loginDisable
         })
     },
-    loginBlur (e) {
+    loginBlur(e) {
         if (e.detail.value == '') {
             this.setData({
                 isEmpty: e.target.id
             })
         }
     },
-    focusInput (e) {
+    focusInput(e) {
         this.setData({
             focus: e.currentTarget.dataset.index
         })

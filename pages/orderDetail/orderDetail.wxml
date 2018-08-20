@@ -57,11 +57,11 @@
                 <view class='value'>{{orderStatus[detail.orderStatus]}}</view>
             </view>
             <view class='bline'>
-                商户名称
+                门店名称
                 <view class='value'>{{detail.merchantName}}</view>
             </view>
             <view class='bline'>
-                商户编号
+                门店编号
                 <view class='value'>{{detail.merchantCode}}</view>
             </view>
             <view class='bline' wx:if="{{detail.outTradeNo}}" id="{{detail.outTradeNo}}" bindtap='clipOrderNo'>

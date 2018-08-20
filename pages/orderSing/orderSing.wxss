@@ -110,8 +110,11 @@
     padding: 20rpx 30rpx;
     position: relative;
     color: #888;
+    transition:.3s;
 }
-
+.o-item-touch{
+    background:#f2f2f2;
+}
 .o-names {
     font-size: 22rpx;
     margin-top: 4rpx;
@@ -221,7 +224,7 @@
 
 .o-type .ico {
     color: #fff;
-    font-size: 64rpx;
+    font-size:70rpx;
     display: flex;
     align-items: center;
     justify-content: center;

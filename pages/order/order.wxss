@@ -190,7 +190,7 @@
     position:absolute;
     left:0;
     right:0;
-    top:90rpx;
+    top:0;
     bottom:0;
 }
 .scroll-order {
@@ -202,8 +202,9 @@
     background: #fff;
 }
 .ico.money{
-    color:#0ec695;
+    color:#35b253;
 }
+
 
 
 
@@ -215,6 +216,10 @@
     padding: 20rpx 30rpx;
     position: relative;
     color: #888;
+    transition:.3s;
+}
+.o-item-touch{
+    background:#f2f2f2;
 }
 
 .o-names {
@@ -239,7 +244,7 @@
 }
 
 .o-head {
-    background: #0ec695;
+    background: #35b253;
     color: #fff;
     display: flex;
     justify-content: space-between;
@@ -326,7 +331,7 @@
 
 .o-type .ico {
     color: #fff;
-    font-size: 66rpx;
+    font-size:70rpx;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -434,4 +439,55 @@
 
 .o-bar>view:first-child {
     width: 40%;
+}
+
+
+.store-item{
+    margin:30rpx;
+    background:#fff;
+    padding:30rpx;
+}
+.store-item-touch{
+    opacity:.8;
+}
+.store-grid{
+    display: flex;
+    flex-wrap:wrap;
+}
+.store-grid>view{
+    width:33.3333333333333%;
+    color:#999;
+    margin:20rpx 0;
+    font-size:22rpx;
+    line-height:1.5;
+}
+.store-name{
+    font-size:32rpx;
+    padding-bottom:12rpx;
+    color:#35b253;
+    font-weight:700;
+    position:relative;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.store-name::after {
+    content: '';
+    display: block;
+    width: 12rpx;
+    height: 12rpx;
+    border: 2px solid #eee;
+    border-left: none;
+    border-bottom: none;
+    transform: rotate(45deg);
+}
+
+.s-number{
+    font-size:34rpx;
+    color:#444;
+    font-weight:800;
+}
+.price{
+    color:#ff541b;
 }

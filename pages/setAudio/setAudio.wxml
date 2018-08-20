@@ -1,0 +1,38 @@
+<import src="../../pages/template/loading.wxml" />
+<view wx:if="{{isPageLoad}}" class='empty'>
+    <template is="bottomloading" />
+</view>
+<block wx:else>
+    <view class='audio-add' wx:if="{{addForm}}">
+        <view>
+            <view class='atitles'>绑定云喇叭设备</view>
+            <text>输入云喇叭设备上显示的产品ID</text>
+        </view>
+        <view class='binds'>
+            <input type='number' bindinput='inputId' value='{{tid}}' placeholder='输入产品ID'></input>
+
+        </view>
+        <view class='button' hover-class='button-hover' bindtap='bindCode'>绑定</view>
+
+    </view>
+    <view wx:if="{{audioList}}" class='audiobox'>
+        <view class='atitle bline'>已绑定设备</view>
+        <view class='alist'>
+            <view wx:for="{{audioList}}" wx:key="audiolist" class='bline alist-item'>
+                <view class='alist-i'>
+                    <view>
+                        {{item.speakerid}}
+                    </view>
+                    <view class='btime'>
+                        绑定时间：{{item.datetime}}</view>
+                </view>
+                <view class='unbtn' bindtap='unBindCode' id="{{index}}">解绑</view>
+            </view>
+        </view>
+    </view>
+    <view class='add' bindtap='toggleAdd' hover-class='add-touch'>
+        <view class='ico icon-add'></view>
+        <text>添加云喇叭</text>
+    </view>
+    <view class='mask' bindtap='toggleAdd' wx:if="{{addForm}}"></view>
+</block>

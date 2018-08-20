@@ -12,13 +12,13 @@ Page({
         orderIndex: 0,
         orderStatus: {
             'NOTPAY': '未支付',
-            'SUCCESS': '已完成 ',
+            'SUCCESS': '已支付 ',
             'REFUND': '已退款',
             'CLOSED': '已关闭',
             'REVOKED': '已撤销',
             'PAYERROR': '失败'
         },
-        orderStatusSel: ['全部支付状态', '未支付', '已完成', '已退款', '已关闭', '已撤销'],
+        orderStatusSel: ['全部支付状态', '未支付', '已支付', '已退款', '已关闭', '已撤销'],
         payTypeSel: ['全部支付方式', '微信', '支付宝 ', '会员'],
         payType: {
             WXPAY: '微信',
@@ -31,6 +31,12 @@ Page({
             merchantCode: options.id || app.commonParmas('merchantCode'),
             role: app.commonParmas('role')
         })
+        this.setData({
+            orderIndex: 2,
+            searchParmas: {
+                orderStatus: "SUCCESS"
+            }
+        })
     },
     summaryParmas() {
         return {
@@ -41,15 +47,31 @@ Page({
         }
     },
     billParmas() {
-        return {
+        let parmas = {
             pageNumber: 1,
             pageSize: 20,
             billEndTime: base.startDate(0, 'yyyyMMddhhmmss'), //new Date().Format('yyyyMMddhhmmss'),
             billBeginTime: base.startDate(15, 'yyyyMMddhhmmss'),
             merchantCode: this.data.merchantCode
         }
+        if (this.data.role == 1) {
+            parmas.operatorId = app.commonParmas("operatorId")
+        }
+        let _parmas = Object.assign(parmas, this.data.searchParmas)
+        return _parmas
     },
     getBill(arg) {
+        function toDate(bill) {
+            if (bill) {
+                let str = bill.orderDetails
+                for (let i in str) {
+                    if (str[i].payTime) {
+                        str[i].payTime = base.strDateFormat(str[i].payTime)
+                    }
+                }
+            }
+        }
+
         if (arg.isSelect) {
             this.setData({
                 searchLoad: true
@@ -73,6 +95,7 @@ Page({
                         bill.orderDetails = bill.orderDetails.concat(res.orderDetails)
                         bill.pageNumber = res.pageNumber
                         let orderHasMore = (res.pageNumber == bill.totalPage) ? false : true
+                        toDate(bill)
                         this.setData({
                             bill: bill,
                             isPageLoad: false,
@@ -82,6 +105,7 @@ Page({
                     } else {
                         let orderHasMore = (res.totalPage > 1) ? true : false
                         let bill = res.code != 'FAILED' ? res : null
+                        toDate(bill)
                         this.setData({
                             bill: bill,
                             isPageLoad: false,
@@ -116,13 +140,10 @@ Page({
         }
     },
     orderStatus(e) {
-        console.log(e)
         this.setData({
             [e.target.id]: e.detail.value,
-            orderIsBottm: false
+            orderIsBottm: false,
         })
-        let billParmas = this.billParmas()
-
         function getValues(arr) {
             let ars = []
             for (let i in arr) {
@@ -145,22 +166,27 @@ Page({
                 searchParmas.payType = getValues(this.data.payType)
             }
         }
-        billParmas = Object.assign(billParmas, searchParmas)
+        this.setData({
+            searchParmas: searchParmas
+        })
+        let billParmas = this.billParmas()
         this.getBill({
             isSelect: true,
             billParmas: billParmas
         })
     },
     normalSearch(e) {
+        this.setData({
+            searchValue: "",
+            cancelSearch: true,
+            showSearch: false,
+            searchParmas: wx.getStorageSync("tempSearchParmas"),
+        })
         this.getBill({
             billParmas: this.billParmas(),
             summaryParmas: this.summaryParmas()
         })
-        this.setData({
-            searchValue: "",
-            cancelSearch: true,
-            showSearch: false
-        })
+
     },
     toggleSearch(e) {
         this.setData({
@@ -170,19 +196,19 @@ Page({
     //订单搜索
     searchOrder(e) {
         this.setData({
-            orderIsBottm:false
+            orderIsBottm: false
         })
         if (e.detail.value != '') {
+            wx.setStorageSync("tempSearchParmas", this.data.searchParmas)
+            this.setData({
+                searchParmas: {}
+            })
             let billParmas = this.billParmas()
             billParmas.outTradeNo = e.detail.value
-
             this.getBill({
                 billParmas: billParmas,
                 isSelect: true
             })
-            // wx.navigateTo({
-            //     url: `/pages/orderDetail/orderDetail?merchantCode=${this.data.merchantCode}&outTradeNo=${e.detail.value}`
-            // })
         } else {
             wx.showToast({
                 title: '请输入搜索订单号',

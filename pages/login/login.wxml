@@ -1,3 +1,4 @@
+<import src="../../pages/template/loading.wxml" />
 <form bindsubmit="login" bindreset="formReset">
     <view class="login-page">
         <view class='logo-img'>

@@ -1,0 +1,108 @@
+.audiolist {
+    font-size: 12px;
+}
+page{
+    background:#f4f4f4;
+}
+
+.audio-add{
+    padding:40rpx 30rpx;
+    font-size:28rpx;
+    color: #444;
+    background:#fff;
+    position:fixed;
+    left:10%;
+    right:10%;
+    top:10%;
+    z-index:10;
+    box-shadow:0 9px 20px rgba(0, 0, 0, .1);
+}
+.audiobox{
+    margin:30rpx;
+     background:#fff;
+     border-radius:8rpx;
+}
+.audio-add text{
+    color:#999;
+    font-size:24rpx;
+    display:block;
+}
+.audio-add input{
+    font-size:28rpx;
+    padding:0 10rpx;
+    border:1px solid #eee;
+    height:70rpx;
+    width:100%;
+    box-sizing:border-box;
+}
+.alist-item {
+    font-size:25rpx;
+    color: #444;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 36rpx 30rpx;
+}
+.alist-item:last-child::before{
+    border:none;
+}
+.binds{
+    display: flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-top:46rpx;
+}
+.atitle{
+    padding:15rpx 30rpx;
+    font-size:28rpx;
+    color:#35b253;
+    
+}
+.alist-i>view{
+    line-height:2;
+    font-size:38rpx;
+}
+.unbtn {
+    padding: 10rpx 26rpx;
+    background: #35b253;
+    color: #fff;
+    border-radius:4rpx;
+}
+.alist-i>view.btime{
+    color:#999;
+    font-size:25rpx;
+}
+.add{
+    /* background:#fff; */
+    padding:20rpx 30rpx;
+    display: flex;
+    text-align:center;
+    justify-content:center;
+    align-items:center;
+    margin:30rpx;
+    border-radius:8rpx;
+    color:#999;
+    font-size:30rpx;
+    border:1px dashed #35b253;
+}
+.add .ico{
+    font-size:28rpx;
+    color:#35b253;
+    /* color:#fff; */
+    border-radius:90px;
+    padding:12rpx;
+    margin-right:20rpx;
+}
+.add text{
+    color:#35b253;
+}
+.add-touch{
+    opacity:.6;
+}
+.atitles{
+    font-size:36rpx;
+    margin-bottom:14rpx;
+}
+.mask{
+    display:block !important;
+}

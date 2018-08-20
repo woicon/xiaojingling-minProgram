@@ -1,4 +1,6 @@
-
+page{
+    background:#fff;
+}
 .login-logo {
     font-size: 160rpx;
     display: flex;

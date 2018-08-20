@@ -4,14 +4,14 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
 		"newFeature": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.2.1",
+	"libVersion": "2.2.2",
 	"appid": "wx98beaebacfd5d0ea",
 	"projectname": "%E6%94%B6%E6%AC%BE%E5%B0%8F%E7%B2%BE%E7%81%B5-wechatNew",
 	"isGameTourist": false,
@@ -33,7 +33,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 7,
+			"current": 9,
 			"list": [
 				{
 					"id": -1,
@@ -80,7 +80,19 @@
 				{
 					"id": -1,
 					"name": "refund",
-					"pathName": "pages/refund/refund"
+					"pathName": "pages/refund/refund",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "setAudio",
+					"pathName": "pages/setAudio/setAudio",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "txH5",
+					"pathName": "pages/txH5/txH5"
 				}
 			]
 		}

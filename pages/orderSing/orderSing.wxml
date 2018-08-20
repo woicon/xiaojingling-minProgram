@@ -40,7 +40,14 @@
             <block wx:else>
                 <view class='o-list' wx:if="{{bill}}">
                     <!-- wx:if="{{item.orderStatus != 'PAYERROR'}}"-->
-                    <view class='o-item' wx:for="{{bill.orderDetails}}" bindtap='viewDetail' id="{{item.orderNo}}" wx:key="orderlist" data-detail="{{item}}">
+                    <view class='o-item' 
+                        hover-class='o-item-touch'
+                        wx:for="{{bill.orderDetails}}" 
+                        bindtap='viewDetail' 
+                        id="{{item.orderNo}}" 
+                        wx:if="{{item.orderStatus != 'REVOKED'}}"
+                        wx:key="orderlist" 
+                        data-detail="{{item}}">
                         <view class='o-type'>
                             <block wx:if="{{item.orderStatus == 'SUCCESS'}}">
                                 <block wx:if="{{item.payType == 'ALIPAY'}}">
@@ -52,7 +59,7 @@
                                 <block wx:elif="{{item.payType == 'MPAY'}}">
                                     <view class='ico vip icon-vip'></view>
                                 </block>
-                                <view class='o-names'>{{payType[item.payType]}}</view>
+                                <!-- <view class='o-names'>{{payType[item.payType]}}</view> -->
                             </block>
                             <block wx:else>
                                 <view class='typeico'>
@@ -61,13 +68,13 @@
                                 <view class='o-names dis'>{{orderStatus[item.orderStatus]}}</view>
                             </block>
                         </view>
-                        <view class='o-no'>
-                            <view class='o-date'>{{item.payTime}}</view>
+                        <view class='o-no {{!item.payTime ? "f-l-c" : ""}}'>
+                            <view class='o-date' wx:if="{{item.payTime}}">{{item.payTime}}</view>
                             <view class='o-line'>{{item.outTradeNo}}</view>
                         </view>
                         <view class='o-price'>
-                            <view class='o-amt' wx:if="{{item.orderStatus != 'SUCCESS'}}">¥0.00</view>
-                            <view class='o-amt' wx:else>¥{{item.receiptAmount}}</view>
+                            <!-- <view class='o-amt' wx:if="{{item.orderStatus != 'SUCCESS'}}">¥0.00</view> -->
+                            <view class='o-amt'>¥{{item.receiptAmount}}</view>
                             <view class='o-tah'>{{orderStatus[item.orderStatus]}}</view>
                         </view>
                     </view>
@@ -90,5 +97,5 @@
         <view class='ico icon-orders'></view>
         <view class='txt'>没有订单记录</view>
     </view>
-    
+
 </block>

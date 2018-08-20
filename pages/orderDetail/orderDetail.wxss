@@ -32,6 +32,7 @@
     display: flex;
     align-items:center;
     color:#888;
+    font-size:20rpx;
     margin-top:8rpx;
 }
 .d-no text{
@@ -49,16 +50,14 @@
 }
 
 .d-btn{
-    padding:0 25rpx;
-    line-height:56rpx;
+    padding:0 26rpx;
+    line-height:54rpx;
     font-size:22rpx;
-    background:#0ec695;
+    background:#35B253;
     color:#fff;
     margin-left:14rpx;
     border-radius:4rpx;
     flex-shrink:0;
-
-
 }
 .d-price{
     text-align:right;
@@ -81,8 +80,8 @@
     align-items:center;
 }
 .value{
-    color:#333;
-    font-size:27rpx;
+    color:#555;
+    font-size:28rpx;
     flex-shrink:0; 
     text-align:right;
 }
@@ -95,7 +94,7 @@
     font-size:60rpx;
 }
 .ico.money{
-    color:#0ec695;
+    color:#35B253;
 }
 
 .weixin{

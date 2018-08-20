@@ -24,19 +24,23 @@
         <view bindtap='refundAll' class='refall' hover-class='refall-touch'>全部退款</view>
     </view>
     <!-- // bindtap='selectMrk' -->
-    <view class='rmk'  bindtap='selectMrk'>
-        <view class='rmk-title'>退款原因 <text wx:if="{{mrk}}">(50/{{markNum}})</text></view>
+    <view class='rmk' bindtap='selectMrk'>
+        <view class='rmk-title'>退款原因
+            <text wx:if="{{mrk}}">(50/{{markNum}})</text>
+        </view>
         <view class='rmk-value' wx:if="{{!mrk}}">{{refundReason}}</view>
     </view>
-    <view class='rmk-text' wx:if="{{mrk}}"><textarea disabled='{{diableTextarea}}' bindinput='mrkInput' placeholder='输入退款原因' value='{{refundReason}}' bindconfirm="mrkOk"></textarea> </view>
+    <view class='rmk-text' wx:if="{{mrk}}">
+        <textarea disabled='{{diableTextarea}}' bindinput='mrkInput' placeholder='输入退款原因' value='{{refundReason}}' bindconfirm="mrkOk"></textarea>
+    </view>
     <view class='d-list'>
         <view class='bline'>交易状态
             <view class='value'>{{orderStatus[detail.orderStatus]}}</view>
         </view>
-         <view class='bline'>交易金额
+        <view class='bline'>交易金额
             <view class='value'>{{detail.totalAmount}}</view>
         </view>
-         <view class='bline'>交易时间
+        <view class='bline'>交易时间
             <view class='value'>{{detail.payTime}}</view>
         </view>
         <view class='bline' id="{{detail.orderNo}}" bindtap='clipOrderNo'>订单编号
@@ -47,7 +51,7 @@
 
     </view>
     <view class='button-group'>
-        <view class='button  button-red f-c-c checkbtn' bindtap='goRefund'>
+        <view class='button  button-red f-c-c checkbtn {{refDidable ? "disable":""}}' bindtap='{{refDidable ? "":"goRefund"}}'>
             确定退款
         </view>
     </view>

@@ -1,0 +1,21 @@
+.b{
+    background:#fff;
+    padding:30rpx;
+    display: flex;
+    align-items:center;
+    justify-content:space-between;
+}
+.banks{
+    font-size:30rpx;
+}
+.banks-text{
+    color:#999;
+    font-size:28rpx;
+    margin-top:20rpx;
+}
+.b .button{
+    font-size:26rpx;
+    padding:5rpx 25rpx;
+    height:55rpx;
+    line-height:55rpx;
+}

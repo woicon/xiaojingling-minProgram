@@ -24,7 +24,8 @@ Page({
         let taday = new Date()
         const dayVal = this.data.dayVal
         //const endDate = taday.Format('yyyy-MM-dd')
-        const endD = new Date(taday.getTime() - dayVal * 2)
+        //const endD = new Date(taday.getTime() - dayVal * 2)
+        const endD = new Date(taday.getTime())
         const endDate = new Date(endD.Format('yyyy-MM-dd')).Format('yyyy-MM-dd')
         const startDate = new Date(endD - (24 * 60 * 60 * 1000 * 90)).Format('yyyy-MM-dd')
 

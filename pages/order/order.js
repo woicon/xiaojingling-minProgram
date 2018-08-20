@@ -13,31 +13,37 @@ Page({
         orderIndex: 0,
         orderStatus: {
             'NOTPAY': '未支付',
-            'SUCCESS': '已完成 ',
+            'SUCCESS': '已支付',
             'REFUND': '已退款',
             'CLOSED': '已关闭',
             'REVOKED': '已撤销',
             'PAYERROR': '失败'
         },
-        orderStatusSel: ['全部支付状态', '未支付', '已完成', '已退款', '已关闭', '已撤销'],
+        orderStatusSel: ['全部支付状态', '未支付', '已支付', '已退款', '已关闭', '已撤销'],
         payTypeSel: ['全部支付方式', '微信', '支付宝 ', '会员'],
         payType: {
             WXPAY: '微信',
             ALIPAY: '支付宝 ',
             MPAY: '会员'
         }
-
     },
     onLoad: function(options) {
         app.checkLogin()
         wx.setNavigationBarTitle({
             title: '交易流水',
         })
+        this.setData({
+            orderIndex: 2,
+            searchParmas: {
+                orderStatus: "SUCCESS"
+            }
+        })
     },
 
     orderInit(parmas, isMore) {
         let sumparmas = this.summaryParmas()
         delete sumparmas.merchantCode
+        console.log(sumparmas)
         return api.tradeSummaryMerchant(sumparmas)
             .then(res => {
                 if (isMore) {
@@ -52,7 +58,9 @@ Page({
                         isPageLoad: false
                     })
                 } else {
+                    let summaryHasMore = (res.totalPage > 1) ? true : false
                     this.setData({
+                        summaryHasMore: summaryHasMore,
                         tradeMerchant: res,
                         isPageLoad: false
                     })
@@ -67,7 +75,6 @@ Page({
         if (this.data.summaryHasMore) {
             let parmas = this.summaryParmas
             parmas.pageNumber = this.data.tradeMerchant.pageNumber + 1
-
             this.orderInit(parmas, true)
         }
     },
@@ -76,28 +83,27 @@ Page({
     summaryParmas() {
         return {
             endDate: base.startDate(0, 'yyyyMMdd'), //new Date().Format('yyyyMMddhhmmss'),
-            beginDate: base.startDate(15, 'yyyyMMdd'),
-            pageSize: 10,
+            beginDate: base.startDate(1, 'yyyyMMdd'),
+            pageSize:18,
             merchantCode: this.data.merchantCode
         }
     },
     billParmas() {
         let parmas = {
             pageNumber: 1,
-            pageSize: 20,
+            pageSize:20,
             billEndTime: base.startDate(0, 'yyyyMMddhhmmss'), //new Date().Format('yyyyMMddhhmmss'),
             billBeginTime: base.startDate(15, 'yyyyMMddhhmmss'),
             merchantCode: this.data.merchantCode
         }
-        if (this.data.searchParmas){
-            parmas = Object.assign(parmas,this.data.searchParmas)
-        }
         if (this.data.role == 1) {
             parmas.operatorId = app.commonParmas("operatorId")
         }
-        return parmas
+        let _parmas = Object.assign(parmas, this.data.searchParmas)
+        return _parmas
     },
     getBill(arg) {
+        console.log(arg)
         if (arg.isSelect) {
             this.setData({
                 searchLoad: true
@@ -105,6 +111,7 @@ Page({
         }
         //获取账单
         let summary = () => {
+            console.log(arg.summaryParmas)
             return api.tradeSummaryMerchant(arg.summaryParmas)
                 .then(res => {
                     this.setData({
@@ -112,7 +119,8 @@ Page({
                     })
                 })
         }
-        function toDate(bill){
+
+        function toDate(bill) {
             if (bill) {
                 let str = bill.orderDetails
                 for (let i in str) {
@@ -177,10 +185,8 @@ Page({
     orderStatus(e) {
         this.setData({
             [e.target.id]: e.detail.value,
-            orderIsBottm:false,
+            orderIsBottm: false,
         })
-        let billParmas = this.billParmas()
-
         function getValues(arr) {
             let ars = []
             for (let i in arr) {
@@ -203,22 +209,27 @@ Page({
                 searchParmas.payType = getValues(this.data.payType)
             }
         }
-        billParmas = Object.assign(billParmas, searchParmas)
+        this.setData({
+            searchParmas: searchParmas
+        })
+        let billParmas = this.billParmas()
         this.getBill({
             isSelect: true,
             billParmas: billParmas
         })
     },
     normalSearch(e) {
+        this.setData({
+            searchValue: "",
+            cancelSearch: true,
+            showSearch: false,
+            searchParmas: wx.getStorageSync("tempSearchParmas"),
+        })
         this.getBill({
             billParmas: this.billParmas(),
             summaryParmas: this.summaryParmas()
         })
-        this.setData({
-            searchValue: "",
-            cancelSearch: true,
-            showSearch: false
-        })
+        
     },
     toggleSearch(e) {
         this.setData({
@@ -231,6 +242,10 @@ Page({
             orderIsBottm: false
         })
         if (e.detail.value != '') {
+            wx.setStorageSync("tempSearchParmas", this.data.searchParmas)
+            this.setData({
+                searchParmas:{}
+            })
             let billParmas = this.billParmas()
             billParmas.outTradeNo = e.detail.value
             this.getBill({
@@ -267,30 +282,11 @@ Page({
         if (role == 0) {
             this.orderInit()
         } else {
+
             this.getBill({
                 billParmas: this.billParmas(),
                 summaryParmas: this.summaryParmas()
             })
         }
-    },
-
-    onHide: function() {
-
-    },
-
-    onUnload: function() {
-
-    },
-
-    onPullDownRefresh: function() {
-
-    },
-
-    onReachBottom: function() {
-
-    },
-
-    onShareAppMessage: function() {
-
     }
 })
