@@ -7,8 +7,8 @@ Page({
     data: {
         ids: "", //07863
         audioList: null,
-        addForm:false,
-        isPageLoad:true
+        addForm: false,
+        isPageLoad: true
     },
     onLoad: function(options) {
         this.checkAudio()
@@ -19,7 +19,7 @@ Page({
     bindCode() {
         this.bindAudio("BIND")
     },
-    unBindCode:function(e) {
+    unBindCode: function(e) {
         let selItem = this.data.audioList[e.target.id]
         this.setData({
             ids: selItem.speakerid
@@ -27,7 +27,7 @@ Page({
         wx.showModal({
             title: '提示',
             content: `您确定要解除该喇叭盒子(${selItem.speakerid})的绑定吗？`,
-            success:(res)=> {
+            success: (res) => {
                 if (res.confirm) {
                     this.codes("UNBIND")
                         .then(res => {
@@ -43,7 +43,7 @@ Page({
                         })
                 }
             },
-            
+
         })
         console.log(e)
         //this.bindAudio(0)
@@ -55,8 +55,8 @@ Page({
                 this.codes(status)
                     .then(res => {
                         this.setData({
-                            tid:'',
-                            addForm:false
+                            tid: '',
+                            addForm: false
                         })
                     })
             }
@@ -68,7 +68,7 @@ Page({
                         console.log(res)
                         if (res.code == "FAILED") {
                             wx.showToast({
-                                title:`${res.msg},${res.subMsg}`,
+                                title: `${res.msg},${res.subMsg}`,
                                 icon: 'none'
                             })
                         } else if (res.code == "SUCCESS") {
@@ -89,30 +89,14 @@ Page({
         }
 
     },
-    codes:function(status) {
+    codes: function(status) {
         wx.showLoading()
         var parmas = {
             bindCode: app.commonParmas("merchantCode"),
             status: status,
             speakerId: this.data.ids
         }
-        //let signParmas = sign(parmas)
         return api.bindYunlaba(parmas)
-        //     .then(res=>{
-        //          console.log(res)
-        //     })
-        // return new Promise((res, rej) => {
-        //     wx.request({
-        //         url: 'https://shopcashier.liantuobank.com/ShopCashier/shopCashierMicro/setYunlabaSwitch.in',
-        //         data: signParmas,
-        //         success:(datas)=> {
-        //             res(datas)
-        //         },
-        //         complete:()=>{
-        //             wx.hideLoading()
-        //         }
-        //     })
-        // })
     },
     inputId(e) {
         console.log(e)
@@ -138,18 +122,18 @@ Page({
                     audioList: audioList
                 })
             },
-            complete: ()=> {
+            complete: () => {
                 this.setData({
                     isPageLoad: false
                 })
             }
         })
     },
-    toggleAdd(){
+    toggleAdd() {
         this.setData({
             addForm: !this.data.addForm,
-            tid:'',
-            ids:''
+            tid: '',
+            ids: ''
         })
     },
     onReady: function() {

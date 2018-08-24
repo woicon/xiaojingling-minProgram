@@ -102,11 +102,10 @@ module.exports = {
     //订单退款
     refund: parmas => ajax('refund', parmas),
     //云喇叭设备绑定
-    bindYunlaba: parmas => ajax('device/yunlaba/bind', parmas, true),
+    bindYunlaba: parmas => ajax('device/yunlaba/bind', parmas),
 
-    //SI 客商提现获取transition_id列表接口
+    //SI crap api 客商提现获取transition_id列表接口
     payPlatFormInforKs: parmas => siAjax('withDrawal/payPlatFormInforKs.in', parmas),
     loginSi: parmas => siAjax('android/login.in', parmas),
-    getKsWithdrawUrl: parmas => siAjax('withDrawal/getKsWithdrawUrl.in', parmas),
-
+    getKsWithdrawUrl: parmas => siAjax('withDrawal/getKsWithdrawUrl.in', parmas)
 }

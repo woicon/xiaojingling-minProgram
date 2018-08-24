@@ -4,7 +4,7 @@ let app = getApp()
 Page({
     data: {
         isPageLoad: true,
-        btnLoading:false,
+        btnLoading: false,
         orderStatus: {
             'NOTPAY': '未支付',
             'SUCCESS': '已完成',
@@ -43,54 +43,84 @@ Page({
                 })
             })
     },
-    clipOrderNo: function(e) {
+    clipOrderNo: function (e) {
         console.log(e)
         wx.setClipboardData({
             data: e.currentTarget.id,
-            success: function(res) {
+            success: function (res) {
                 wx.getClipboardData({
-                    success: function(res) {
+                    success: function (res) {
                         console.log(res.data)
                     }
                 })
             }
         })
     },
-    // goRefund(e) {
-    //     this.setData({
-    //         btnLoading: true
-    //     })
-    // },
+    checkPay: function (e) {
+        console.log(e)
+        this.setData({
+            btnLoading: true
+        })
+        api.payQuery({
+            merchantCode: this.data.detail.merchantCode,
+            outTradeNo: this.data.detail.outTradeNo
+        }).then(res => {
+            this.setData({
+                btnLoading: false
+            })
+            console.log(res)
+            if (res.code == 'FAILED') {
+                if (res.subMsg) {
+                    wx.showModal({
+                        title: res.msg,
+                        content: res.subMsg,
+                        showCancel: false
+                    })
+                } else {
+                    wx.showToast({
+                        title: res.msg,
+                        icon: "none"
+                    })
+                }
+
+            } else if (res.code == 'SUCCESS') {
+                this.setData({
+                    detail: res
+                })
+            }
+        })
+    },
     goRefund: function (e) {
         console.log(this.data.detail)
+
         wx.setStorageSync("refundDetail", this.data.detail)
         wx.redirectTo({
             url: '/pages/refund/refund',
         })
     },
-    onReady: function() {
+    onReady: function () {
 
     },
-    onShow: function() {
+    onShow: function () {
 
     },
-    onHide: function() {
+    onHide: function () {
 
     },
-    onUnload: function() {
+    onUnload: function () {
 
     },
-    onPullDownRefresh: function() {
+    onPullDownRefresh: function () {
 
     },
-    onReachBottom: function() {
+    onReachBottom: function () {
 
     },
 
     /**
      * 用户点击右上角分享
      */
-    onShareAppMessage: function() {
+    onShareAppMessage: function () {
 
     }
 })
