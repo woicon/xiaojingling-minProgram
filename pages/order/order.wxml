@@ -3,7 +3,6 @@
     <template is="bottomloading" />
 </view>
 <block wx:elif="{{role == 0}}">
-
     <scroll-view scroll-y class='summary-scroll' bindscrolltolower="moreSummary">
         <view class='store'>
             <view wx:for="{{tradeMerchant.statisticsList}}" wx:key="summary" bindtap='orderPage' class='store-item' hover-class='store-item-touch' id="{{item.merchantCode}}" data-departmentName="{{item.merchantName}}">
@@ -58,7 +57,7 @@
             <view class='os-value'>{{summary.todayOrderCnt}}</view>
         </view>
         <view>今日实收金额
-            <view class='os-value'>{{summary.todayOrderAmt}}</view>
+            <view class='os-value'>{{summary.todayTradeAmt}}</view>
         </view>
     </view>
     <view class='o-search {{showSearch? "o-search-show":""}} bline' style='{{role == 2?"top:0":""}}'>

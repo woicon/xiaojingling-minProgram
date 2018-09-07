@@ -27,7 +27,6 @@ App({
     },
     checkLogin(){
         if(!wx.getStorageSync("login")){
-            console.log("sdf")
             wx.reLaunch({
                 url: '/pages/login/login',
             })

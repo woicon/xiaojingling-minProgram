@@ -52,7 +52,7 @@
                         <view class='bline'>
                             <view class='ico icon-refund'></view>
                             <view>退款金额(元)/笔
-                                <view class='value'>{{trade.totalRefundAmt}}</view>
+                                <view class='value'>{{trade.totalRefundAmt}}/{{trade.totalRefundCnt}}</view>
                             </view>
                         </view>
                        

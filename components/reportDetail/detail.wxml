@@ -15,7 +15,7 @@
         </view>
         <view class='s-item'>
             <view class='s-title'>支付宝实收/笔</view>
-            <view class='s-num'>{{item.alipayTradeAmt}}/{{item.alipayTradeAmt}}</view>
+            <view class='s-num'>{{item.alipayTradeAmt}}/{{item.alipayTradeCnt}}</view>
         </view>
         <view class='s-item'>
             <view class='s-title'>实收合计/笔</view>
@@ -31,7 +31,7 @@
         </view>
         <view class='s-item'>
             <view class='s-title'>退款合计/笔</view>
-            <view class='s-num'>{{item. totalRefundAmt}}/{{item.totalRefundAmt}}</view>
+            <view class='s-num'>{{item. totalRefundAmt}}/{{item.totalRefundCnt}}</view>
         </view>
         
         <view class='s-item'>
