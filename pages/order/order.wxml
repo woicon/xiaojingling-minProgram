@@ -3,7 +3,6 @@
     <template is="bottomloading" />
 </view>
 <block wx:elif="{{role == 0}}">
-
     <scroll-view scroll-y class='summary-scroll' bindscrolltolower="moreSummary">
         <view class='store'>
             <view wx:for="{{tradeMerchant.statisticsList}}" wx:key="summary" bindtap='orderPage' class='store-item' hover-class='store-item-touch' id="{{item.merchantCode}}" data-departmentName="{{item.merchantName}}">

@@ -43,13 +43,13 @@ Page({
                 })
             })
     },
-    clipOrderNo: function(e) {
+    clipOrderNo: function (e) {
         console.log(e)
         wx.setClipboardData({
             data: e.currentTarget.id,
-            success: function(res) {
+            success: function (res) {
                 wx.getClipboardData({
-                    success: function(res) {
+                    success: function (res) {
                         console.log(res.data)
                     }
                 })
@@ -57,6 +57,7 @@ Page({
         })
     },
     checkPay: function(e) {
+
         console.log(e)
         this.setData({
             btnLoading: true
@@ -82,7 +83,6 @@ Page({
                         icon: "none"
                     })
                 }
-                
             } else if (res.code == 'SUCCESS') {
                 this.setData({
                     detail: res
@@ -98,29 +98,29 @@ Page({
             url: '/pages/refund/refund',
         })
     },
-    onReady: function() {
+    onReady: function () {
 
     },
-    onShow: function() {
+    onShow: function () {
 
     },
-    onHide: function() {
+    onHide: function () {
 
     },
-    onUnload: function() {
+    onUnload: function () {
 
     },
-    onPullDownRefresh: function() {
+    onPullDownRefresh: function () {
 
     },
-    onReachBottom: function() {
+    onReachBottom: function () {
 
     },
 
     /**
      * 用户点击右上角分享
      */
-    onShareAppMessage: function() {
+    onShareAppMessage: function () {
 
     }
 })

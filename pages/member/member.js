@@ -104,10 +104,6 @@ Page({
             success: function(res) {
                 wx.getClipboardData({
                     success: function(res) {
-                        wx.showToast({
-                            title: '商户编号已复制',
-                            icon: "none"
-                        })
                     }
                 })
             }

@@ -4,11 +4,11 @@
 </view>
 <block wx:else>
     <view class='m-head-warp'>
-        <view class='m-head'>
+        <view class='m-head' bindtap='clipNo' data-id="{{member.merchantCode}}">
             <view class='m-img'>
                 <image src='{{userInfo.avatarUrl}}'></image>
             </view>
-            <view class='m-info' bindtap='clipNo' data-id="{{member.merchantCode}}">
+            <view class='m-info' >
                 <view class='m-name'>{{member.merchantName}}</view>
                 <view class="m-ts">编号：{{member.merchantCode}} </view>
                 <!-- <text>复制</text> -->
