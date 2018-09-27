@@ -57,8 +57,7 @@
         <view class='rline'>今日订单笔数
             <view class='os-value'>{{summary.todayOrderCnt}}</view>
         </view>
-        <view>今日实收金额
-            <view class='os-value'>{{summary.todayOrderAmt}}</view>
+        <view>今日实收金额<view class='os-value'>{{summary.todayTradeAmt}}</view>
         </view>
     </view>
     <view class='o-search {{showSearch? "o-search-show":""}} bline' style='{{role == 2?"top:0":""}}'>

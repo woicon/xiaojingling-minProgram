@@ -4,7 +4,6 @@
     <template is="bottomloading" />
 </view>
 <block wx:else>
-
     <view class='d'>
         <view class='d-head'>
             <view class="flex-c-b">
@@ -118,33 +117,39 @@
         </view>
         <!-- 0总部 1门店 2员工 3店长 -->
         <block wx:if="{{detail.receiptAmount > 0}}">
-            <view class='button-group' wx:if="{{role == 3 || role == 1 }}">
-                <view wx:if="{{detail.orderStatus == 'SUCCESS'}}" class='button button-red f-c-c checkbtn ' hover-class='checkbtn-hover ' bindtap='goRefund'>
-                    <template is="bottomloading" wx:if="{{btnLoading}}" />
-                    <block wx:else>退款</block>
+            <block wx:if="{{role == 3 || role == 1 }}">
+                <view class='button-group' wx:if="{{detail.orderStatus == 'SUCCESS' || detail.orderStatus == 'REFUND'}}">
+                    <view class='button button-red f-c-c checkbtn ' hover-class='checkbtn-hover ' bindtap='goRefund'>
+                        <template is="bottomloading" wx:if="{{btnLoading}}" />
+                        <block wx:else>退款</block>
+                    </view>
                 </view>
-            </view>
+            </block>
         </block>
-        <!-- <view class='button-group' wx:if="{{role != 0 }}">
-        <view wx:if="{{detail.orderStatus == 'NOTPAY'}}" class='button  button-red f-c-c checkbtn {{btnLoading?"button-disable":""}}' bindtap='{{btnLoading?"":"checkPay"}}'>
-            <template is="bottomloading" wx:if="{{btnLoading}}" />
-            <block wx:else>支付检测</block>
-        </view>
 
-        <view wx:elif="{{detail.orderStatus == 2}}" class=' button button-red f-c-c checkbtn {{btnLoading? "button-disable": ""}} ' bindtap='{{btnLoading? "": "refundQuery"}} '>
-            <template is="bottomloading" wx:if="{{btnLoading}}" />
-            <block wx:else>退款检测</block>
+        <view class='button-group' wx:if="{{detail.orderStatus == 'NOTPAY' || detail.orderStatus == 'CLOSED'}}">
+            <view class='button  button-red f-c-c checkbtn {{btnLoading?"button-disable":""}}' bindtap='{{btnLoading?"":"checkPay"}}'>
+                <template is="bottomloading" wx:if="{{btnLoading}}" />
+                <block wx:else>支付检测</block>
+            </view>
         </view>
-
-        <view wx:elif="{{detail.orderStatus == 3}}" class='button button-red f-c-c checkbtn {{btnLoading? "button-disable": ""}} ' bindtap='{{btnLoading? "": "refundAgain"}} '>
-            <template is="bottomloading" wx:if="{{btnLoading}}" />
-            <block wx:else>再次退款</block>
-        </view>
-
-        <view wx:if="{{detail.orderStatus == 'SUCCESS'}}" class='button button-red f-c-c checkbtn ' hover-class='checkbtn-hover ' bindtap='goRefund '>
-            <template is="bottomloading" wx:if="{{btnLoading}}" />
-            <block wx:else>退款</block>
-        </view>
-    </view> -->
+        <!-- <view wx:elif="{{detail.orderStatus == 'REFUND'}}" class=' button button-red f-c-c checkbtn {{btnLoading? "button-disable": ""}} ' bindtap='{{btnLoading? "": "refundQuery"}} '>
+                <template is="bottomloading" wx:if="{{btnLoading}}" />
+                <block wx:else>退款检测</block>
+            </view> -->
     </view>
+
+
+
+    <!--<view wx:elif="{{detail.orderStatus == 3}}" class='button button-red f-c-c checkbtn {{btnLoading? "button-disable": ""}} ' bindtap='{{btnLoading? "": "refundAgain"}} '>
+<template is="bottomloading" wx:if="{{btnLoading}}" />
+<block wx:else>再次退款</block>
+</view>
+
+<view wx:if="{{detail.orderStatus == 'SUCCESS'}}" class='button button-red f-c-c checkbtn ' hover-class='checkbtn-hover ' bindtap='goRefund '>
+<template is="bottomloading" wx:if="{{btnLoading}}" />
+<block wx:else>退款</block>
+</view>
+</view> -->
+
 </block>

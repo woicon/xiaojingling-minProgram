@@ -16,13 +16,17 @@ Page({
         wx.setNavigationBarTitle({
             title: '收款报表',
         })
-        this.setData({
-            reportDate: new Date().Format('yyyyMMdd'),
-            taday: base.formatDate(nowDate, 'yyyy-MM-dd'),
-            yestaday: base.formatDate(nowDate.getTime() - base.dayValue, 'yyyy-MM-dd'),
-            reportDateFormat: new Date().Format('yyyy-MM-dd'),
-            role: app.commonParmas('role')
-        })
+        try {
+            this.setData({
+                reportDate: new Date().Format('yyyyMMdd'),
+                taday: base.formatDate(nowDate, 'yyyy-MM-dd'),
+                yestaday: base.formatDate(nowDate.getTime() - base.dayValue, 'yyyy-MM-dd'),
+                reportDateFormat: new Date().Format('yyyy-MM-dd'),
+                role: app.commonParmas('role')
+            })
+        } catch (error) {
+            console.log(error)
+        }
     },
     reportParmas(date) {
         return this.data.searchDate ? this.data.searchDate : {
@@ -64,8 +68,8 @@ Page({
                 parmas.merchantCode = wx.getStorageSync("storeCode") || app.commonParmas('merchantCode')
                 Promise.all([api.trade(parmas), api.tradeOperator(parmas)]).then(res => {
                     console.log(res)
-                    var cashier =  (res[1].code != 'FAILED') ? res[1] : null
-                    var trade =  (res[0].code != 'FAILED') ? res[0].statistics : null
+                    var cashier = (res[1].code != 'FAILED') ? res[1] : null
+                    var trade = (res[0].code != 'FAILED') ? res[0].statistics : null
                     this.setData({
                         isPageLoad: false,
                         trade: trade,
@@ -245,7 +249,7 @@ Page({
             })
         } else {
             //let parmas = this.data.searchDate || this.reportParmas(this.data.reportDate)
-            console.log("merchantCode::::",this.data.store[e.detail.value])
+            console.log("merchantCode::::", this.data.store[e.detail.value])
             //parmas.merchantCode = this.data.store[e.detail.value].merchantCode
             wx.setStorageSync("storeCode", this.data.store[e.detail.value].merchantCode)
             this.getReport(this.data.reportDate, 1)
@@ -258,9 +262,10 @@ Page({
         })
     },
     onReady: function() {
-        
+
     },
     onShow() {
+        console.log("onshow")
         this.getReport(this.data.searchDate || this.data.reportDate)
     }
 })

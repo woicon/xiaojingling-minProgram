@@ -11,9 +11,9 @@
 		"newFeature": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.2.2",
-	"appid": "wx98beaebacfd5d0ea",
-	"projectname": "%E6%94%B6%E6%AC%BE%E5%B0%8F%E7%B2%BE%E7%81%B5-wechatNew",
+	"libVersion": "2.3.0",
+	"appid": "wx9785e4edfb5ab220",
+	"projectname": "%E6%94%B6%E6%AC%BE%E5%B0%8F%E7%B2%BE%E7%81%B5-%E5%95%86%E6%88%B7%E9%80%9A",
 	"isGameTourist": false,
 	"condition": {
 		"search": {
@@ -33,7 +33,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 9,
+			"current": 13,
 			"list": [
 				{
 					"id": -1,
@@ -92,7 +92,32 @@
 				{
 					"id": -1,
 					"name": "txH5",
-					"pathName": "pages/txH5/txH5"
+					"pathName": "pages/txH5/txH5",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "account",
+					"pathName": "pages/account/account",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "accountWithdrawal",
+					"pathName": "pages/accountWithdrawal/accountWithdrawal",
+					"query": ""
+				},
+				{
+					"id": 12,
+					"name": "userScanPay",
+					"pathName": "pages/userScanPay/userScanPay",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "userScanPay",
+					"pathName": "pages/pos/pos",
+					"query": ""
 				}
 			]
 		}

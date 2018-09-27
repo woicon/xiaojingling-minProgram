@@ -1,0 +1,103 @@
+@keyframes ops {
+    0% {
+        opacity: 0.1;
+    }
+    100% {
+        opacity: 0.8;
+    }
+}
+.key{
+    width: 33.3333333%;
+    font-size:70rpx;
+    display: flex;align-items:center;
+    justify-content:center;
+    color:#444;
+}
+.total-empty{
+    color:#999;
+}
+.price-line {
+    width: 4rpx;
+    height: 76rpx;
+    background: darkorange;
+    animation: ops 1s ease-in-out infinite;
+    margin-left: 8rpx;
+}
+
+.pay-head{
+    display:flex;
+    justify-content:space-between;
+    padding:50rpx;
+    background:#fff;
+    align-items:center;
+    font-size:28rpx;
+}
+.pay-total{
+    font-weight:800;
+    font-size:58rpx;
+    color:darkorange;
+    position:relative;
+    display: flex;
+    align-items:center;
+}
+.pay-total{
+    font-size:28rpx;
+}
+.number{
+    font-size:80rpx;
+}
+.total-empty .number{
+    color:#ccc;
+}
+.key-warp{
+    width: 75%;
+    display: flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    text-align:center;
+}
+.key-button{
+    width:25%;
+    height:100%;
+    position:absolute;
+    right:0;
+    bottom:0;
+    top:0;
+}
+.key-button view{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+.keyborad{
+    background:#fff;
+    display: flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    text-align:center;
+    position:fixed;
+    left:0;
+    right:0;
+    bottom:0;
+}
+.pay-name{
+    font-size:26rpx;
+    color:#444;
+    background:#fff;
+    padding:50rpx;
+}
+.del{
+    height:25%;
+}
+.pay{
+    height:75%;
+    background:green;
+    color:#fff;
+}
+.pay text{
+    margin:0 20rpx;
+    font-weight:800;
+    font-size:50rpx;
+}

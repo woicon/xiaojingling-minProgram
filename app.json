@@ -11,19 +11,22 @@
         "pages/orderSing/orderSing",
         "pages/setAudio/setAudio",
         "pages/txH5/txH5",
-        "pages/refund/refund"
+        "pages/refund/refund",
+        "pages/account/account",
+        "pages/accountWithdrawal/accountWithdrawal",
+        "pages/userScanPay/userScanPay"
     ],
     "window": {
         "backgroundTextStyle": "light",
-        "navigationBarBackgroundColor": "#35B253",
-        "navigationBarTitleText": "收款搭档",
+        "navigationBarBackgroundColor": "#0ec695",
+        "navigationBarTitleText": "收款小精灵商户通",
         "navigationBarTextStyle": "white",
         "backgroundColor": "#fafafa"
     },
     "tabBar": {
         "backgroundColor": "#ffffff",
         "borderStyle": "white",
-        "selectedColor": "#35B253",
+        "selectedColor": "#0ec695",
         "color": "#979797",
         "list": [
             {

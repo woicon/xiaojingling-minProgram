@@ -55,7 +55,7 @@ page{
 .atitle{
     padding:15rpx 30rpx;
     font-size:28rpx;
-    color:#35b253;
+    color:#0ec695;
     
 }
 .alist-i>view{
@@ -64,7 +64,7 @@ page{
 }
 .unbtn {
     padding: 10rpx 26rpx;
-    background: #35b253;
+    background: #0ec695;
     color: #fff;
     border-radius:4rpx;
 }
@@ -83,18 +83,18 @@ page{
     border-radius:8rpx;
     color:#999;
     font-size:30rpx;
-    border:1px dashed #35b253;
+    border:1px dashed #0ec695;
 }
 .add .ico{
     font-size:28rpx;
-    color:#35b253;
+    color:#0ec695;
     /* color:#fff; */
     border-radius:90px;
     padding:12rpx;
     margin-right:20rpx;
 }
 .add text{
-    color:#35b253;
+    color:#0ec695;
 }
 .add-touch{
     opacity:.6;

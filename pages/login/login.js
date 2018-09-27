@@ -8,6 +8,9 @@ Page({
             frontColor: '#000000',
             backgroundColor: '#ffffff',
         })
+        wx.setNavigationBarTitle({
+            title: '收款小精灵商户通',
+        })
     },
     login: function(e) {
         let parmas = e.detail.value

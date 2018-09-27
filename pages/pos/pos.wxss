@@ -1,1 +1,307 @@
-/* pages/pos/pos.wxss */
+page {
+    /* //   background: #0ec695; */
+    box-sizing: border-box;
+    background-image: linear-gradient(0deg, #00939b 0%, #0ec695 100%);
+}
+
+.border-r {
+    border-right: 1px solid #eee;
+    box-sizing: border-box;
+}
+
+.border-b {
+    border-bottom: 1px solid #eee;
+    box-sizing: border-box;
+}
+
+.btn-creatpay {
+    color: #ff6d50;
+    background: #fff;
+    display: flex;
+    position: relative;
+    z-index: 2;
+}
+
+.btn-creatpay.distopay {
+    opacity: 0.6;
+}
+
+.key-btngroup .btn-creatpay text {
+    color: #ff6d50;
+    width: 48rpx;
+    font-size: 48rpx;
+    margin-top: 0;
+    font-weight: 800;
+}
+
+.btn-creatpay.creatpay-touch {
+    background: #ff6d50;
+    color: #fff;
+}
+
+.btn-creatpay.creatpay-touch text {
+    color: #fff;
+}
+
+.delnum {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.key-border {
+    background: #fff;
+    height: 60%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    animation: sliderInUp ease-in 0.4s;
+}
+
+.key-btngroup view text {
+    font-size: 50rpx;
+    text-align: center;
+    color: #888;
+    padding-top: 10rpx;
+}
+
+.key-warp {
+    position: absolute;
+    display: flex;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.px .key-border {
+    padding-bottom: 90rpx;
+}
+
+
+.key-numbergroup {
+    width: 75%;
+    text-align: center;
+    background: #fff;
+    overflow: hidden;
+    height: 100%;
+}
+
+.key-numbergroup>view {
+    width: 33.333333%;
+    height: 25%;
+    float: left;
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 70rpx;
+    transition: 0.2s;
+    font-weight: 400;
+    position: relative;
+}
+
+.key-numbergroup>view:after {
+    content: '';
+    display: block;
+    border: 1px solid #ddd;
+}
+
+.key-numbergroup .ico {
+    font-size: 70rpx;
+}
+
+.key-btngroup {
+    background: #fff;
+    width: 25%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.key-btngroup .ico {
+    color: #666;
+}
+
+.key-btngroup>view {
+    display: flex;
+    align-items: center;
+    font-size: 30px;
+    width: 100%;
+    height: 25%;
+    flex-direction: column;
+    justify-content: center;
+    line-height: normal;
+}
+
+@keyframes ops {
+    0% {
+        opacity: 0.1;
+    }
+
+    100% {
+        opacity: 0.8;
+    }
+}
+
+.btn-wx {
+    color: #1aad19;
+}
+
+.btn-alpay {
+    color: #0be;
+}
+
+.btn-vip {
+    color: tomato;
+}
+
+.total {
+    background: #0ec695;
+    display: flex;
+    padding: 40rpx 30rpx;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 10rpx;
+    margin: 40rpx;
+}
+
+total-warp {
+    position: fixed;
+    left: 20rpx;
+    right: 20rpx;
+    top: 20rpx;
+}
+
+.total-title {
+    font-size: 28rpx;
+    color: #fff;
+}
+
+.total-price {
+    text-align: right;
+    font-size: 90rpx;
+    color: #fff;
+    transition: 0.2s;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    line-height: normal;
+}
+
+.price-empty {
+    font-size: 90rpx;
+    opacity: 0.4;
+}
+
+.total-price text {
+    font-size: 40rpx;
+}
+
+.price-line {
+    width: 4rpx;
+    height: 76rpx;
+    background: #fff;
+    animation: ops 1s ease-in-out infinite;
+    margin-left: 8rpx;
+}
+
+.getcoupon {
+    font-size: 28rpx;
+    color: #fff;
+    margin: 0 40rpx;
+}
+
+.get-money {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.coupon-list {
+    background: #fff;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 40%;
+    bottom: 0;
+    z-index: 100;
+}
+
+.coupon-item {
+    font-size: 26rpx;
+    padding: 30rpx;
+    position: relative;
+    border-bottom: 1px solid #eee;
+}
+
+.coupon-scroll {
+    height: 100%;
+}
+
+.coupon-info {
+    color: #888;
+}
+
+.coupon-name {
+    font-size: 30rpx;
+}
+
+.coupon-add {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    margin-top: -60rpx;
+    z-index: 10;
+    width: 200rpx;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cbtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100rpx;
+    position: relative;
+    z-index: 10;
+}
+
+.coupon-m, .coupon-a {
+    width: 120rpx;
+    height: 120rpx;
+}
+
+.aprice {
+    text-decoration: line-through;
+}
+
+.mask {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 90;
+}
+
+.load {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.key-touch {
+    background: #eee;
+}

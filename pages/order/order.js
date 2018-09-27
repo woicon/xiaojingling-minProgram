@@ -93,7 +93,7 @@ Page({
             pageNumber: 1,
             pageSize:20,
             billEndTime: base.startDate(0, 'yyyyMMddhhmmss'), //new Date().Format('yyyyMMddhhmmss'),
-            billBeginTime: base.startDate(15, 'yyyyMMddhhmmss'),
+            billBeginTime: base.startDate(30, 'yyyyMMddhhmmss'),
             merchantCode: this.data.merchantCode
         }
         if (this.data.role == 1) {
@@ -282,7 +282,6 @@ Page({
         if (role == 0) {
             this.orderInit()
         } else {
-
             this.getBill({
                 billParmas: this.billParmas(),
                 summaryParmas: this.summaryParmas()

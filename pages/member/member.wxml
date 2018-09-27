@@ -22,6 +22,7 @@
             </view>
             <view class='button' hover-class='button-touch' catchtap='getKsUrl'>提现</view>
         </view>
+        
     </view>
     <view class='m-list'>
         <navigator url='/pages/setAudio/setAudio' hover-class='nav-touch' wx:if="{{member.role!=0}}">

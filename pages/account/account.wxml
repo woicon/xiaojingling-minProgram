@@ -1,0 +1,8 @@
+<view>
+    <view>账户余额
+    <view class='price'></view>
+    </view>
+</view>
+<view class='button'>提现</view>
+<view>提现明细</view>
+<view>结算明细</view>

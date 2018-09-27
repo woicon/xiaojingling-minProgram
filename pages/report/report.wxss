@@ -148,8 +148,8 @@
 .r-title {
     padding: 30rpx 30rpx 10rpx;
     font-size: 28rpx;
-    color: #35b253;
-    /* margin: 0 0 0; *//* border-left: 20rpx solid #35B253; */
+    color: #0ec695;
+    /* margin: 0 0 0; *//* border-left: 20rpx solid #0ec695; */
     line-height: 28rpx;
     font-weight: 800;
     background: #fff;
@@ -220,7 +220,7 @@
 /*//member*/
 
 .m-head {
-    background: #35b253;
+    background: #0ec695;
     display: flex;
     align-items: center;
     padding: 60rpx 40rpx;

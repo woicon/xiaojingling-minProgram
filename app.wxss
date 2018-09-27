@@ -328,7 +328,7 @@ page {
 }
 
 .footbar .active {
-    color: #35B253;
+    color: #0ec695;
 }
 
 .pxview {
@@ -344,7 +344,7 @@ page {
     padding:0 0;
     height:78rpx;
     line-height:78rpx;
-    background: #35B253;
+    background: #0ec695;
     color: #fff;
     border: none;
 }
@@ -360,7 +360,7 @@ page {
 }
 
 .button-touch {
-    background: #22933D;
+    background: #0BB185;
 }
 
 .btnbar {
@@ -380,7 +380,7 @@ page {
     width: 40%;
     padding: 26rpx 0;
     font-size: 32rpx;
-    background: #35B253;
+    background: #0ec695;
     color: #fff;
     margin: 0 5px;
     border-radius: 4rpx;
@@ -402,7 +402,7 @@ page {
 }
 
 .button-hover {
-    background: #22933D;
+    background: #0BB185;
 }
 
 .button-red {
@@ -428,10 +428,10 @@ page {
 .tab>view {
     display: inline-block;
     padding: 0 44rpx;
-    border: 1px solid #35B253;
+    border: 1px solid #0ec695;
     margin-left: -1rpx;
     font-size: 28rpx;
-    color: #35B253;
+    color: #0ec695;
     line-height: 54rpx;
 }
 
@@ -444,7 +444,7 @@ page {
 }
 
 .tab .active {
-    background: #35B253;
+    background: #0ec695;
     color: #fff;
 }
 
@@ -778,7 +778,7 @@ page {
 }
 
 .o-summary {
-    background:#35B253;
+    background:#0ec695;
     color: rgba(255, 255, 255, 0.7);
     display: flex;
     font-size: 23rpx;

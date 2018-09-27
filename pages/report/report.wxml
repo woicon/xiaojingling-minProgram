@@ -37,7 +37,7 @@
                                 <view class='value'>{{trade.totalOrderCnt}}</view>
                             </view>
                         </view> -->
-                          <view class='bline'>
+                        <view class='bline'>
                             <view class='ico icon-money'></view>
                             <view>订单金额/笔
                                 <view class='value'>{{trade.totalOrderAmt}}/{{trade.totalOrderCnt}}</view>
@@ -52,10 +52,10 @@
                         <view class='bline'>
                             <view class='ico icon-refund'></view>
                             <view>退款金额(元)/笔
-                                <view class='value'>{{trade.totalRefundAmt}}</view>
+                                <view class='value'>{{trade.totalRefundAmt}}/{{trade.totalRefundCnt}}</view>
                             </view>
                         </view>
-                       
+
                         <view class='bline lline'>
                             <view class='ico icon-fee'></view>
                             <view>
@@ -108,7 +108,7 @@
                         <view class='lline'>结算金额
                             <text>{{trade.wechatSettleAmt}}</text>
                         </view>
-                      
+
                     </view>
                 </view>
                 <view class='rs'>

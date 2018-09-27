@@ -1,0 +1,61 @@
+.lines{
+    display: flex;
+    align-items:center;
+}
+.w-head{
+    padding:40rpx;
+    background:#fff;
+}
+.w-head{
+    font-size:26rpx;
+}
+.w-code{
+    font-size:28rpx;
+    font-weight:800;
+    margin-top:12rpx;
+    color:#666;
+}
+input{
+    color:#444;
+}
+.w-input{
+    background:#fff;
+    padding:40rpx;
+    margin:20rpx 0;
+    display: flex;
+    align-items:center;
+    justify-content:space-between;
+}
+.w-title{
+    font-weight:800;
+    margin-bottom:20rpx;
+    font-size:30rpx;
+    color:#777;
+}
+.w-money{
+    font-size:24rpx;
+    color:#666;
+    margin-top:20rpx;
+}
+.w-gets{
+    font-size:60rpx;
+    font-weight:800;
+}
+.w-gets text{
+    font-size:28rpx;
+}
+.tip{
+    font-size:24rpx;
+    padding:40rpx;
+    color:#999;
+    line-height:1.5;
+}
+.w-all{
+    text-align:center;
+    padding:10rpx 20rpx;
+    font-size:28rpx;
+}
+.lines-warp{
+    background:#fff;
+    margin:20rpx 0;
+}

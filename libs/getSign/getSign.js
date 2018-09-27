@@ -45,26 +45,45 @@ function parseParam(obj, encode) {
     }
     return ret.join('&')
 }
-module.exports = (parmas, isSi) => {
-    delete parmas.sign
+module.exports = (params, isSi) => {
+    console.log(params)
+    if (params.sign) {
+        delete params.sign
+    }
     let loginInfo = wx.getStorageSync("login")
-    if (isSi) {
-        console.log(sortObj(parmas))
-        let singParmas = `${parseParam(sortObj(parmas))}&${wx.getStorageSync("siKey")}`
-        console.log(singParmas)
-        let MD5 = md5(singParmas).toUpperCase()
+    if (isSi === true) {
+        //SI验签
+        console.log(sortObj(params))
+        let singparams = `${parseParam(sortObj(params))}&${wx.getStorageSync("siKey")}`
+        console.log(singparams)
+        let MD5 = md5(singparams).toUpperCase()
         let MD5_array = MD5.split('')
         let convertMD5 = chars => {
             return String.fromCharCode(chars.charCodeAt() ^ 't'.charCodeAt())
         }
-        parmas.sign = MD5_array.map(convertMD5).join('')
-        console.log(parmas.sign)
-        return parmas
+        params.sign = MD5_array.map(convertMD5).join('')
+        console.log(params.sign)
+        return params
+    } else if (isSi === 'none') {
+        //免验签
+        let singparams = `${parseParam(sortObj(params))}`
+        let sign = md5(singparams).toUpperCase()
+        params.sign = sign
+        return params
+    } else if (isSi === 'ks') {
+        //客商验签
+        let singparams = `${parseParam(sortObj(params))}4cbf6354b6778d155399781592dd368b`
+        console.log(singparams)
+        let sign = md5(singparams)
+        console.log(sign)
+        params.sign = sign
+        params.sign_type = 'MD5'
+        return params
     } else {
-        let singParmas = `${parseParam(sortObj(parmas))}&key=${loginInfo.key}`
-        //liantuofu.com验签
-        parmas.sign = md5(singParmas)
-        return parmas
+        //liantuofu.com 接口验签
+        let singparams = `${parseParam(sortObj(params))}&key=${loginInfo.key}`
+        params.sign = md5(singparams)
+        return params
     }
 
 }

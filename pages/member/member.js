@@ -7,6 +7,7 @@ Page({
     },
     onLoad: function(options) {
         app.checkLogin()
+        
         wx.setNavigationBarTitle({
             title: '个人中心',
         })
@@ -20,6 +21,7 @@ Page({
                 userInfo: null
             })
         }
+        this.checkBag()
     },
     checkBag: function() {
         let parmas = {
@@ -35,7 +37,7 @@ Page({
                     for (let i in bagList) {
                         bagList[i].endNum = bagList[i].balanceAccount.substr(bagList[i].balanceAccount.length - 4)
                     }
-
+                    wx.setStorageSync("bag", bagList[0])
                     this.setData({
                         bag: bagList
                     })

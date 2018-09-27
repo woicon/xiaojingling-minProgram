@@ -1,2 +1,80 @@
-<!--pages/pos/pos.wxml-->
-<text>pages/pos/pos.wxml</text>
+<import src="../../pages/temp/loading.wxml" />
+<view wx:if="{{isPageLoad}}" class='flex-c-c'>
+    <template is="bottomloading" />
+</view>
+<view class='get-monty {{isPX?"px":""}}' wx:else>
+    <view class='total-warp'>
+        <view class='total'>
+            <!-- <view class='total-title'>收款金额</view> -->
+            <view class='total-price {{priceEmpty?"price-empty":""}}'>
+
+                <text wx:if="{{!priceEmpty}}">¥</text>{{priceEmpty?"请输入金额":totalPrice}}
+                <view wx:if="{{!priceEmpty}}" class='price-line'></view>
+            </view>
+        </view>
+        <!-- <view class='getcoupon' bindtap='cooseCoupon'>选择优惠券</view> -->
+    </view>
+    <view class='key-border' style='height:{{borderHeight*2}}rpx'>
+        <view class='key-warp {{isPX?"bline":""}}' style='height:{{borderHeight*2}}rpx'>
+            <view class='key-numbergroup' style='height:{{borderHeight*2}}rpx'>
+                <view wx:for="123456789" class='bline rline' wx:key="keybord" bindtap='touchKey' data-number="{{item}}" hover-class='key-touch' style='height:{{keyHeight*2}}rpx'>{{item}}</view>
+                <view class='rline' bindtap='touchKey' data-number="0" hover-class='key-touch' style='height:{{keyHeight*2}}rpx'>0</view>
+                <view class='rline' bindtap='touchKey' data-number="." hover-class='key-touch' style='height:{{keyHeight*2}}rpx'>.</view>
+                <view class='rline' bindtap='touchKey' data-number="00" hover-class='key-touch' style='height:{{keyHeight*2}}rpx'>00</view>
+            </view>
+            <view class='key-btngroup' bindtap='createPay' style='height:{{borderHeight*2}}rpx'>
+                <!-- <view class='btn-wx icon-weixins border-b' id="weixin" style='height:{{keyHeight*2}}rpx'>
+                    <text>微信</text>
+                </view>
+                <view class='btn-alpay icon-alipays border-b' id="alipay" style='height:{{keyHeight*2}}rpx'>
+                    <text>支付宝</text>
+                </view>
+                <view class='btn-vip icon-vips border-b' id="vip" style='height:{{keyHeight*2}}rpx'>
+                    <text>会员卡</text>
+                </view> -->
+                <view class='btn-alpay bline btn-creatpay' id="alipay" hover-class='creatpay-touch' style='height:{{keyHeight*6}}rpx'>
+                    <text>收 款</text>
+                </view>
+                <view catchtap='delNumber' class='ico icon-delnum  delnum' hover-class='key-touch' style='height:{{keyHeight*2}}rpx'></view>
+            </view>
+        </view>
+    </view>
+    <block wx:if="{{showCoupon}}">
+        <view class='coupon-list'>
+            <scroll-view scroll-y class='coupon-scroll'>
+                <view class='coupon-item' wx:for="{{couponList}}" wx:key="couponList" data-no="{{item.no}}" id="{{index}}">
+                    <!-- <block wx:if="{{item.couponType === 0}}"> <!--单品代金券
+                        </block>
+                        <block wx:elif="{{item.couponType === 1}}"><!--单品折扣
+                        </block> -->
+                    <view class='coupon-name'>{{item.name}}</view>
+                    <view class='coupon-info'>
+                        <view wx:if="{{item.couponType === 0}}" class='coupon-price'>
+                            <text>原价：<text class='aprice'>{{item.price}}</text></text> 现价：{{item.reduceCost}}</view>
+                        <view wx:elif="{{item.couponType === 1}}" class='coupon-price'>
+                            <text>原价：<text class='aprice'>{{item.price}}</text></text> 现价：{{item.discount}}折</view>
+                        <view class='coupon-least' wx:if="{{item.leastCost != 0}}">
+                            <text>最低消费：{{item.leastCost}}</text>
+                        </view>
+                    </view>
+                    <view class='coupon-type'>{{couponChannel[item.couponChannel]}}</view>
+
+                    <view class='coupon-add' bindtap='couponTotal' id="{{index}}">
+                        <view class='cbtn coupon-m' id="min">-</view>
+                        <view class="coupon-total">{{item.quantity || '0'}}</view>
+                        <view class='cbtn coupon-a' id="add">+</view>
+                    </view>
+                </view>
+            </scroll-view>
+        </view>
+        <view class='mask' bindtap='hideCoupon'></view>
+    </block>
+</view>
+
+<view wx:if="{{loadPay}}" class='load'>
+    <view class='load-warp'>
+        <view class='icon-moneys'></view>
+        <view>{{payMsg}}</view>
+        <view class='buttons'>取消</view>
+    </view>
+</view>

@@ -28,7 +28,6 @@ Page({
         const endD = new Date(taday.getTime())
         const endDate = new Date(endD.Format('yyyy-MM-dd')).Format('yyyy-MM-dd')
         const startDate = new Date(endD - (24 * 60 * 60 * 1000 * 90)).Format('yyyy-MM-dd')
-
         console.log(startDate + '<><：：：：日期选择范围：：：：><>' + endDate)
         // 获取完整的年月日 时分秒，以及默认显示的数组
         var obj = dateTimePicker.dateTimePicker(this.data.startYear, this.data.endYear)
@@ -46,7 +45,6 @@ Page({
         let et = new Date().Format('yyyy-MM-dd')
         let newYear = [st, et]
         obj.dateTimeArray.splice(0, 3, newYear)
-
         let points = obj.dateTimeArray[1]
         let seconds = obj.dateTimeArray[2]
         let dateTimeArray = obj.dateTimeArray
@@ -64,7 +62,6 @@ Page({
             const n = i.toString()
             sArr.push(n[1] ? n : '0' + n)
         }
-
         let dateEndArray = []
         dateEndArray[0] = dateTimeArray[0]
         dateEndArray[1] = mArr
@@ -72,7 +69,6 @@ Page({
         console.log(dateEndArray)
         wx.setStorageSync("dateEndArray", dateEndArray)
         wx.setStorageSync("dateStartArray", dateTimeArray)
-
         let dateTime = [0, 0, 0]
         let dateTimeS = [dateEndArray[0].length - 1, dateEndArray[1].length - 1, dateEndArray[2].length - 1]
         wx.setStorageSync("endTimes", dateTimeS)
@@ -82,16 +78,19 @@ Page({
             dateTimeArray: dateTimeArray,
             endDate: endDate,
             startDate: startDate,
+            dateEndArray: dateEndArray,
+            dateStartArray: dateTimeArray,
             startTime: '',
         })
     },
+    initDate() {
 
+    },
     toggleTab: function(e) {
         console.log(e)
         let that = this
         const tabIndex = e.target.dataset.index
         const pickerMode = tabIndex === 0 ? 'date' : 'time'
-
         that.setData({
             pickerMode: pickerMode,
             tabCurr: tabIndex,
@@ -127,9 +126,10 @@ Page({
         console.log(e)
     },
     changeDateTimeColumn: function(e) {
-        let dateArr = this.data.dateTimeArray
+
         let detail = e.detail
-        console.log(detail)
+        console.log(e)
+        console.log("changeDateTime=>", detail)
         if (detail.column == 0) {
             if (detail.value == 1) {
                 this.setData({
@@ -155,27 +155,42 @@ Page({
             case 'endTime':
                 let etTime = this.data.etTime
                 etTime[e.detail.column] = e.detail.value
+                let endDateArr = this.data.dateEndArray
+                if (detail.column == 1 && detail.value < endDateArr[1].length) {
+                    endDateArr[2] = this.data.dateStartArray[2]
+                    this.setData({
+                        dateEndArray: endDateArr
+                    })
+                } else if (detail.column == 1 && detail.value == endDateArr[1].length) {
+                    console.log("ss")
+                    let endDateArrs = wx.getStorageSync("dateEndArray")
+                    endDateArr[2] = endDateArrs[2]
+                    this.setData({
+                        dateEndArray: endDateArr
+                    })
+                }
                 this.setData({
                     etTime: etTime
-                })
+                }) 
                 break
         }
 
     },
     changeDateTime(e) {
         console.log(e)
-        let that = this
-        let dateTimeArray = this.data.dateTimeArray
+        let dateTimeArray = this.data.dateTimeArray,
+            dateStartArray = this.data.dateStartArray,
+            dateEndArray = this.data.dateEndArray
         let stTime = this.data.stTime
         let etTime = this.data.etTime
         switch (e.target.id) {
             case 'startTime':
                 this.setData({
-                    sTime: `${dateTimeArray[0][stTime[0]]} ${dateTimeArray[1][stTime[1]]}:${dateTimeArray[2][stTime[2]]}:00`
+                    sTime: `${dateStartArray[0][stTime[0]]} ${dateStartArray[1][stTime[1]]}:${dateStartArray[2][stTime[2]]}:00`
                 })
                 break
             case 'endTime':
-                let esTime = `${dateTimeArray[0][etTime[0]]} ${dateTimeArray[1][etTime[1]]}:${dateTimeArray[2][etTime[2]]}:00`
+                let esTime = `${dateEndArray[0][etTime[0]]} ${dateEndArray[1][etTime[1]]}:${dateEndArray[2][etTime[2]]}:00`
                 let endTime = new Date(esTime).getTime()
                 let startTime = new Date(this.data.sTime).getTime()
                 this.setData({
@@ -191,14 +206,14 @@ Page({
                     })
                 } else {
                     let reportTime = {
-                        beginTime: `${dateTimeArray[1][stTime[1]]}${dateTimeArray[2][stTime[2]]}00`,
-                        beginDate: base.formatDate(dateTimeArray[0][stTime[0]], 'yyyyMMdd'),
-                        endTime: `${dateTimeArray[1][etTime[1]]}${dateTimeArray[2][etTime[2]]}00`,
-                        endDate: base.formatDate(dateTimeArray[0][etTime[0]], 'yyyyMMdd')
+                        beginTime: `${dateStartArray[1][stTime[1]]}${dateStartArray[2][stTime[2]]}00`,
+                        beginDate: base.formatDate(dateStartArray[0][stTime[0]], 'yyyyMMdd'),
+                        endTime: `${dateEndArray[1][etTime[1]]}${dateEndArray[2][etTime[2]]}00`,
+                        endDate: base.formatDate(dateEndArray[0][etTime[0]], 'yyyyMMdd')
                     }
                     this.setData({
                         reportTime: reportTime,
-                        searchDates: `${dateTimeArray[0][stTime[0]]} ${dateTimeArray[1][stTime[1]]}:${dateTimeArray[2][stTime[2]]}:00至${dateTimeArray[0][etTime[0]]} ${dateTimeArray[1][etTime[1]]}:${dateTimeArray[2][etTime[2]]}:00`,
+                        searchDates: `${dateStartArray[0][stTime[0]]} ${dateStartArray[1][stTime[1]]}:${dateStartArray[2][stTime[2]]}:00至${dateEndArray[0][etTime[0]]} ${dateEndArray[1][etTime[1]]}:${dateEndArray[2][etTime[2]]}:00`,
                     })
                 }
                 break

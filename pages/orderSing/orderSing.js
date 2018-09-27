@@ -231,23 +231,6 @@ Page({
             summaryParmas: this.summaryParmas()
         })
     },
-
-    onHide: function() {
-
-    },
-
-    onUnload: function() {
-
-    },
-
-    onPullDownRefresh: function() {
-
-    },
-
-    onReachBottom: function() {
-
-    },
-
     onShareAppMessage: function() {
 
     }

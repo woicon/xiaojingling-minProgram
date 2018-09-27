@@ -53,7 +53,7 @@
     padding:0 26rpx;
     line-height:54rpx;
     font-size:22rpx;
-    background:#35B253;
+    background:#0ec695;
     color:#fff;
     margin-left:14rpx;
     border-radius:4rpx;
@@ -94,7 +94,7 @@
     font-size:60rpx;
 }
 .ico.money{
-    color:#35B253;
+    color:#0ec695;
 }
 
 .weixin{

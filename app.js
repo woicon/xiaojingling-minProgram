@@ -6,28 +6,25 @@ App({
                 this.globalData.isPX = (res.model.indexOf("iPhone X") != -1) ? true : false
             }
         })
-        // 登录
-        wx.login({
-            success: res => {
-                // 发送 res.code 到后台换取 openId, sessionKey, unionId
-            }
-        })
         this.checkLogin()
     },
     globalData: {
         userInfo: null
     },
-    currPage: function () {
+    currPage: function() {
         let _curPageArr = getCurrentPages()
         return _curPageArr[_curPageArr.length - 1]
     },
-    commonParmas(arg){
-        let login = wx.getStorageSync("login")
-        return login[arg]
+    commonParmas(arg) {
+        try {
+            let login = wx.getStorageSync("login")
+            return login[arg]
+        } catch (error) {
+            console.log(error)
+        }
     },
-    checkLogin(){
-        if(!wx.getStorageSync("login")){
-            console.log("sdf")
+    checkLogin() {
+        if (!wx.getStorageSync("login")) {
             wx.reLaunch({
                 url: '/pages/login/login',
             })

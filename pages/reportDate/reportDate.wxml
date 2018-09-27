@@ -24,7 +24,7 @@
 
     <block wx:elif="{{tabCurr == 1}}">
         <view class="c-item">
-            <picker mode="multiSelector" id='startTime' value="{{stTime}}" bindchange="changeDateTime" bindcolumnchange="changeDateTimeColumn" range="{{dateTimeArray}}">
+            <picker mode="multiSelector" id='startTime' value="{{stTime}}" bindchange="changeDateTime" bindcolumnchange="changeDateTimeColumn" range="{{dateStartArray}}">
                 <view class="inputtime">
                     <view>选择开始时间</view>
                     <view>
@@ -35,7 +35,7 @@
             </picker>
         </view>
         <view class='c-item  {{sTime ? "":"disable"}}'>
-            <picker mode="multiSelector" bindtap='endTimes' id='endTime' value="{{etTime}}" disabled='{{sTime ? false : true}}' bindchange="changeDateTime" bindcolumnchange="changeDateTimeColumn" range="{{dateTimeArray}}">
+            <picker mode="multiSelector" bindtap='endTimes' id='endTime' value="{{etTime}}" disabled='{{sTime ? false : true}}' bindchange="changeDateTime" bindcolumnchange="changeDateTimeColumn" range="{{dateEndArray}}">
                 <view class="inputtime">
                     <view>选择结束时间</view>
                     <view>
