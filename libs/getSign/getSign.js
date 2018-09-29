@@ -46,7 +46,6 @@ function parseParam(obj, encode) {
     return ret.join('&')
 }
 module.exports = (params, isSi) => {
-    console.log(params)
     if (params.sign) {
         delete params.sign
     }
@@ -73,9 +72,7 @@ module.exports = (params, isSi) => {
     } else if (isSi === 'ks') {
         //客商验签
         let singparams = `${parseParam(sortObj(params))}4cbf6354b6778d155399781592dd368b`
-        console.log(singparams)
         let sign = md5(singparams)
-        console.log(sign)
         params.sign = sign
         params.sign_type = 'MD5'
         return params

@@ -1,0 +1,71 @@
+
+page{
+    background:#0ec695;
+}
+.pays{
+    margin:40rpx;
+    background:#fff;
+    padding:40rpx;
+    border-radius:6rpx;
+    box-shadow:0 50px 90px rgba(0, 0, 0, .2);
+}
+.qr{
+    margin:0 auto;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    position:relative;
+}
+.sub{
+    text-align:center;
+    font-size:24rpx;
+}
+.qrlost{
+    position:absolute;
+    left:0;
+    right:0;
+    top:0;
+    height:500rpx;
+    background:rgba(255, 255, 255, 0.96);
+    color:#0ec695;
+    display: flex;
+    align-items:center;
+    justify-content:center;
+}
+.qr-info{
+    font-size:24rpx;
+    color:#0ec695;
+    font-weight:800;
+    padding-top:10rpx;
+}
+.qr-time{
+    font-size:22rpx;
+    color:#999;
+    width:100%;
+    border-bottom:1px dashed #eee;
+    padding-bottom:30rpx;
+    text-align:center;
+    margin-bottom:20rpx;
+}
+.price{
+    text-align:center;
+    color:tomato;
+    font-weight:800;
+    margin-top:8rpx;
+    font-size:50rpx;
+}
+
+.paybar{
+    margin:50rpx 0 0;
+}
+.paybar .button{
+    font-size:34rpx;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+.paybar .ico{
+    margin-right:14rpx;
+    font-size:30rpx;
+}

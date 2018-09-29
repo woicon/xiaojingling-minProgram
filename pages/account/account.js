@@ -1,15 +1,17 @@
 let app = getApp()
 const api = require('../../openApi/api.js')
 var base = require('../../utils/util.js')
+const commonParams = {
+    // 客商平台KEY：4cbf6354b6778d155399781592dd368b
+    //fund_pool_no：PN01000000000000001 
+    partner_id: "18042621422975713", // 客商平台PID
+    core_merchant_no: "EW_N0949188211", // 客商平台编号
+    input_charset: 'UTF-8',
+    version: '1.0'
+}
 Page({
     data: {
-        commonParams:{
-            // 客商平台KEY：4cbf6354b6778d155399781592dd368b
-            partner_id: "18042621422975713", // 客商平台PID
-            core_merchant_no: "EW_N0949188211", // 客商平台编号
-            input_charset: 'UTF-8',
-            version: '1.0'
-        }
+        isPageLoad:true,
     },
     onLoad(options) {
         let params = {
@@ -26,16 +28,16 @@ Page({
             sign:"02E039A8FB4D7FF322CD3C7E7103E184"
         }
         api.si(params,'none').then(res=>{
-            console.log(res)
             let mcDetails = JSON.parse(res.mcDetails)
             wx.setStorageSync("storeCode", mcDetails[0].platformMerchant)
-            console.log(mcDetails)
-           
+            console.log("SI == McDetails=====+>",mcDetails)
             this.detail()  //详情获得 CA
-            this.balance()  //余额查询
+          
         })
+        this.initDate()
     },
     detail(){
+        //提现费率详情 需要获得 certificateNo  accountType
         let datas = {
             applicationName:'提现小程序',
             isAdmin: true,
@@ -44,28 +46,66 @@ Page({
             operationLoginName:'username',
             agencyCodeName:'222',
             service: 'agent_app_store_details',
-            storeCode: wx.getStorageSync("storeCode")
-            // operationLoginName
-            // operatorName
-            // agencyCodeName
-            // isAdmin:true,
+            storeCode: wx.getStorageSync("storeCode"),
+            merchantPaymentMode:1
         }
-        let params = Object.assign(this.data.commonParams, datas)
+        const params = Object.assign(datas, commonParams )
         api.ksApi(params)
-        .then(res=>{
-            console.log(res)
-            console.log(JSON.parse(res.mcDetails))
-        })
+            .then(res=>{
+                console.log("MCdetails=====>",JSON.parse(res.mcDetails))
+                let mcDetails = JSON.parse(res.mcDetails)
+                wx.setStorageSync('mcdetail',{
+                    certificateNo: mcDetails.certificateNo,
+                    accountType: mcDetails.accountType,
+                    caAccount: mcDetails.caAccount
+                })
+
+                this.balance()  //余额查询
+            })
     },
     balance(){
-        let datas ={
+        //余额查询
+        let ca  = wx.getStorageSync("mcdetail")
+        let params ={
             service:'trade_credit_account_query',
-            account_no:'',
+            account_no: ca.caAccount,
         }
-        let params = Object.assign(this.data.commonParams, datas)
-        api.ksApi(params)
+        api.ksApi(Object.assign(params,commonParams))
         .then(res=>{
-           console.log(res)
+            console.log("balance=====>",JSON.parse(res.tradeDetails))
+            let tradeDetails = JSON.parse(res.tradeDetails)
+            this.getExchangList()
+            this.setData({
+                trade: tradeDetails[0],
+                isPageLoad:false
+            })
+        })
+    },
+    getExchangList(){
+        let ca = wx.getStorageSync("mcdetail")
+        let params = {
+            withdraw_account_no: ca.caAccount,
+            service: 'trade_single_withdraw_remittance_page_details',
+            fund_pool_no:"PN01000000000000001", 
+            gmt_created_start:"2018-06-01 15:03:20",
+            gmt_created_end:"2018-06-30 15:03:20",
+        }
+        api.ksApi(Object.assign(params, commonParams))
+        .then(res=>{
+            console.log(res)
+        })
+    },
+    initDate(){
+        let nowDate = new Date()
+        let tadayDate = nowDate.Format("yyyy-MM-dd"),
+            startDate = new Date(nowDate.setDate(nowDate.getDate() - 31)).Format("yyyy-MM-dd"),
+            start = new Date(nowDate.setDate(nowDate.getDate() - 1000)).Format("yyyy-MM-dd");
+        console.log(tadayDate, startDate)
+        this.setData({
+            tadayDate: tadayDate,
+            endDate: tadayDate,
+            startDate: startDate,
+            start: start
         })
     },
     onReady: function() {
@@ -75,26 +115,4 @@ Page({
     onShow: function() {
 
     },
-
-    onHide: function() {
-
-    },
-    onUnload: function() {
-
-    },
-
-    onPullDownRefresh: function() {
-
-    },
-
-    onReachBottom: function() {
-
-    },
-
-    /**
-     * 用户点击右上角分享
-     */
-    onShareAppMessage: function() {
-
-    }
 })

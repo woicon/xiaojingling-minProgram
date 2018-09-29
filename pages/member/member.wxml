@@ -29,7 +29,10 @@
             <view class='ico icon-setting'></view>
             <view class='m-name'>云喇叭设置</view>
         </navigator>
-
+        <view class='phones' bindtap='callServ' hover-class='nav-touch'>
+            <view class='ico icon-moneys'></view>
+            <view class='m-name'>收银</view>
+        </view>
         <!-- <view bindtap='toAgent' hover-class='nav-touch'>
             <view class='ico icon-myservices'></view>
             <view class='m-name'>我的服务商</view>

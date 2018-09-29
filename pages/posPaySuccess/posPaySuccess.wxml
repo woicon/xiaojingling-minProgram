@@ -1,0 +1,33 @@
+<view class='head'>
+    <view class="ico icon-ok"></view>
+    <view class='head-title'>{{detail.msg}}</view>
+    <view class='total'>
+        <!-- 收款金额 -->¥
+        <text>{{detail.receiptAmount}}</text>
+    </view>
+    <view wx:if="{{detail.detail.discountAmount>0}}">
+        优惠金额
+        <text>{{detail.discountAmount}}</text>
+    </view>
+</view>
+<view class='list'>
+    <view class='bline'>
+        支付方式
+        <view class='value'>
+            {{payType[detail.payType]}}
+        </view>
+    </view>
+    <view class='bline'>
+        订单编号
+        <view class='value'>
+            {{detail.outTradeNo}}
+        </view>
+    </view>
+    <view>
+        交易时间
+        <view class='value'>
+            {{detail.payTime}}
+        </view>
+    </view>
+</view>
+<view bindtap='paySuccess' class='button' hover-class='button-touch'>完成</view>

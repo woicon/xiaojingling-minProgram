@@ -145,6 +145,9 @@ module.exports = {
     merchantList: params => ajax('merchant/list', params),
     //订单退款
     refund: params => ajax('refund', params),
+    //支付二维码生成
+    jspay: params => ajax('jspay', params),
+    pay: params => ajax('pay', params),
     //云喇叭设备绑定
     bindYunlaba: params => ajax('device/yunlaba/bind', params),
 

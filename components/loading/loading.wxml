@@ -1,0 +1,3 @@
+<view class='loading'>
+    <view wx:for="123" wx:key="loadings" style='background:{{color}}'>{{item}}</view>
+</view>

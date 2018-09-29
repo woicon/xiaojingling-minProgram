@@ -1,20 +1,17 @@
-<view class='pay-name'>
-付款给 “北京西少爷肉夹馍三里屯专卖店”
-</view>
-<view class='pay-head'>
-
+<view class='pay-name'>付款给 “北京西少爷肉夹馍三里屯专卖店”</view>
+<view class='pay-head' bindtap='showKeybord'>
     <view class='pay-total {{priceEmpty?"total-empty":""}}'>
-        <text wx:if="{{!priceEmpty}}">¥</text> <view class='number'>{{priceEmpty?"请输入金额":totalPrice}}</view>
+        <text wx:if="{{!priceEmpty}}">¥</text> <view class='number'>{{priceEmpty?"付款金额":totalPrice}}</view>
         <view wx:if="{{!priceEmpty}}" class='price-line'></view>
     </view>
 </view>
-<view class='keyborad'>
+<view class='keyborad' wx:if="{{keyborad}}">
     <view class='key-warp'>
-        <view class='key bline rline' bindtap='touchKey' data-number="{{item}}" hover-class='key-touch' style='height:{{btnHeight*1.9}}rpx' wx:key="keys" wx:for="123456789">{{item}}</view>
-        <view class='key rline' wx:for="h.0" data-number="{{item}}"  style='height:{{btnHeight*1.9}}rpx' wx:key="keyB">{{item}}</view>
+        <view class='key bline rline' bindtap='touchKey' data-number="{{item}}" hover-class='key-touch' style='height:{{btnHeight*1.8}}rpx' wx:key="keys" wx:for="123456789">{{item}}</view>
+        <view class='key {{item=="h"?"hidden ico-keybord":""}} rline' bindtap='{{item=="h"?"toggleKeybord":"touchKey"}}' wx:for="h.0" data-number="{{item}}"  style='height:{{btnHeight*1.8}}rpx' wx:key="keyB">{{item=='h'?'':item}}</view>
     </view>
     <view class='key-button'>
-        <view class='del' catchtap='delNumber' >删除</view>
+        <view class='del blines ico-del' hover-class='key-touch' catchtap='delNumber'></view>
         <view class='pay' hover-class='touch'><text> 微信支付</text></view>
     </view>
 </view>

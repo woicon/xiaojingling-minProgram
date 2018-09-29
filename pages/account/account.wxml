@@ -1,8 +1,31 @@
-<view>
-    <view>账户余额
-    <view class='price'></view>
-    </view>
+<import src="../../pages/template/loading.wxml" />
+<view wx:if="{{isPageLoad}}" class='empty'>
+    <template is="bottomloading" />
 </view>
-<view class='button'>提现</view>
-<view>提现明细</view>
-<view>结算明细</view>
+<block wx:else>
+    <view class='heads'>
+        <view>
+            <view class='h-title'>账户余额 </view>
+            <view class='price'>{{trade.availableBalance}}</view>
+        </view>
+        <view class='outbtn'>提现</view>
+    </view>
+    <view class='list'>
+        <view class='bline' hover-class='touch'>提现明细</view>
+        <view hover-class='touch'>结算明细</view>
+    </view>
+
+    <view class='timebar'>
+        <view>
+            <picker mode="date"  value="{{startDate}}" start="start" end="{{endDate}}" bindchange="bindDateChange">
+            {{startDate}}
+            </picker>
+        </view>
+        <view>至</view>
+         <view>
+            <picker mode="date"  value="{{endDate}}" start="{{startDate}}" end="{{tadayDate}}" bindchange="bindDateChange">
+            {{endDate}}
+            </picker>
+        </view>
+    </view>
+</block>

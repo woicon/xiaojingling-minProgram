@@ -1,6 +1,6 @@
-<import src="../../pages/temp/loading.wxml" />
+
 <view wx:if="{{isPageLoad}}" class='flex-c-c'>
-    <template is="bottomloading" />
+         <load color="#ffffff"></load>
 </view>
 <view class='get-monty {{isPX?"px":""}}' wx:else>
     <view class='total-warp'>
@@ -12,30 +12,26 @@
                 <view wx:if="{{!priceEmpty}}" class='price-line'></view>
             </view>
         </view>
+        <view class='mark'>
+        <view class='ico icon-info'></view>
+        <input placeholder='订单备注' bindinput='markInput' value='{{mark}}' class='mark-input' placeholder-class="phcolor"></input>
+        </view>
         <!-- <view class='getcoupon' bindtap='cooseCoupon'>选择优惠券</view> -->
     </view>
-    <view class='key-border' style='height:{{borderHeight*2}}rpx'>
-        <view class='key-warp {{isPX?"bline":""}}' style='height:{{borderHeight*2}}rpx'>
-            <view class='key-numbergroup' style='height:{{borderHeight*2}}rpx'>
-                <view wx:for="123456789" class='bline rline' wx:key="keybord" bindtap='touchKey' data-number="{{item}}" hover-class='key-touch' style='height:{{keyHeight*2}}rpx'>{{item}}</view>
-                <view class='rline' bindtap='touchKey' data-number="0" hover-class='key-touch' style='height:{{keyHeight*2}}rpx'>0</view>
-                <view class='rline' bindtap='touchKey' data-number="." hover-class='key-touch' style='height:{{keyHeight*2}}rpx'>.</view>
-                <view class='rline' bindtap='touchKey' data-number="00" hover-class='key-touch' style='height:{{keyHeight*2}}rpx'>00</view>
+    <view class='key-border'>
+        <view class='key-warp {{isPX?"bline":""}}'>
+            <view class='key-numbergroup'>
+                <view wx:for="123456789" class='bline rline' wx:key="keybord" bindtap='touchKey' data-number="{{item}}" hover-class='key-touch' style='height:{{keyHeight*1.7}}rpx'>{{item}}</view>
+                <view class='rline' bindtap='touchKey' data-number="0" hover-class='key-touch' style='height:{{keyHeight*1.7}}rpx'>0</view>
+                <view class='rline' bindtap='touchKey' data-number="." hover-class='key-touch' style='height:{{keyHeight*1.7}}rpx'>.</view>
+                <view class='rline' bindtap='touchKey' data-number="00" hover-class='key-touch' style='height:{{keyHeight*1.7}}rpx'>00</view>
             </view>
-            <view class='key-btngroup' bindtap='createPay' style='height:{{borderHeight*2}}rpx'>
-                <!-- <view class='btn-wx icon-weixins border-b' id="weixin" style='height:{{keyHeight*2}}rpx'>
-                    <text>微信</text>
-                </view>
-                <view class='btn-alpay icon-alipays border-b' id="alipay" style='height:{{keyHeight*2}}rpx'>
-                    <text>支付宝</text>
-                </view>
-                <view class='btn-vip icon-vips border-b' id="vip" style='height:{{keyHeight*2}}rpx'>
-                    <text>会员卡</text>
-                </view> -->
-                <view class='btn-alpay bline btn-creatpay' id="alipay" hover-class='creatpay-touch' style='height:{{keyHeight*6}}rpx'>
+            <view class='key-btngroup'>
+                <view catchtap='delNumber' class='ico icon-delnum  delnum blines' hover-class='key-touch' style='height:{{keyHeight*1.7}}rpx'></view>
+                <view class='btn-alpay btn-creatpay' data-total="{{totalPrice}}" bindtap='createPay' id="alipay" hover-class='creatpay-touch' style='height:{{keyHeight*5.1}}rpx'>
                     <text>收 款</text>
                 </view>
-                <view catchtap='delNumber' class='ico icon-delnum  delnum' hover-class='key-touch' style='height:{{keyHeight*2}}rpx'></view>
+                
             </view>
         </view>
     </view>

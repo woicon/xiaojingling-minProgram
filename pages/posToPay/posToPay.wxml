@@ -1,0 +1,22 @@
+<view wx:if="{{isPageLoad}}" class='flex-c-c'>
+     <load color="#ffffff"></load>
+</view>
+<view wx:else class='pays' animation="{{animation}}">
+    <view>
+        <view class='sub'>收款金额</view>
+        <view class='price'>
+            <text>¥</text>{{totalPrcie}}
+        </view>
+    </view>
+    <view class='qr'>
+        <canvas bindtap="previewImg" hidden="{{canvasHidden}}" style="width:{{size.w}}px;height:{{size.h}}px" canvas-id="qrCodeCanvas" />
+        <view class='qr-time' wx:if="{{qrFail}}">收款码已失效</view>
+        <view class='qr-time' wx:else>收款码将于 {{endTime}}s 后失效</view>
+        <view class='qr-info'>请顾客使用微信或者支付宝“扫一扫”付款</view>
+          <view class='qrlost' bindtap='initPay' wx:if="{{qrFail}}">重新生成</view>
+    </view>
+    <view class='paybar'>
+        <view class='button' hover-class='button-touch' bindtap='scanPay'>
+            <text class='icon-scan ico'></text>扫描微信或支付宝"付款码"收款</view>
+    </view>
+</view>

@@ -1,7 +1,7 @@
 page {
     /* //   background: #0ec695; */
     box-sizing: border-box;
-    background-image: linear-gradient(0deg, #00939b 0%, #0ec695 100%);
+    background-image: linear-gradient(0deg, #0ec695 0%, #0ec695 100%);
 }
 
 .border-r {
@@ -52,7 +52,6 @@ page {
 
 .key-border {
     background: #fff;
-    height: 60%;
     position: absolute;
     left: 0;
     right: 0;
@@ -69,12 +68,10 @@ page {
 }
 
 .key-warp {
-    position: absolute;
-    display: flex;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    
 }
 
 .px .key-border {
@@ -98,6 +95,7 @@ page {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-wrap:wrap;
     font-size: 70rpx;
     transition: 0.2s;
     font-weight: 400;
@@ -117,13 +115,18 @@ page {
 .key-btngroup {
     background: #fff;
     width: 25%;
-    height: 100%;
     overflow: hidden;
-    position: relative;
+    position:absolute;
+    right:0;
+    bottom:0;
+    top:0;
 }
 
 .key-btngroup .ico {
     color: #666;
+    height:25%;
+    position:relative;
+    z-index:10;
 }
 
 .key-btngroup>view {
@@ -153,6 +156,7 @@ page {
 
 .btn-alpay {
     color: #0be;
+    height:75%;
 }
 
 .btn-vip {
@@ -301,7 +305,28 @@ total-warp {
     bottom: 0;
     background: rgba(0, 0, 0, 0.3);
 }
+.phcolor{
+    color:#fff;
+}
 
 .key-touch {
     background: #eee;
+}
+.mark{
+    margin:40rpx;
+    background:rgba(0, 0, 0, 0.1);
+    border-radius:8rpx;
+    display: flex;
+    align-items:center;
+    justify-content:space-between;
+}
+.mark .ico{
+    margin:0 20rpx;
+    color:#fff;
+}
+.mark-input{
+    padding:16rpx 20rpx 16rpx 0;
+    font-size:26rpx;
+    color:#fff;
+    flex-grow:2;
 }

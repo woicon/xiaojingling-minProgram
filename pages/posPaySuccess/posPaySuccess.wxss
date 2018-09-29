@@ -1,0 +1,60 @@
+.list {
+}
+
+.ico {
+    font-size: 120rpx;
+    color: #0ec695;
+    margin-bottom: 20rpx;
+}
+
+.head-title {
+    font-size: 28rpx;
+    color: #444;
+    font-weight: 800;
+}
+
+.total {
+    font-size: 40rpx;
+    margin: 20rpx 0;
+    color: #f66948;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    margin-right: 12rpx;
+}
+
+.total text {
+    font-weight: 800;
+    color: #f66948;
+    font-size: 70rpx;
+}
+
+.button {
+    margin: 50rpx;
+}
+
+.head {
+    text-align: center;
+    padding: 90rpx 0;
+}
+
+page {
+    background: #fff;
+}
+
+.list {
+    padding: 50rpx;
+}
+
+.list>view {
+    display: flex;
+    justify-content: space-between;
+    font-size: 28rpx;
+    color: #666;
+    padding: 28rpx 0;
+}
+
+.list .value {
+    color: #333;
+}

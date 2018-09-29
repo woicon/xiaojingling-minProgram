@@ -1,11 +1,20 @@
+import types from './utils/types'
 App({
     onLaunch: function() {
         //适配iPhone X
+        console.log(types)
         wx.getSystemInfo({
             success: (res) => {
-                this.globalData.isPX = (res.model.indexOf("iPhone X") != -1) ? true : false
+                let isPX = (res.model.indexOf("iPhone X") != -1) ? true : false
+                this.systemInfo = {
+                    isPX: isPX,
+                    windowHeight: res.windowHeight,
+                    windowWidth: res.windowWidth
+                }
             }
         })
+        this.types = types
+        this.base = require('./utils/util.js')
         this.checkLogin()
     },
     globalData: {

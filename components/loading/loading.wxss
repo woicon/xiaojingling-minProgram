@@ -1,0 +1,47 @@
+.loading {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height:80rpx;
+}
+
+.loading>view {
+    width: 12rpx;
+    height: 12rpx;
+    margin: 0 7rpx;
+    background: #666;
+    border-radius:20px;
+    font-size: 0;
+    animation: moves 1.2s linear infinite both;
+    /* border-radius: 90px; */
+}
+
+.loading view:nth-child(1) {
+    animation-delay: 0;
+}
+
+.loading view:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.loading view:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+@keyframes moves {
+    0% {
+        transform: scale(1.5);
+        opacity: .9;
+    }
+
+    50% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1.5);
+        opacity: .9;
+    }
+}

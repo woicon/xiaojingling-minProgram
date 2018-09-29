@@ -1,0 +1,19 @@
+<view class='detail'>
+<view class='heads'>
+    <view class='head-total'>
+        ¥ 900.00
+    </view>
+    <view class='head-name'>西少爷西直门旗舰店</view>
+</view>
+<view class='list'>
+    <view class='bline'>原价<view class='value unvalue'>100.00</view></view>
+    <view>优惠 <view class='value'>90.00</view></view>
+</view>
+
+<view class='comment'>
+    <view class='comment-title'>评价</view>
+    <view class='star'>
+        <view wx:for="{{star}}" bindtap='selectStar' data-id="{{item}}" wx:key="starlist" class='icon-star lightStar[i]?"active":""'></view>
+    </view>
+</view>
+</view>

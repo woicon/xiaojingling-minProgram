@@ -12,14 +12,13 @@ Page({
         goodsDetail: [],
         borderHeight: null
     },
-
     onLoad: function (options) {
         console.log("::onLoad::")
+        wx.hideTabBar()
         this.setData({
-            isPX: app.globalData.isPX
+            isPX: app.systemInfo.isPX
         })
     },
-
     onReady: function () {
         console.log("::onReady::")
         let that = this
@@ -138,19 +137,26 @@ Page({
                 icon: "none"
             })
         } else {
-            wx.scanCode({
-                onlyFromCamera: true,
-                success: (res) => {
-                    console.log("扫码返回结果：：：：：", res)
-                    this.creatPay(res.result)
-                },
-                fail: function (error) {
-                    console.log("扫码Error::", error)
-                }
+            wx.navigateTo({
+                url: `/pages/posToPay/posToPay?total=${this.data.totalPrice}&mark=${this.data.mark ? this.data.mark : ''}`,
             })
+            // wx.scanCode({
+            //     onlyFromCamera: true,
+            //     success: (res) => {
+            //         console.log("扫码返回结果：：：：：", res)
+            //         this.creatPay(res.result)
+            //     },
+            //     fail: function (error) {
+            //         console.log("扫码Error::", error)
+            //     }
+            // })
         }
     },
-    
+    markInput(e){
+        this.setData({
+            mark:e.detail.value
+        })
+    },
     creatPay: function (payerAccount) {
         let that = this
         wx.showLoading({

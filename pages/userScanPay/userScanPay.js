@@ -1,7 +1,9 @@
+let app = getApp()
 Page({
     data: {
         totalPrice: "0",
         priceEmpty: true,
+        keyborad:true
     },
     onLoad: function(options) {
 
@@ -16,13 +18,14 @@ Page({
 
     },
     getInfo() {
-        wx.getSystemInfo({
-            success: (res) => {
-                console.log(res)
-                this.setData({
-                    btnHeight: res.windowWidth / 4
-                })
-            },
+        this.setData({
+            isPX: app.systemInfo.isPX,
+            btnHeight: app.systemInfo.windowWidth / 4.2
+        })
+    },
+    showKeybord(){
+        this.setData({
+            keyborad:true
         })
     },
     touchKey: function(e) {
@@ -40,6 +43,16 @@ Page({
         this.setData({
             priceEmpty: false,
             totalPrice: newTotal.length < 8 ? newTotal : total
+        })
+    },
+    toggleKeybord(e){
+        this.setData({
+            keyborad: !this.data.keyborad
+        })
+    },
+    showKeybord(){
+        this.setData({
+            keyborad: true
         })
     },
     delNumber: function () {
