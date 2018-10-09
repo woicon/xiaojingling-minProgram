@@ -1,17 +1,46 @@
 <view class='pay-name'>付款给 “北京西少爷肉夹馍三里屯专卖店”</view>
 <view class='pay-head' bindtap='showKeybord'>
     <view class='pay-total {{priceEmpty?"total-empty":""}}'>
-        <text wx:if="{{!priceEmpty}}">¥</text> <view class='number'>{{priceEmpty?"付款金额":totalPrice}}</view>
+        <text wx:if="{{!priceEmpty}}">¥</text>
+        <view class='number'>{{priceEmpty?"付款金额":totalPrice}}</view>
         <view wx:if="{{!priceEmpty}}" class='price-line'></view>
     </view>
 </view>
+<view class='pay-coupon'>
+    <view>中秋节全场满100减20</view>
+    <view>-¥9.00</view>
+</view>
+
+<view bindtap='addRemark' class='pay-addcomment'>添加备注</view>
+
+<view class='pay-cet'>
+    <view class='ico-vip vip'></view>
+    <view>
+        <view class='vip-title'> 成为会员，省心又省钱</view>
+        <view class='vip-txt'>专享活动·尊贵身份·优质服务</view>
+    </view>
+    <view class='vip-get'>免费领卡</view>
+</view>
+
 <view class='keyborad' wx:if="{{keyborad}}">
     <view class='key-warp'>
         <view class='key bline rline' bindtap='touchKey' data-number="{{item}}" hover-class='key-touch' style='height:{{btnHeight*1.8}}rpx' wx:key="keys" wx:for="123456789">{{item}}</view>
-        <view class='key {{item=="h"?"hidden ico-keybord":""}} rline' bindtap='{{item=="h"?"toggleKeybord":"touchKey"}}' wx:for="h.0" data-number="{{item}}"  style='height:{{btnHeight*1.8}}rpx' wx:key="keyB">{{item=='h'?'':item}}</view>
+        <view class='key {{item=="h"?"hidden ico-keybord":""}} rline' bindtap='{{item=="h"?"toggleKeybord":"touchKey"}}' wx:for="h.0" data-number="{{item}}" style='height:{{btnHeight*1.8}}rpx' wx:key="keyB">{{item=='h'?'':item}}</view>
     </view>
     <view class='key-button'>
         <view class='del blines ico-del' hover-class='key-touch' catchtap='delNumber'></view>
-        <view class='pay' hover-class='touch'><text> 微信支付</text></view>
+        <view class='pay' bindtap='toPay' hover-class='touch'>
+            <text> 微信支付</text>
+        </view>
+    </view>
+</view>
+
+<view wx:if="{{showRemark}}" class='remark'>
+    <view class='remark-cont'>
+        <view class='remark-title'>添加备注</view>
+        <view>
+            <textarea placeholder='请输入备注内容'></textarea>
+        </view>
+        <view class='button'>添加备注</view>
     </view>
 </view>

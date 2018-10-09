@@ -26,6 +26,14 @@
     padding: 20rpx 0;
 }
 
+.star .active{
+    color:tomato;
+}
+
+.star .ico{
+    transition:.6s;
+}
+
 .comment-title {
     font-size: 26rpx;
     color: #666;
@@ -61,6 +69,21 @@
 .star>view {
     display: inline-block;
     color: #ccc;
-    font-size: 38rpx;
+    font-size:44rpx;
     margin: 0 10rpx;
+}
+.commtent-num{
+    font-size:24rpx;
+    color:#999;
+    text-align:right;
+}
+.comment{
+    padding:20rpx 0;
+    margin:0 20rpx;
+}
+textarea{
+    font-size:28rpx;
+    width:100%;
+    text-align:left;
+    height:120rpx;
 }

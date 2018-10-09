@@ -13,14 +13,12 @@ Page({
         borderHeight: null
     },
     onLoad: function (options) {
-        console.log("::onLoad::")
         wx.hideTabBar()
         this.setData({
             isPX: app.systemInfo.isPX
         })
     },
     onReady: function () {
-        console.log("::onReady::")
         let that = this
         wx.setNavigationBarColor({
             frontColor: '#ffffff',
@@ -33,7 +31,6 @@ Page({
         query.select('#alipay').boundingClientRect()
         query.selectViewport().scrollOffset()
         query.exec((res) => {
-            console.log(res[0])
             let bheight = res[0].width
             let fheight = bheight.toFixed()
             that.setData({
@@ -43,7 +40,6 @@ Page({
         })
     },
     onShow: function () {
-        console.log("::ONshow::")
         let that = this
         try {
             const loginData = wx.getStorageSync("loginData")
@@ -112,13 +108,10 @@ Page({
     touchKey: function (e) {
         let that = this
         let total = that.data.totalPrice
-        console.log(typeof total, total)
         let num = e.currentTarget.dataset.number
-        console.log(num)
         let decimalReg = /^\d{0,8}\.{0,1}(\d{1,2})?$/
         let _total = `${total}${num}`
         let nums = (num == "00" && total == "0") ? total : num
-        console.log(nums)
         let newTotal = total == "0" ? nums != '.' ? nums : "0." : decimalReg.test(_total) ? _total : total
 
         this.setData({
@@ -128,7 +121,6 @@ Page({
     },
 
     createPay: function (e) {
-        console.log(e.target.id)
         let that = this
         let totalPrice = Number(this.data.totalPrice).toFixed(2)
         if (totalPrice == 0.00) {

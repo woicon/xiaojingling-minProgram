@@ -3,7 +3,18 @@ Page({
     data: {
         totalPrice: "0",
         priceEmpty: true,
-        keyborad:true
+        keyborad:true,
+        showMark:false
+    },
+    toPay(){
+        wx.navigateTo({
+            url: '/pages/userPaySuccess/userPaySuccess',
+        })
+    },
+    addRemark(){
+        this.setData({
+            showRemark:true
+        })
     },
     onLoad: function(options) {
 

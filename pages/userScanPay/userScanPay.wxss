@@ -6,12 +6,49 @@
         opacity: 0.8;
     }
 }
+.pay-cet{
+    position:relative;
+    display: flex;
+    align-items:center;
+    justify-content:space-between;
+    background:#fff;
+    padding:50rpx;
+    margin:20rpx 0;
+}
+.vip-title{
+    font-weight:800;
+    color:#B79C60;
+}
+.vip-get{
+    color:#B79C60;
+    font-size:30rpx;
+    font-weight:800;
+}
+.vip-txt{
+    font-size:24rpx;
+    color:#999;
+}
+.vip{
+    position:absolute;
+    left:-70rpx;
+    top:-70rpx;
+    border:70rpx solid transparent;
+    border-bottom-color:#B79C60;
+    transform:rotate(-45deg);
+}
+.vip::before{
+    position:absolute;
+    color:rgba(255, 255, 255, .9);
+    top:20rpx;
+    left:-20rpx;
+}
 .key{
     width: 33.3333333%;
     font-size:70rpx;
+    font-weight:800;
     display: flex;align-items:center;
     justify-content:center;
-    color:#444;
+    color:#555;
     transition:.3s;
 }
 .key.hidden{
@@ -42,7 +79,7 @@
 .pay-head{
     display:flex;
     justify-content:space-between;
-    padding:50rpx;
+    padding:40rpx;
     background:#fff;
     align-items:center;
     font-size:28rpx;
@@ -104,12 +141,26 @@
 .pay-name{
     font-size:26rpx;
     color:#444;
-    background:#fff;
-    padding:50rpx;
+    padding:30rpx;
+}
+.pay-addcomment{
+    padding:20rpx 40rpx;
+    color:#666;
+    font-size:28rpx;
 }
 .del{
     height:25%;
     font-size:50rpx;
+    color:#555;
+}
+.pay-coupon{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 40rpx 40rpx;
+    color:#FF7F3A;
+    font-size:28rpx;
+    background:#fff;
 }
 .pay{
     height:75%;
@@ -162,3 +213,22 @@
   content: "\e905";
 }
 
+.remark{
+    position:fixed;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+    background:rgba(0, 0, 0, .5);
+}
+.remark-cont{
+    background:#fff;
+    margin:20% 10%;
+    padding:40rpx;
+    border-radius:8rpx;
+}
+.remark-title{
+    padding:20rpx 0;
+    font-weight:800;
+    color:#444;
+}

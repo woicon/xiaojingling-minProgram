@@ -1,60 +1,47 @@
-// pages/userPaySuccess/userPaySuccess.js
 Page({
-  data: {
-      star:"12345",
-      
-  },
-  onLoad: function (options) {
-      wx.setNavigationBarTitle({
-          title: '支付完成',
-      })
-  },
-  onReady: function () {
-
-  },
-    selectStar(e){
-        let startId = e.currentTarget.id
+    data: {
+        endTxt: 0,
+        isComment:false
+    },
+    onLoad: function(options) {
+        wx.setNavigationBarTitle({
+            title: '支付完成'
+        })
+    },
+    selectStar(e) {
+        console.log(e)
+        let startId = e.currentTarget.dataset.id,
+            star = e.currentTarget.dataset.star
         let lightStar = []
-        for(let i=0; i<=startId; i++){
-            lightStar
+        for (let i = 0; i < star; i++) {
+            lightStar.push(i <= startId ? true : false)
+        }
+        this.setData({
+            lightStar: lightStar,
+            comment:true
+        })
+    },
+    commentTxt(e){
+        let endTxt = e.detail.value.length
+        if (endTxt<=140){
+            this.setData({
+                commentTxt:e.detail.value,
+                endTxt: endTxt
+            })
+        }else{
+            wx.showToast({
+                title: '留言字数不能大于140',
+            })
         }
     },
-  onShow: function () {
+    sendComment(){
+        wx.showModal({
+            title: '完成',
+            content: '感谢评价！',
+        })
 
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
+        this.setData({
+            isComment:true
+        })
+    }
 })

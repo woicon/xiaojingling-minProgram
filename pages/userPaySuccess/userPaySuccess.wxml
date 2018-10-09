@@ -13,7 +13,12 @@
 <view class='comment'>
     <view class='comment-title'>评价</view>
     <view class='star'>
-        <view wx:for="{{star}}" bindtap='selectStar' data-id="{{item}}" wx:key="starlist" class='icon-star lightStar[i]?"active":""'></view>
+        <view wx:for="....." bindtap='{{isComment?"":"selectStar"}}' data-star='5' data-id="{{index}}" wx:key="starlist" class='ico icon-star {{lightStar[index]?"active":""}}'></view>
+    </view>
+    <view wx:if="{{comment}}" class='comment'>
+        <textarea placeholder='输入评价内容' bindinput='commentTxt'></textarea>
+        <view class='commtent-num'>{{endTxt}}/140</view>
+        <view class='button' wx:if="{{!isComment}}" bindtap='sendComment'>评价</view>
     </view>
 </view>
 </view>
