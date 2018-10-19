@@ -298,3 +298,14 @@
     border: none;
 }
 
+.o-type .alipay{
+    color:#20A1E6;
+}
+.o-type .weixin{
+    color:#44B549;
+}
+.o-type .vip{
+    color:#FF7A3E;
+    
+}
+

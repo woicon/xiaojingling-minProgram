@@ -117,7 +117,7 @@
         </view>
         <!-- 0总部 1门店 2员工 3店长 -->
         <block wx:if="{{detail.receiptAmount > 0}}">
-            <block wx:if="{{role == 3 || role == 1 }}">
+            <block wx:if="{{role != 2 }}">
                 <view class='button-group' wx:if="{{detail.orderStatus == 'SUCCESS' || detail.orderStatus == 'REFUND'}}">
                     <view class='button button-red f-c-c checkbtn ' hover-class='checkbtn-hover ' bindtap='goRefund'>
                         <template is="bottomloading" wx:if="{{btnLoading}}" />

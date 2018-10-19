@@ -46,12 +46,6 @@
                 "selectedIconPath": "assets/images/order-sel.png"
             },
             {
-                "pagePath": "pages/pos/pos",
-                "text": "收银",
-                "iconPath": "assets/images/pos.png",
-                "selectedIconPath": "assets/images/pos-sel.png"
-            },
-            {
                 "pagePath": "pages/member/member",
                 "text": "个人中心",
                 "iconPath": "assets/images/member.png",

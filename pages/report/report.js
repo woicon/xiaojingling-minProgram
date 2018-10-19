@@ -67,7 +67,6 @@ Page({
                 console.log("门店角色:::::")
                 parmas.merchantCode = wx.getStorageSync("storeCode") || app.commonParmas('merchantCode')
                 Promise.all([api.trade(parmas), api.tradeOperator(parmas)]).then(res => {
-                    console.log(res)
                     var cashier = (res[1].code != 'FAILED') ? res[1] : null
                     var trade = (res[0].code != 'FAILED') ? res[0].statistics : null
                     this.setData({

@@ -96,7 +96,8 @@ Page({
             billBeginTime: base.startDate(30, 'yyyyMMddhhmmss'),
             merchantCode: this.data.merchantCode
         }
-        if (this.data.role == 1) {
+        //角色 0总部 1门店 2员工 3店长
+        if (this.data.role == 2) {
             parmas.operatorId = app.commonParmas("operatorId")
         }
         let _parmas = Object.assign(parmas, this.data.searchParmas)

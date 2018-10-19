@@ -96,8 +96,9 @@
 }
 
 .datevalue {
-    font-size: 32rpx;
+    font-size: 30rpx;
     color: #555;
+    font-weight:800;
     position: absolute;
     left: 0;
     top: 0;
@@ -190,7 +191,9 @@
 .rs-title .weixin {
     color: #23b300;
 }
-
+.rs-title .vip{
+    color:#FF7A3E;
+}
 .rs-title .alipay {
     color: #1394ff;
 }

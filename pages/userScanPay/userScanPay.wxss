@@ -21,7 +21,7 @@
 }
 .vip-get{
     color:#B79C60;
-    font-size:30rpx;
+    font-size:26rpx;
     font-weight:800;
 }
 .vip-txt{
@@ -34,7 +34,8 @@
     top:-70rpx;
     border:70rpx solid transparent;
     border-bottom-color:#B79C60;
-    transform:rotate(-45deg);
+    transform:scale(.6) rotate(-45deg);
+    
 }
 .vip::before{
     position:absolute;
@@ -70,7 +71,7 @@
 }
 .price-line {
     width: 4rpx;
-    height: 76rpx;
+    height: 56rpx;
     background: #FF7F3A;
     animation: ops 1s ease-in-out infinite;
     margin-left: 8rpx;
@@ -100,7 +101,7 @@
     font-size:28rpx;
 }
 .number{
-    font-size:80rpx;
+    font-size:60rpx;
 }
 .total-empty .number{
     color:#ccc;
@@ -159,8 +160,11 @@
     justify-content:space-between;
     padding:0 40rpx 40rpx;
     color:#FF7F3A;
-    font-size:28rpx;
+    font-size:26rpx;
     background:#fff;
+}
+.coupon-total{
+    font-weight:800;
 }
 .pay{
     height:75%;
@@ -224,11 +228,33 @@
 .remark-cont{
     background:#fff;
     margin:20% 10%;
-    padding:40rpx;
+    padding:40rpx 40rpx 0;
     border-radius:8rpx;
 }
-.remark-title{
+.remark-cont input{
+    font-size:26rpx;
+    width:100%;
     padding:20rpx 0;
+}
+.remark-title{
+    padding:10rpx 0;
     font-weight:800;
+    font-size:28rpx;
     color:#444;
+}
+.remark-bar{
+    display: flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+}
+.remark-bar>view{
+    width:50%;
+    text-align:center;
+    padding:30rpx 0;
+    font-size:30rpx;
+    color:#555;
+}
+.remark-bar .yes{
+    color:#44B549;
 }

@@ -8,7 +8,7 @@
 </view>
 <view class='pay-coupon'>
     <view>中秋节全场满100减20</view>
-    <view>-¥9.00</view>
+    <view class='coupon-total'>-¥9.00</view>
 </view>
 
 <view bindtap='addRemark' class='pay-addcomment'>添加备注</view>
@@ -38,9 +38,12 @@
 <view wx:if="{{showRemark}}" class='remark'>
     <view class='remark-cont'>
         <view class='remark-title'>添加备注</view>
-        <view>
-            <textarea placeholder='请输入备注内容'></textarea>
+        <view class='bline'>
+            <input placeholder='请输入备注内容' maxlength='12' />
         </view>
-        <view class='button'>添加备注</view>
+        <view class='remark-bar'>
+            <view class='no rline' bindtap='resRemark'>取消</view>
+            <view class='yes' bindtap='newRemark'>添加备注</view>
+        </view>
     </view>
 </view>

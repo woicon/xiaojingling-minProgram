@@ -39,6 +39,16 @@ Page({
             keyborad:true
         })
     },
+    resRemark(){
+        this.setData({
+            showRemark:false
+        })
+    },
+    newRemark(){
+        this.setData({
+            showRemark: false
+        })
+    },
     touchKey: function(e) {
         let that = this
         let total = that.data.totalPrice

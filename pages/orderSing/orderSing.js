@@ -26,7 +26,7 @@ Page({
             MPAY: '会员'
         }
     },
-    onLoad: function(options) {
+    onLoad(options) {
         this.setData({
             merchantCode: options.id || app.commonParmas('merchantCode'),
             role: app.commonParmas('role')

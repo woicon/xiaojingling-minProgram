@@ -57,8 +57,6 @@ Page({
         })
     },
     checkPay: function(e) {
-
-        console.log(e)
         this.setData({
             btnLoading: true
         })

@@ -38,8 +38,7 @@
                 <template is="bottomloading" />
             </view>
             <block wx:else>
-                <view class='o-list' wx:if="{{bill}}">
-                    <!-- wx:if="{{item.orderStatus != 'PAYERROR'}}"-->
+                <view class='o-list' wx:if="{{bill.orderDetails && bill.orderDetails.length>0 }}">
                     <view class='o-item' 
                         hover-class='o-item-touch'
                         wx:for="{{bill.orderDetails}}" 
@@ -79,7 +78,7 @@
                         </view>
                     </view>
                 </view>
-                <view class='empty' wx:elif="{{bill==null}}">
+                <view class='empty' wx:else>
                     <view class='ico icon-orders'></view>
                     <view class='txt'>没有查询到对应的数据</view>
                 </view>
