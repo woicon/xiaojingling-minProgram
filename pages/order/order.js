@@ -98,7 +98,7 @@ Page({
         }
         //角色 0总部 1门店 2员工 3店长
         if (this.data.role == 2) {
-            parmas.operatorId = app.commonParmas("operatorId")
+            parmas.operatorId = app.commonParams("operatorId")
         }
         let _parmas = Object.assign(parmas, this.data.searchParmas)
         return _parmas
@@ -275,10 +275,10 @@ Page({
 
     },
     onShow() {
-        let role = app.commonParmas("role")
+        let role = app.commonParams("role")
         this.setData({
-            role: app.commonParmas('role'),
-            merchantCode: app.commonParmas('merchantCode')
+            role: app.commonParams('role'),
+            merchantCode: app.commonParams('merchantCode')
         })
         if (role == 0) {
             this.orderInit()

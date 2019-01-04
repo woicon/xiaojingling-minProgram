@@ -30,7 +30,7 @@ Page({
             checkParmas: options,
             detail: wx.getStorageSync("orderDetail"),
             isPageLoad: false,
-            role: app.commonParmas('role')
+            role: app.commonParams('role')
         })
     },
     checkOrder() {

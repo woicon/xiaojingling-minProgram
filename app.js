@@ -1,14 +1,16 @@
 import types from './utils/types'
 App({
-    onLaunch: function() {
+    onLaunch() {
         //适配iPhone X
         console.log(types)
         this.updateManager()
         wx.getSystemInfo({
             success: (res) => {
                 let isPX = (res.model.indexOf("iPhone X") != -1) ? true : false
+                this.isPX = isPX
                 this.systemInfo = {
                     isPX: isPX,
+                    headHeight: isPX ? 88 : 64,
                     windowHeight: res.windowHeight,
                     windowWidth: res.windowWidth
                 }
@@ -17,7 +19,6 @@ App({
         this.types = types
         this.base = require('./utils/util.js')
         this.checkLogin()
-        
     },
     globalData: {
         userInfo: null
@@ -26,7 +27,7 @@ App({
         let _curPageArr = getCurrentPages()
         return _curPageArr[_curPageArr.length - 1]
     },
-    commonParmas(arg) {
+    commonParams(arg) {
         try {
             let login = wx.getStorageSync("login")
             return login[arg]

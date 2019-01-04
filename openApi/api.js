@@ -133,10 +133,17 @@ module.exports = {
     trade: params => ajax('statistics/trade', params),
     //商户分组交易汇总统计
     tradeMerchant: params => ajax('statistics/trade/merchant', params),
+    //通用充值数据统计
+    recharge: params => ajax('statistics/recharge', params),
+    //会员新增数量
+    newMemberCount: params => ajax('statistics/newMemberCount', params),
+    //款台分组交易汇总统计
+    terminal: params => ajax('statistics/trade/terminal', params),
     //员工分组交易汇总统计
     tradeOperator: params => ajax('statistics/trade/operator', params),
     //商户分组交易概要统计
     tradeSummaryMerchant: params => ajax('statistics/trade/summaryMerchant', params),
+
     //账单查询
     bill: params => ajax('bill', params),
     //订单查询

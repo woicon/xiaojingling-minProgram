@@ -1,0 +1,60 @@
+.list{
+    background:#fff;
+}
+.heads{
+    background:#fff;
+    margin-bottom:40rpx;
+    padding:40rpx;
+        display: flex;
+    align-items:center;
+    justify-content:space-between;
+}
+.titles{
+    font-size:28rpx;
+    color:#888;
+}
+.amt{
+    font-weight:800;
+    font-size:50rpx;
+}
+.list>view{
+    display: flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:28rpx 0;
+    font-size:28rpx;
+    margin:0 40rpx;
+    color:#444;
+}
+.list label{
+    color:#666;
+}
+
+.tips{
+    font-size:28rpx;
+    padding:40rpx;
+    display: flex;
+    line-height:1.6;
+    color:tomato;
+}
+.tips .ico{
+    font-size:46rpx;
+    margin-right:8rpx;
+}
+
+.tag{
+    display: flex;
+    align-items:center;
+    font-weight:800;
+    color:#444;
+}
+.tag .ico{
+    font-size:48rpx;
+    margin-right:12rpx;
+    color:green;
+}
+
+.subs{
+    text-align:right;
+    color:#333;
+}

@@ -30,7 +30,7 @@ Page({
     onLoad: function(options) {
         this.setData({
             detail: wx.getStorageSync("refundDetail"),
-            role: app.commonParmas("role")
+            role: app.commonParams("role")
         })
     },
 

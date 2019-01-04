@@ -8,27 +8,32 @@ Page({
         reportTab: 1,
         reportDate: null,
         reportDateFormat: null,
-        disNext: true
+        disNext: true,
+        navBar:null,
+        currentCat:1,
     },
-    onLoad: function(options) {
+    onLoad(options) {
         app.checkLogin()
         const nowDate = new Date()
         wx.setNavigationBarTitle({
             title: '收款报表',
         })
         try {
+            let role = app.commonParams('role')
             this.setData({
                 reportDate: new Date().Format('yyyyMMdd'),
                 taday: base.formatDate(nowDate, 'yyyy-MM-dd'),
                 yestaday: base.formatDate(nowDate.getTime() - base.dayValue, 'yyyy-MM-dd'),
                 reportDateFormat: new Date().Format('yyyy-MM-dd'),
-                role: app.commonParmas('role')
+                role: role, //role  0总部 1门店 2员工 3店长
+                navBar: role === 0 ? ['营业统计', '会员统计'] : ['营业统计', '会员统计', '核销统计'],
+                ...app.systemInfo
             })
         } catch (error) {
             console.log(error)
         }
     },
-    reportParmas(date) {
+    reportparams(date) {
         return this.data.searchDate ? this.data.searchDate : {
             beginDate: date,
             endDate: date
@@ -36,20 +41,21 @@ Page({
     },
     getReport(reportDate, role) {
         let login = wx.getStorageSync("login")
-        let parmas = this.reportParmas(reportDate)
+        let params = this.reportparams(reportDate)
         this.setData({
             srcollLoading: true
         })
         //0总部 1门店 2员工 3店长
-        let roles = role || app.commonParmas('role')
+        let roles = role || app.commonParams('role')
         switch (roles) {
             case 0:
                 console.log("总部:::::")
                 //获取门店
-                let report = [api.trade(parmas), api.tradeMerchant(parmas), api.merchantList({})]
+                let report = [api.trade(params), api.tradeMerchant(params), api.merchantList({}), api.recharge(params), api.newMemberCount(params)]
                 Promise.all(report).then(res => {
                     console.log(res)
                     let store = res[2].merchantList
+                    let recharge = res[3].rechargeStatistics
                     store.unshift({
                         merchantName: '全部门店'
                     })
@@ -59,14 +65,15 @@ Page({
                         department: res[1],
                         srcollLoading: false,
                         store: store,
+                        recharge: recharge,
                         selStore: 0,
                     })
                 })
                 break
             case 1:
-                console.log("门店角色:::::")
-                parmas.merchantCode = wx.getStorageSync("storeCode") || app.commonParmas('merchantCode')
-                Promise.all([api.trade(parmas), api.tradeOperator(parmas)]).then(res => {
+                console.log("门店:::::")
+                params.merchantCode = wx.getStorageSync("storeCode") || app.commonParams('merchantCode')
+                Promise.all([api.trade(params), api.tradeOperator(params), api.recharge(params), api.newMemberCount(params)]).then(res => {
                     var cashier = (res[1].code != 'FAILED') ? res[1] : null
                     var trade = (res[0].code != 'FAILED') ? res[0].statistics : null
                     this.setData({
@@ -79,10 +86,10 @@ Page({
                 })
                 break
             case 2:
-                console.log("员工角色:::::::")
-                parmas.merchantCode = app.commonParmas('merchantCode')
-                parmas.operatorId = app.commonParmas('operatorId')
-                api.tradeOperator(parmas).then(res => {
+                console.log("员工:::::::")
+                params.merchantCode = app.commonParams('merchantCode')
+                params.operatorId = app.commonParams('operatorId')
+                api.tradeOperator(params).then(res => {
                     this.setData({
                         isPageLoad: false,
                         cashier: res,
@@ -92,8 +99,8 @@ Page({
                 break
             case 3:
                 console.log("店长角色:::::")
-                parmas.merchantCode = app.commonParmas('merchantCode')
-                Promise.all([api.trade(parmas), api.tradeOperator(parmas)]).then(res => {
+                params.merchantCode = app.commonParams('merchantCode')
+                Promise.all([api.trade(params), api.tradeOperator(params), api.recharge(params), api.newMemberCount(params)]).then(res => {
                     console.log(res)
                     if (res[1].code != 'FAILED') {
                         var cashier = res[1]
@@ -148,7 +155,7 @@ Page({
             })
         }
     },
-    nextView: function(csTime) {
+    nextView(csTime) {
         let nowTime = new Date().getTime()
         const dayValue = base.dayValue
         let disNext = new Date().Format('yyyy-MM-dd') == new Date(csTime).Format('yyyy-MM-dd') ? true : false
@@ -167,7 +174,7 @@ Page({
             reportTab: reportTab
         })
     },
-    toggleReport: function(e) {
+    toggleReport(e) {
         let event = e.target.dataset
         let reportDate = this.data.reportDateFormat
         switch (event.index) {
@@ -204,9 +211,9 @@ Page({
         })
     },
     moreDepartment() {
-        let parmas = this.reportParmas(this.data.reportDate)
-        parmas.pageNumber = this.data.department.pageNumber + 1
-        api.tradeMerchant(parmas)
+        let params = this.reportparams(this.data.reportDate)
+        params.pageNumber = this.data.department.pageNumber + 1
+        api.tradeMerchant(params)
             .then(res => {
                 console.log(res)
                 let department = this.data.department
@@ -220,36 +227,35 @@ Page({
     },
     moreCashier() {
         let cashier = this.data.cashier
-        let parmas = this.reportParmas(this.data.reportDate)
-        parmas.merchantCode = app.commonParmas("merchantCode")
-        parmas.pageNumber = cashier.pageNumber + 1
-        api.tradeOperator(parmas)
+        let params = this.reportparams(this.data.reportDate)
+        params.merchantCode = app.commonParams("merchantCode")
+        params.pageNumber = cashier.pageNumber + 1
+        api.tradeOperator(params)
             .then(res => {
                 console.log(res)
                 if (res.code != 'FAILED') {
                     cashier.statisticsList = cashier.statisticsList.concat(res.statisticsList)
-                    cashier.pageNumber = parmas.pageNumber
+                    cashier.pageNumber = params.pageNumber
 
                 } else {
-                    cashier.pageNumber = parmas.pageNumber
+                    cashier.pageNumber = params.pageNumber
                 }
                 this.setData({
                     cashier: cashier
                 })
             })
     },
-    storeChange: function(e) {
-        console.log(e)
+    storeChange(e) {
         if (e.detail.value == 0) {
             this.getReport(this.data.reportDate)
             wx.removeStorageSync("storeCode")
             wx.setNavigationBarTitle({
-                title: app.commonParmas("merchantName"),
+                title: app.commonParams("merchantName"),
             })
         } else {
-            //let parmas = this.data.searchDate || this.reportParmas(this.data.reportDate)
+            //let params = this.data.searchDate || this.reportparams(this.data.reportDate)
             console.log("merchantCode::::", this.data.store[e.detail.value])
-            //parmas.merchantCode = this.data.store[e.detail.value].merchantCode
+            //params.merchantCode = this.data.store[e.detail.value].merchantCode
             wx.setStorageSync("storeCode", this.data.store[e.detail.value].merchantCode)
             this.getReport(this.data.reportDate, 1)
             wx.setNavigationBarTitle({
@@ -260,8 +266,19 @@ Page({
             selStore: e.detail.value
         })
     },
-    onReady: function() {
-
+    toggleCat(e){
+        this.setData({
+            currentCat:e.target.id
+        })
+    },
+    // 充值统计
+    recharge(){
+        //let params = this.reportparams()
+        return api.recharge(this.reportparams())
+    },
+    // 会员新增数量
+    newMemberCount(){
+        return api.newMemberCount(this.reportparams())
     },
     onShow() {
         console.log("onshow")

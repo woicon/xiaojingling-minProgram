@@ -25,8 +25,8 @@ Page({
     },
     checkBag: function() {
         let parmas = {
-            codeName: app.commonParmas("merchantCode"),
-            merchantNo: app.commonParmas("appId"),
+            codeName: app.commonParams("merchantCode"),
+            merchantNo: app.commonParams("appId"),
         }
         api.payPlatFormInforKs(parmas)
             .then(res => {
@@ -55,8 +55,8 @@ Page({
     getKsUrl: function() {
         let parmas = {
             orderNo: `${new Date().Format('yyyyMMddHHmmss')}${base.randomNum(5)}`,
-            codeName: app.commonParmas("merchantCode"),
-            merchantNo: app.commonParmas("appId"),
+            codeName: app.commonParams("merchantCode"),
+            merchantNo: app.commonParams("appId"),
             transactionId: this.data.bag[0].transactionId
         }
         api.getKsWithdrawUrl(parmas)

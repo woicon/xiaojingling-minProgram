@@ -28,8 +28,8 @@ Page({
     },
     onLoad(options) {
         this.setData({
-            merchantCode: options.id || app.commonParmas('merchantCode'),
-            role: app.commonParmas('role')
+            merchantCode: options.id || app.commonParams('merchantCode'),
+            role: app.commonParams('role')
         })
         this.setData({
             orderIndex: 2,
@@ -55,7 +55,7 @@ Page({
             merchantCode: this.data.merchantCode
         }
         if (this.data.role == 1) {
-            parmas.operatorId = app.commonParmas("operatorId")
+            parmas.operatorId = app.commonParams("operatorId")
         }
         let _parmas = Object.assign(parmas, this.data.searchParmas)
         return _parmas

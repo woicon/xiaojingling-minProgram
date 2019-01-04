@@ -22,9 +22,9 @@ Page({
     initPay() {
         let params = {
             totalAmount: this.data.totalPrcie,
-            merchantCode: app.commonParmas('merchantCode'),
+            merchantCode: app.commonParams('merchantCode'),
             expireSeconds: 120,
-            operatorId: app.commonParmas('operatorId')
+            operatorId: app.commonParams('operatorId')
         }
         if(this.data.mark){
             params.orderRemark = this.data.mark
@@ -70,7 +70,7 @@ Page({
             success:(res)=>{
                 let outTradeNo = `${new Date().Format('yyyyMMddhhmmss')}${app.base.randomNum(4)}`
                 let params = {
-                    merchantCode: app.commonParmas('merchantCode'),
+                    merchantCode: app.commonParams('merchantCode'),
                     outTradeNo: outTradeNo,
                     totalAmount:this.data.totalPrcie,
                     authCode: res.result,

@@ -92,10 +92,10 @@ Page({
     codes: function(status) {
         wx.showLoading()
         var parmas = {
-            bindCode: app.commonParmas("merchantCode"),
+            bindCode: app.commonParams("merchantCode"),
             status: status,
             speakerId: this.data.ids,
-            appId: app.commonParmas("merchantCode")
+            appId: app.commonParams("merchantCode")
         }
         return api.bindYunlaba(parmas)
     },
@@ -112,7 +112,7 @@ Page({
             url: 'https://ylb1.top/list_bind.php',
             data: {
                 token: "5032g0BL2tdi",
-                uid: app.commonParmas("merchantCode")
+                uid: app.commonParams("merchantCode")
             },
             success: (res) => {
                 var audioList = null

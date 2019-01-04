@@ -41,7 +41,7 @@ Component({
                 endDate: base.startDate(0, 'yyyyMMdd'), //new Date().Format('yyyyMMddhhmmss'),
                 beginDate: base.startDate(15, 'yyyyMMdd'),
                 pageSize: 10,
-                merchantCode: app.commonParmas("merchantCode")
+                merchantCode: app.commonParams("merchantCode")
             }
         },
         billParmas() {
@@ -50,7 +50,7 @@ Component({
                 pageSize: 20,
                 billEndTime: base.startDate(0, 'yyyyMMddhhmmss'), //new Date().Format('yyyyMMddhhmmss'),
                 billBeginTime: base.startDate(15, 'yyyyMMddhhmmss'),
-                merchantCode: app.commonParmas("merchantCode")
+                merchantCode: app.commonParams("merchantCode")
             }
         },
         getBill(arg) {

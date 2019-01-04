@@ -1,10 +1,14 @@
 <import src="../../pages/template/loading.wxml" />
+<import src="../../template/header.wxml" />
+<template is="headerReport" data="{{headHeight:headHeight,navBar:navBar,store:store,selStore:selStore}}" />
 <view wx:if="{{isPageLoad}}" class='empty'>
     <template is="bottomloading" />
 </view>
-
 <block wx:else>
-    <view class='report-head'>
+    <view class='report-head' style='top:{{headHeight}}px'>
+        <view class='navbar bline' bindtap='toggleCat'>
+            <view wx:for="{{navBar}}" style='width:33.33333%' class='{{currentCat==index ? "active" : ""}}' wx:key="navBar" id="{{index}}">{{item}}</view>
+        </view>
         <view class='tab'>
             <view wx:for="{{['昨日','今日','其他']}}" bindtap='toggleReport' wx:key="reportTab" class='{{reportTab == index ? "active":""}}' data-index="{{index}}">{{item}}</view>
         </view>
@@ -15,19 +19,20 @@
         </view>
     </view>
 
-    <scroll-view scroll-y class='scroll-report {{isPX?"pxScroll":""}}'>
-        <view wx:if="{{store}}" class='store'>
-            <picker bindchange="storeChange" value="{{selStore}}" range="{{store}}" range-key="merchantName">
-                <view class="picker">
-                    <view class='ico icon-home-sel'></view>{{store[selStore].merchantName}}</view>
-            </picker>
-        </view>
+    <scroll-view scroll-y class='scroll-report {{isPX?"pxScroll":""}}' style='top:{{120+headHeight}}px'>
+        <import src="trade.wxml" />
+        <import src="member.wxml" />
+        <import src="recharge.wxml" />
+        <template wx:if="{{currentCat == 0}}" is="trade" />
+        <template wx:elif="{{currentCat == 1}}" is="member" />
+        <template wx:elif="{{currentCat == 2}}" is="recharge" />
+
         <block wx:if="{{srcollLoading}}">
             <view class='pageloading'>
                 <template is="bottomloading" />
             </view>
         </block>
-        <block wx:else>
+        <block wx:elif="{{currentCat == 0}}">
             <block wx:if="{{role!= 2}}">
                 <view class='r bline'>
                     <view class='r-grid'>
@@ -164,14 +169,11 @@
                         </view>
                     </view>
                 </view>
-
             </block>
-
-            <!-- <block wx:if="{{terminal && terminal.length!=0}}">
+            <block wx:if="{{terminal && terminal.length!=0}}">
                 <view class='r-title'>款台统计</view>
                 <detail details="{{terminal}}"></detail>
-            </block> -->
-
+            </block>
             <block wx:if="{{cashier && cashier.length!=0}}">
                 <view class='r-title' wx:if="{{role!=2}}">收银员统计</view>
                 <detail details="{{cashier.statisticsList}}"></detail>
@@ -190,6 +192,122 @@
                     <view class='txt'>暂时没有数据</view>
                 </view>
             </block>
+        </block>
+        <block wx:elif="{{currentCat == 1}}">
+                     <view class='r bline'>
+                    <view class='r-grid'>
+                        <!-- <view class='bline'>
+                            <view class='ico icon-iorders'></view>
+                            <view>订单数
+                                <view class='value'>{{trade.totalOrderCnt}}</view>
+                            </view>
+                        </view> -->
+                        <view class='bline'>
+                            <view class='ico icon-money'></view>
+                            <view>新增会员/笔
+                                <view class='value'>{{trade.totalOrderAmt}}/{{trade.totalOrderCnt}}</view>
+                            </view>
+                        </view>
+                        <view class='bline lline'>
+                            <view class='ico icon-moneys'></view>
+                            <view>新增充值/笔
+                                <view class='value'>{{trade.totalTradeAmt}}/{{trade.totalTradeCnt}}</view>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+                <view class='r'>
+                <view class='r-title'>会员充值统计</view>
+                    <view class='rs-block'>
+                        <view class='bline'>消费金额/笔
+                            <text>{{trade.memberOrderAmt}}/{{trade.memberTradeCnt}}</text>
+                        </view>
+                        <view class='bline lline'>退款金额/笔数
+                            <text>{{trade.memberRefundAmt}}/{{trade.memberRefundCnt}}</text>
+                        </view>
+                        <view class='bline lline'>实充消费金额/笔
+                            <text>{{trade.memberActualAmt}}/{{trade.memberActualCnt}}</text>
+                        </view>
+                        <view>优惠金额/笔
+                            <text>{{trade.memberDiscountableAmt}}/{{trade.memberDiscountableCnt}}</text>
+                        </view>
+                        <view class='lline'>赠送消费金额/笔
+                            <text>{{trade.memberGiveAmt}}/{{trade.memberGiveCnt}}</text>
+                        </view>
+                        <view class='lline'>实付金额/笔
+                            <text>{{trade.memberTradeAmt}}/{{trade.memberTradeCnt}}</text>
+                        </view>
+                    </view>
+                </view>
+            <view class='r'>
+                <view class='r-title'>支付方式统计</view>
+                <view class='rs'>
+                    <view class='rs-title'>
+                        <view class="ico icon-weixin weixin"></view>
+                        <view>微信支付</view>
+                    </view>
+                    <view class='rs-block'>
+                        <view class=''>微信实充金额/笔
+                            <text>{{trade.wechatOrderAmt}}</text>
+                        </view>
+                    
+                        <view class=' lline'>微信实充手续费
+                            <text>{{trade.wechatTradeAmt}}</text>
+                        </view>
+                        <view class=" lline">微信实充结算金额
+                            <text>{{trade.wechatTradeCnt}}</text>
+                        </view>
+                    </view>
+                </view>
+      
+                <view class='rs'>
+                    <view class='rs-title'>
+                        <view class='ico icon-alipay alipay'></view>
+                        <view>支付宝支付</view>
+                    </view>
+                    <view class='rs-block'>
+                        <view class=''>支付宝实充金额/笔
+                            <text>{{trade.wechatOrderAmt}}</text>
+                        </view>
+                    
+                        <view class='lline'>支付宝实充手续费
+                            <text>{{trade.wechatTradeAmt}}</text>
+                        </view>
+                        <view class="lline">支付宝实充结算金额
+                            <text>{{trade.wechatTradeCnt}}</text>
+                        </view>
+                    </view>
+                </view>
+            </view>
+
+            <view class='r'>
+                <view class='r-title'>会员卡统计</view>
+                 <view class='r-grid r-grid-min'>
+                    <view class='bline'>
+                        <view>会员消费金额/笔数
+                            <view class='value'>{{trade.totalOrderAmt}}/{{trade.totalOrderCnt}}</view>
+                        </view>
+                    </view>
+                    <view class='bline lline'>
+                        <view>会员支付退款金额/笔数
+                            <view class='value'>{{trade.totalTradeAmt}}/{{trade.totalTradeCnt}}</view>
+                        </view>
+                    </view>
+                      <view class='bline'>
+                        <view>退回实充金额
+                            <view class='value'>{{trade.totalOrderAmt}}/{{trade.totalOrderCnt}}</view>
+                        </view>
+                    </view>
+                    <view class='bline lline'>
+                        <view>退回赠送金额
+                            <view class='value'>{{trade.totalTradeAmt}}/{{trade.totalTradeCnt}}</view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+
+        </block>
+        <block wx:elif="{{currentCat == 2}}">
         </block>
     </scroll-view>
 </block>

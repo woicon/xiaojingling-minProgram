@@ -28,4 +28,16 @@
             </picker>
         </view>
     </view>
+    <view class='list'>
+        <view wx:for="{{trade}}" wx:key="trade" class='item bline' bindtap='toDetail' data-id="{{index}}">
+            <view class='amt'>{{item.withdrawAccountOutAmt}}</view>
+            <view class='dates'>
+                <view>{{item.gmtCreated}}</view>
+                <view>{{item.outTradeNo}}</view>
+            </view>
+            <view>
+                <view class='tag'>{{status[item.status]}} </view>
+            </view>
+        </view>
+    </view>
 </block>

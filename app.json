@@ -1,19 +1,20 @@
 {
     "pages": [
         "pages/report/report",
+        "pages/login/login",
         "pages/order/order",
         "pages/member/member",
         "pages/index/index",
         "pages/pos/pos",
         "pages/reportDate/reportDate",
         "pages/orderDetail/orderDetail",
-        "pages/login/login",
         "pages/orderSing/orderSing",
         "pages/setAudio/setAudio",
         "pages/txH5/txH5",
         "pages/refund/refund",
         "pages/account/account",
         "pages/accountWithdrawal/accountWithdrawal",
+        "pages/tradeDetail/tradeDetail",
         "pages/userScanPay/userScanPay",
         "pages/userPaySuccess/userPaySuccess",
         "pages/posToPay/posToPay",
@@ -38,7 +39,6 @@
                 "iconPath": "assets/images/report.png",
                 "selectedIconPath": "assets/images/report-sel.png"
             },
-            
             {
                 "pagePath": "pages/order/order",
                 "text": "交易流水",

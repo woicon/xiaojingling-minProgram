@@ -1,0 +1,14 @@
+<template name="headerReport">
+    <view class='header' style="height:{{headHeight}}px">
+        <view class='header-title'>
+            <view wx:if="{{store}}" class='stores'>
+                <picker bindchange="storeChange" value="{{selStore}}" range="{{store}}" range-key="merchantName">
+                    <view class="picker">{{store[selStore].merchantName}}</view>
+                </picker>
+            </view>
+        </view>
+    </view>
+</template>
+<template name="headerCommon">
+
+</template>

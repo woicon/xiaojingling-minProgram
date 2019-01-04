@@ -11,7 +11,7 @@
 		"newFeature": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.3.0",
+	"libVersion": "2.4.3",
 	"appid": "wx9785e4edfb5ab220",
 	"projectname": "%E6%94%B6%E6%AC%BE%E5%B0%8F%E7%B2%BE%E7%81%B5-%E5%95%86%E6%88%B7%E9%80%9A",
 	"isGameTourist": false,
@@ -33,7 +33,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 16,
+			"current": 17,
 			"list": [
 				{
 					"id": -1,
@@ -96,7 +96,7 @@
 					"query": ""
 				},
 				{
-					"id": -1,
+					"id": 10,
 					"name": "account",
 					"pathName": "pages/account/account",
 					"query": ""
@@ -135,6 +135,12 @@
 					"id": -1,
 					"name": "userPaySuccess",
 					"pathName": "pages/userPaySuccess/userPaySuccess",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "tradeDetail",
+					"pathName": "pages/tradeDetail/tradeDetail",
 					"query": ""
 				}
 			]

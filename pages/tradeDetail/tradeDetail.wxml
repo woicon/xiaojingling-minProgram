@@ -1,0 +1,24 @@
+<view class='heads'>
+
+    <view class="subs">
+        <view class='titles'>提现金额</view>
+        <view class='amt'>{{detail.withdrawAccountOutAmt}}</view>
+    </view>
+         <view class='tag'>
+     <view class='ico icon-ok'></view>
+     {{status[detail.status]}}
+     </view>
+</view>
+
+<view class="list">
+    <view class="bline">
+        <label>提现订单号</label> {{detail.outTradeNoExt}}</view>
+    <view class="bline">
+        <label>请求银行流水号</label> {{detail.receiveExternalPayChannelOrder}} </view>
+    <view class="bline">
+        <label>提现到账银行卡号</label> {{detail.receiveExternalAccount}}</view>
+    <view class="bline">
+        <label>提现时间</label> {{detail.gmtCreated}}</view>
+</view>
+
+<view class='tips'> <view class='ico icon-info'> </view> 温馨提示：请以银行信息为准，提现记录不可作为入账凭证。</view>

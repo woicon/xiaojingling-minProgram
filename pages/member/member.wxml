@@ -14,13 +14,13 @@
                 <!-- <text>复制</text> -->
             </view>
         </view>
-        <!-- <view class='b' wx:if="{{bag}}">
+        <view class='b' wx:if="{{bag}}">
             <view class='banks'>
                 <view>我的钱包</view>
                 <view class='banks-text'>{{bag[0].accountHolder}} {{bag[0].bankName}} 尾号 {{bag[0].endNum}}</view>
             </view>
             <view class='button' hover-class='button-touch' catchtap='getKsUrl'>提现</view>
-        </view> -->
+        </view>
     </view>
     <view class='m-list'>
         <navigator url='/pages/setAudio/setAudio' hover-class='nav-touch' wx:if="{{member.role!=0}}">

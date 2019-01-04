@@ -3,6 +3,31 @@
     padding: 0 0;
 }
 
+.navbar {
+    background: #fff;
+    color: #666;
+    display: flex;
+    align-items: center;
+    height: 40px;
+    justify-content: center;
+    font-weight: 800;
+}
+
+.navbar>view {
+    text-align: center;
+    font-size: 32rpx;
+    border-bottom: 2px solid #fff;
+    line-height: 40px;
+    box-sizing: border-box;
+}
+
+.navbar>view.active {
+    color: #0ec695;
+    border-bottom: 2px solid #0ec695;
+    position: relative;
+    z-index: 90;
+}
+
 .r-head {
     display: flex;
     justify-content: space-between;
@@ -40,11 +65,9 @@
 }
 
 .report-head {
-    height: 180rpx;
     /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
     position: absolute;
     left: 0;
-    top: 0;
     right: 0;
     z-index: 2;
 }
@@ -55,6 +78,10 @@
 
 .r-head>view:last-child {
     /*  background: #658ccf; */
+}
+
+.r-head>view {
+    height: 40px;
 }
 
 .r-head>view view view {
@@ -68,7 +95,7 @@
     background: #fff;
     justify-content: space-between;
     position: relative;
-    height: 90rpx;
+    height: 40px;
 }
 
 .datebar>view {
@@ -98,7 +125,7 @@
 .datevalue {
     font-size: 30rpx;
     color: #555;
-    font-weight:800;
+    font-weight: 800;
     position: absolute;
     left: 0;
     top: 0;
@@ -144,6 +171,15 @@
     font-size: 24rpx;
     padding: 30rpx 0;
     color: #777;
+    box-sizing: border-box;
+}
+
+.r-grid-min>view {
+    padding-left: 30rpx;
+}
+
+.r-grid-min>view .value {
+    font-size: 28rpx;
 }
 
 .r-title {
@@ -191,9 +227,11 @@
 .rs-title .weixin {
     color: #23b300;
 }
-.rs-title .vip{
-    color:#FF7A3E;
+
+.rs-title .vip {
+    color: #ff7a3e;
 }
+
 .rs-title .alipay {
     color: #1394ff;
 }
@@ -315,7 +353,7 @@
     position: absolute;
     left: 0;
     right: 0;
-    top: 180rpx;
+    top: 260rpx;
     bottom: 0;
 }
 
@@ -416,10 +454,6 @@
     border-radius: 90rpx;
 }
 
-.pxScroll {
-    bottom: 160rpx !important;
-}
-
 .sm-list {
     padding: 0;
 }
@@ -463,4 +497,41 @@
     background: #fff;
     font-size: 26rpx;
     margin-bottom: 30rpx;
+}
+
+.navbars {
+    display: flex;
+    align-content: center;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 44px;
+}
+
+.navbars
+.navbars>view {
+    color: #fff;
+    width: 160rpx;
+    line-height: 44px;
+    text-align: center;
+    font-size: 32rpx;
+}
+
+.stores {
+    height: 44px;
+}
+
+.stores .picker {
+    font-size: 32rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stores .picker::after {
+    content: '';
+    border: 5px solid transparent;
+    border-top-color: #fff;
+    margin-bottom: -7px;
+    margin-left: 12px;
 }
