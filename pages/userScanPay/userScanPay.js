@@ -16,18 +16,11 @@ Page({
             showRemark:true
         })
     },
-    onLoad: function(options) {
 
-    },
-    onReady: function() {
-
-    },
     onShow() {
         this.getInfo()
     },
-    onHide: function() {
 
-    },
     getInfo() {
         this.setData({
             isPX: app.systemInfo.isPX,
@@ -49,7 +42,7 @@ Page({
             showRemark: false
         })
     },
-    touchKey: function(e) {
+    touchKey(e) {
         let that = this
         let total = that.data.totalPrice
         console.log(typeof total, total)
@@ -76,7 +69,7 @@ Page({
             keyborad: true
         })
     },
-    delNumber: function () {
+    delNumber () {
         let totals = this.data.totalPrice
         let strTotals = totals.toString()
         let totalsLength = strTotals.length
@@ -85,16 +78,5 @@ Page({
             priceEmpty: totalPrice.length == 0 ? true : false,
             totalPrice: totalPrice == '' ? "0" : totalPrice
         })
-    },
-    onUnload: function() {
-
-    },
-
-    onPullDownRefresh: function() {
-
-    },
-
-    onReachBottom: function() {
-
     }
 })

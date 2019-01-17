@@ -18,7 +18,11 @@
         "pages/userScanPay/userScanPay",
         "pages/userPaySuccess/userPaySuccess",
         "pages/posToPay/posToPay",
-        "pages/posPaySuccess/posPaySuccess"
+        "pages/posPaySuccess/posPaySuccess",
+        "pages/customerService/customerService",
+        "pages/help/help",
+        "pages/payCard/payCard",
+        "pages/checkCoupon/checkCoupon"
     ],
     "window": {
         "backgroundTextStyle": "light",

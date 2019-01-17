@@ -33,7 +33,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 17,
+			"current": 21,
 			"list": [
 				{
 					"id": -1,
@@ -141,6 +141,30 @@
 					"id": -1,
 					"name": "tradeDetail",
 					"pathName": "pages/tradeDetail/tradeDetail",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "customerService",
+					"pathName": "pages/customerService/customerService",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "help",
+					"pathName": "pages/help/help",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "payCard",
+					"pathName": "pages/payCard/payCard",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "checkCoupon",
+					"pathName": "pages/checkCoupon/checkCoupon",
 					"query": ""
 				}
 			]

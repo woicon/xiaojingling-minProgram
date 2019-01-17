@@ -1,5 +1,6 @@
 /**app.wxss**/
 @import "icon.wxss";
+
 .container {
     height: 100%;
     display: flex;
@@ -12,7 +13,7 @@
 
 page {
     background: #fafafa;
-    box-sizing:border-box;
+    box-sizing: border-box;
 }
 
 .lines {
@@ -111,13 +112,23 @@ page {
     border-radius: 5rpx;
     text-align: center;
     font-size: 32rpx;
-    margin: 30rpx 0 0;
-    padding:0 0;
-    height:78rpx;
-    line-height:78rpx;
+    margin: 30rpx 40rpx 0;
+    padding: 0 0;
+    height: 78rpx;
+    line-height: 78rpx;
     background: #0ec695;
     color: #fff;
     border: none;
+}
+
+.button-mini {
+    font-size: 25rpx;
+    padding: 0 20rpx;
+    display: inline-block;
+    text-align: center;
+    height: 52rpx;
+    line-height: 52rpx;
+    margin: 0;
 }
 
 .button-grey {
@@ -131,7 +142,7 @@ page {
 }
 
 .button-touch {
-    background: #0BB185;
+    background: #0bb185;
 }
 
 .btnbar {
@@ -173,7 +184,7 @@ page {
 }
 
 .button-hover {
-    background: #0BB185;
+    background: #0bb185;
 }
 
 .button-red {
@@ -311,11 +322,13 @@ page {
     align-items: center;
     justify-content: center !important;
 }
+
 .f-l-c {
     display: flex;
     align-items: left;
     justify-content: center !important;
 }
+
 .pageloading {
     position: fixed;
     left: 0;
@@ -355,11 +368,11 @@ page {
     font-size: 90rpx;
 }
 
-.bline, .lline, .rline,.blines {
+.bline, .lline, .rline, .blines {
     position: relative;
 }
 
-.bline:before,.blines:after{
+.bline:before, .blines:after {
     content: '';
     display: block;
     left: -50%;
@@ -415,7 +428,7 @@ page {
     left: -4px;
     right: -4px;
     top: 50%;
-    height:44rpx;
+    height: 44rpx;
     margin-top: -22rpx;
     background: #fafafa;
     border-radius: 3px;
@@ -423,11 +436,11 @@ page {
     font-weight: 700;
     color: #ccc;
     transform: rotate(-45deg);
-    box-sizing:border-box;
-    font-size:25rpx;
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    box-sizing: border-box;
+    font-size: 25rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .typeico:after {
@@ -549,7 +562,7 @@ page {
 }
 
 .o-summary {
-    background:#0ec695;
+    background: #0ec695;
     color: rgba(255, 255, 255, 0.7);
     display: flex;
     font-size: 23rpx;
@@ -573,21 +586,22 @@ page {
     border-right: 1px solid rgba(255, 255, 255, 0.5) !important;
 }
 
-.header{
-    background:#0ec695;
-    position:fixed;
-    left:0;
-    right:0;
-    top:0;
-    z-index:100;
+.header {
+    background: #0ec695;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 100;
 }
-.header-title{
-    position:absolute;
-    bottom:0;
-    left:44px;
-    right:44px;
-    line-height:44px;
-    color:#fff;
-    font-size:34rpx;
-    text-align:center;
+
+.header-title {
+    position: absolute;
+    bottom: 0;
+    left: 44px;
+    right: 44px;
+    line-height: 44px;
+    color: #fff;
+    font-size: 34rpx;
+    text-align: center;
 }

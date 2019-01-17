@@ -1,7 +1,7 @@
 import types from './utils/types'
 App({
     onLaunch() {
-        //适配iPhone X
+        //适配iPhone X //role  0总部 1门店 2员工 3店长
         console.log(types)
         this.updateManager()
         wx.getSystemInfo({
@@ -23,7 +23,7 @@ App({
     globalData: {
         userInfo: null
     },
-    currPage: function() {
+    currPage() {
         let _curPageArr = getCurrentPages()
         return _curPageArr[_curPageArr.length - 1]
     },

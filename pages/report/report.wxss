@@ -535,3 +535,52 @@
     margin-bottom: -7px;
     margin-left: 12px;
 }
+.p-head{
+    display: flex;
+    background:#fff;
+    padding:30rpx 0;
+}
+
+.p-head>view{
+    font-size:28rpx;
+    width:50%;
+    text-align:center;
+    color:#888;
+}
+.p-num{
+    font-size:48rpx;
+    font-weight:800;
+    color:#333;
+}
+.p-tab{
+    display: flex;
+    background:#fff;
+}
+.p-tab>view{
+    width:50%;
+    text-align:center;
+}
+.p-tab>view picker{
+    padding:20rpx 0;
+    font-size:28rpx;
+}
+.r-item{
+    padding:40rpx;
+    background:#fff;
+}
+.coupon-title{
+    font-size:30rpx;
+    font-weight:800;
+}
+.r-item>view{
+    display: flex;
+    justify-content:space-between;
+    font-size:24rpx;
+    color:#444;
+}
+.coupon-bar{
+    margin-top:20rpx;
+}
+.r-item>.coupon-bar>view{
+    color:#999;
+}

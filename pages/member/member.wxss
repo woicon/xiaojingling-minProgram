@@ -118,15 +118,17 @@
     font-size: 24rpx;
     margin-top: 10rpx;
 }
-.m-ts text{
-    background: rgba(0, 0, 0, .2);
-    padding:6rpx 15rpx;
-    display:inline-block;
-    margin-left:14rpx;
+
+.m-ts text {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 6rpx 15rpx;
+    display: inline-block;
+    margin-left: 14rpx;
 }
+
 .b {
     background: rgba(0, 0, 0, 0.1);
-    padding:32rpx 60rpx;
+    padding: 32rpx 60rpx;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -140,7 +142,7 @@
 
 .banks {
     font-size: 30rpx;
-    flex-grow:2;
+    flex-grow: 2;
 }
 
 .banks-text {
@@ -157,4 +159,18 @@
     background: transparent;
     border: 1px solid #fff;
     margin: 0;
+}
+
+.member-nav {
+    display: flex;
+    background: #fff;
+    justify-content: space-between;
+    margin: 0 40rpx;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.member-nav>view {
+    text-align: center;
+    width: 33.333333%;
 }

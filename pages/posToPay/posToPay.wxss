@@ -64,6 +64,7 @@ page{
     display:flex;
     align-items:center;
     justify-content:center;
+    margin:0;
 }
 .paybar .ico{
     margin-right:14rpx;

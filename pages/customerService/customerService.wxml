@@ -1,0 +1,11 @@
+<view class='mess'>
+    <view><image src='../../assets/images/xjllogo.png'></image></view>
+    <view class='mess-cont'>
+        <view>您好，我是收款小精灵在线客服，以下为使用常见问题，更多咨询请点击下方人工客服。</view>
+        <view class='links' bindtap='toHelp'>常见问题</view>
+    </view>
+</view>
+
+<view class='bar'><button open-type='contact' class='button'>转人工客服</button>
+    <view>服务时间 09:00-18:00</view>
+</view>

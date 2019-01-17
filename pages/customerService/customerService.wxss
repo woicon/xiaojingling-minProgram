@@ -1,0 +1,61 @@
+.bar {
+    position: absolute;
+    left: 40rpx;
+    right: 40rpx;
+    bottom: 50rpx;
+    text-align: center;
+    font-size: 24rpx;
+    color: #888;
+}
+
+page {
+    background: #f4f4f4;
+}
+
+.mess {
+    position: relative;
+    display: flex;
+    margin: 40rpx;
+}
+
+.mess image {
+    width: 60rpx;
+    height: 60rpx;
+    background: #fff;
+    border-radius: 120rpx;
+    padding: 8rpx;
+    box-shadow: 0 2px 16px rgba(90, 90, 90, 0.1);
+}
+
+.links {
+    text-decoration: underline;
+    color: #0ec695;
+    font-weight: 800;
+    margin-top: 22rpx;
+}
+
+.mess-cont {
+    background: #fff;
+    border-radius: 10rpx;
+    padding: 34rpx;
+    font-size: 28rpx;
+    line-height: 1.7;
+    color: #444;
+    flex: 1;
+    margin-left: 35rpx;
+    position: relative;
+    box-shadow: 0 2px 16px rgba(90, 90, 90, 0.1);
+}
+
+.mess-cont::after {
+    content: '';
+    border: 15rpx solid transparent;
+    border-right-color: #fff;
+    position: absolute;
+    left: -28rpx;
+    top: 24rpx;
+}
+
+button {
+    margin-bottom: 20rpx !important;
+}

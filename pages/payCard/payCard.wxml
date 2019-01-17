@@ -1,0 +1,18 @@
+<view class='c-head'>
+    <view>
+        <view class='ico-shop'></view> {{login.merchantName}}</view>
+</view>
+<view class='list'>
+    <view wx:for="{{list}}" wx:key="terminalList" class='bline'>
+        <view class='t-tag'>{{item.operatorId ? "员工码":"店码"}}</view>
+        <view class='t-info'>
+            <view class='t-name'>{{type[item.type]}}</view>
+            <view class='t-no'>{{item.cacheKey}}</view>
+        </view>
+
+        <view class='button button-mini' bindtap='unBindPayCode' data-id="{{item.cacheKey}}">删除</view>
+    </view>
+</view>
+<view class='button-bar'>
+    <view class='button' hover-class='button-touch' bindtap='bindPayCode'>{{list.length>0 ?"再次绑定":"绑定店码"}}</view>
+</view>

@@ -16,22 +16,22 @@ function ajax(url, params, signs, method) {
             appId: loginInfo.appId,
             random: base.randomNum(4),
             //key: loginInfo.key
-            // merchantCode: loginInfo.merchantCode
+          //  merchantCode: loginInfo.merchantCode
         }
         sparams = Object.assign(params, commonparams)
     }
-    if(params.sign){
+    if (params.sign) {
         delete params.sign
     }
     const signparams = signs ? params : sign(sparams)
-    
+
     console.log(`${url}==>请求参数`, signparams)
     return new Promise((res, rej) => {
         wx.request({
             url: API + url,
             data: signparams,
             method: method || 'GET',
-            success: function (data) {
+            success: function(data) {
                 console.log(`${url}==>返回数据`, data.data)
                 let currPage = app.currPage()
                 console.log()
@@ -49,7 +49,7 @@ function ajax(url, params, signs, method) {
                     res(data.data)
                 }
             },
-            fail: function (error) {
+            fail: function(error) {
                 rej(error)
             }
         })
@@ -61,8 +61,9 @@ function ajax(url, params, signs, method) {
         })
     })
 }
+
 function siAjax(url, params) {
-    let singparams = sign(params,true)
+    let singparams = sign(params, true)
     return new Promise((res, rej) => {
         wx.request({
             url: `${siApi}${url}`,
@@ -85,13 +86,13 @@ function siAjax(url, params) {
 }
 
 function oldSiAjax(params) {
-   // let singparams = sign(params, "none")
+    // let singparams = sign(params, "none")
     return new Promise((res, rej) => {
         wx.request({
             url: `${oldSi}`,
             data: params,
-            method:'POST',
-            header:{
+            method: 'POST',
+            header: {
                 "content-type": "application/x-www-form-urlencoded"
             },
             success: (data) => {
@@ -158,7 +159,43 @@ module.exports = {
     //云喇叭设备绑定
     bindYunlaba: params => ajax('device/yunlaba/bind', params),
 
+    //新增接口
+    //[兑换券] - 核销兑换券
+    giftConsume: params => ajax('coupon/giftConsume', params),
+
+    //支付码绑定
+    bindPayCode: params => ajax('bindPayCode', params),
+    //支付码解除绑定
+    unBindPayCode: params => ajax('unBindPayCode', params),
+    //终端签到统计
+    signIn: params => ajax('terminal/signIn', params),
+    //终端签出统计
+    signOut: params => ajax('terminal/signOut', params),
+    //款台列表
+    terminalList: params => ajax('terminal/list', params),
+
+    //支付码列表
+    payCodeList: params => ajax('payCode/list', params),
+    //[优惠券] - 核销优惠券记录明细
+    couponConsumeRecordList: params => ajax('coupon/couponConsumeRecordList', params),
+    
+    //[优惠券] - 查询核销优惠券数量
+    couponConsumeCount: params => ajax('coupon/couponConsumeCount', params),
+    
+   // [优惠券] - 核销优惠券记录
+    couponConsumeList: params => ajax('coupon/couponConsumeList', params),
+
+    //[支付优惠] - 订单营销优惠查询
+    discount: params => ajax('pay/discount', params),
+ 
+    //员工列表
+    employeeList: params => ajax('employee/list', params),
+
     //SI 客商提现获取transition_id列表接口
+
+    ///open/settle/ksAccountList
+    ksAccountList: params => ajax('settle/ksAccountList', params),
+
     payPlatFormInforKs: params => siAjax('withDrawal/payPlatFormInforKs.in', params),
     loginSi: params => siAjax('android/login.in', params),
     getKsWithdrawUrl: params => siAjax('withDrawal/getKsWithdrawUrl.in', params),

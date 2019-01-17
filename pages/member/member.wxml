@@ -8,7 +8,7 @@
             <view class='m-img'>
                 <image src='{{userInfo.avatarUrl}}'></image>
             </view>
-            <view class='m-info' >
+            <view class='m-info'>
                 <view class='m-name'>{{member.merchantName}}</view>
                 <view class="m-ts">编号：{{member.merchantCode}} </view>
                 <!-- <text>复制</text> -->
@@ -21,11 +21,35 @@
             </view>
             <view class='button' hover-class='button-touch' catchtap='getKsUrl'>提现</view>
         </view>
+
+        <view wx:if="{{role == 0}}" class='member-nav'>
+            <view>
+                <view class='icon-order'></view> 订单</view>
+            <view>
+                <view class='icon-orders'></view>到账</view>
+        </view>
+
+        <view wx:else class='member-nav'>
+            <view>
+                <view class='icon-order'></view>收款</view>
+            <view>
+                <view class='icon-orders'></view>交接班</view>
+            <view>
+                <view class='icon-coupon'></view>核券</view>
+        </view>
+
+
     </view>
+
+
     <view class='m-list'>
         <navigator url='/pages/setAudio/setAudio' hover-class='nav-touch' wx:if="{{member.role!=0}}">
             <view class='ico icon-setting'></view>
             <view class='m-name'>云喇叭设置</view>
+        </navigator>
+        <navigator url='/pages/payCard/payCard' hover-class='nav-touch' wx:if="{{member.role!=0}}">
+            <view class='ico icon-setting'></view>
+            <view class='m-name'>店码设置</view>
         </navigator>
         <navigator wx:if="{{member.role!=0}}" url='/pages/pos/pos' class='phones' hover-class='nav-touch'>
             <view class='ico icon-mpos'></view>
@@ -42,7 +66,7 @@
         <view class='phones' bindtap='callServ' hover-class='nav-touch'>
             <view class='ico icon-call'></view>
             <view class='m-name'> 客服热线</view>
-            <text>4000-122-155</text>
+            <text></text>
         </view>
         <!-- <navigator url='/pages/help/help' hover-class='nav-touch'>
             <view class='ico icon-book'></view>

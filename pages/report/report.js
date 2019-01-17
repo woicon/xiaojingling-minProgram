@@ -9,8 +9,9 @@ Page({
         reportDate: null,
         reportDateFormat: null,
         disNext: true,
-        navBar:null,
-        currentCat:1,
+        navBar: null,
+        currentCheck:0,
+        currentCat: 2,
     },
     onLoad(options) {
         app.checkLogin()
@@ -34,6 +35,7 @@ Page({
         }
     },
     reportparams(date) {
+
         return this.data.searchDate ? this.data.searchDate : {
             beginDate: date,
             endDate: date
@@ -74,13 +76,18 @@ Page({
                 console.log("门店:::::")
                 params.merchantCode = wx.getStorageSync("storeCode") || app.commonParams('merchantCode')
                 Promise.all([api.trade(params), api.tradeOperator(params), api.recharge(params), api.newMemberCount(params)]).then(res => {
+                    console.log(res)
                     var cashier = (res[1].code != 'FAILED') ? res[1] : null
                     var trade = (res[0].code != 'FAILED') ? res[0].statistics : null
+                    let recharge = res[2].rechargeStatistics
+
                     this.setData({
                         isPageLoad: false,
                         trade: trade,
                         cashier: cashier,
                         srcollLoading: false,
+                        recharge: recharge,
+                        memberCount: res[3].count,
                         department: null
                     })
                 })
@@ -266,22 +273,82 @@ Page({
             selStore: e.detail.value
         })
     },
-    toggleCat(e){
+    toggleCat(e) {
+        let currentCat = e.target.id
         this.setData({
-            currentCat:e.target.id
+            currentCat: e.target.id
         })
+        this.initPage()
     },
     // 充值统计
-    recharge(){
+    recharge() {
         //let params = this.reportparams()
         return api.recharge(this.reportparams())
     },
     // 会员新增数量
-    newMemberCount(){
+    newMemberCount() {
         return api.newMemberCount(this.reportparams())
+    },
+    //核销优惠券记录
+    couponConsumeRecordList(date) {
+        return api.couponConsumeRecordList(this.reportparams(this.data.searchDate || this.data.reportDate))
+    },
+    //查询核券数量
+    couponConsumeCount() {
+        return api.couponConsumeCount({})
+    },
+
+    //核销优惠券记录
+    couponConsumeList() {
+        return api.couponConsumeList({})
+    },
+
+    //员工列表
+    employeeList() {
+        return api.employeeList({})
+    },
+    initCouponCheck() {
+        let init = [
+            this.couponConsumeCount(),
+            this.couponConsumeList(),
+            this.employeeList(),
+            this.couponConsumeRecordList()
+        ]
+        Promise.all(init).then(res => {
+            console.log(res)
+            this.setData({
+                isPageLoad:false,
+                couponList: res[1].couponList,
+                todayCount: res[0].todayCount,
+                yesterdayCount: res[0].yesterdayCount,
+                employeeList: res[2].employeeList,
+                recordList: res[3].recordList
+            })
+        })
+    },
+    changeCoupon(e) {
+
+    },
+    changeEmployee(e) {
+
+    },
+    //核券时间切换
+    toggleCheckTab(e){
+        this.setData({
+            currentCheck:e.target.dataset.id
+        })
+        this.initCouponCheck()
+    },
+    //优惠券查询
+    initPage(){
+        if (this.data.currentCat == 2) {
+            this.initCouponCheck()
+        } else {
+            this.getReport(this.data.searchDate || this.data.reportDate)
+        }
     },
     onShow() {
         console.log("onshow")
-        this.getReport(this.data.searchDate || this.data.reportDate)
+        this.initPage()
     }
 })

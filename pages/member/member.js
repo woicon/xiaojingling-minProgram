@@ -22,8 +22,14 @@ Page({
             })
         }
         this.checkBag()
+        this.ksAccountList()
     },
-    checkBag: function() {
+    ksAccountList(){
+        api.ksAccountList({}).then(res=>{
+            console.log(res)
+        })
+    },
+    checkBag() {
         let parmas = {
             codeName: app.commonParams("merchantCode"),
             merchantNo: app.commonParams("appId"),
@@ -115,9 +121,12 @@ Page({
         })
     },
     callServ: function() {
-        wx.makePhoneCall({
-            phoneNumber: '4000122155'
-        })
+       wx.navigateTo({
+           url: `/pages/customerService/customerService`,
+       })
+        // wx.makePhoneCall({
+        //     phoneNumber: '4000122155'
+        // })
     },
     onHide: function() {
 

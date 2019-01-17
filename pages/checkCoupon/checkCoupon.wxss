@@ -1,0 +1,24 @@
+.check {
+    background: #fff;
+    padding: 40rpx;
+    display: flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.scan {
+    width:68rpx;
+    height:68rpx;
+    position: relative;
+    font-size:34rpx;
+    color:#fff;
+    background:#0ec695;
+    border-radius:90px;
+    display: flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.check input {
+    flex:1;
+}
