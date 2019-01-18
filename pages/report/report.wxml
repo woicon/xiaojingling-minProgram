@@ -353,7 +353,7 @@
                
             </view>
             <view>
-                <view wx:for="{{recordList}}" wx:key="recordList" class='r-item bline'>
+                <view wx:for="{{recordList}}" wx:key="recordList" class='bline r-item'>
                     <view>
                         <view class='coupon-title'>{{item.couponName}}</view>
                         <view> {{item.memberName}}</view>

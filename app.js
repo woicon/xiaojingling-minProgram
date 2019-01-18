@@ -69,4 +69,17 @@ App({
             })
         })
     },
+    //截取URL参数
+    getQueryString(url) {
+        let str = url.split('?')
+        let arr = str[1].split("&")
+        let obj = {}
+        for (let i = 0; i < arr.length; i++) {
+            let num = arr[i].indexOf("=")
+            if (num > 0) {
+                obj[arr[i].substring(0, num)] = arr[i].substr(num + 1)
+            }
+        }
+        return obj
+    }
 })

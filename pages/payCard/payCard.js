@@ -31,18 +31,34 @@ Page({
         wx.scanCode({
             success: (code) => {
                 console.log(code.result)
-                let params = {
-                    payCode: code.result
-                }
-                app.commonParams('role') == 2 ? params.operatorId = app.commonParams('operatorId') : ''
-                api.bindPayCode(params).then(res => {
-                    wx.showModal({
-                        title: res.msg,
-                        content: res.subMsg,
-                        showCancel: false
+                let cardUrl = code.result
+                if (cardUrl.indexOf('pay?code=')!=-1){
+                    console.log('sss')
+                    let cardCode = app.getQueryString(cardUrl)
+                    console.log(cardCode)
+                    let params = {
+                        payCode: cardCode.code
+                    }
+                   app.commonParams('role') == 2 ? params.operatorId = app.commonParams('operatorId') : ''
+                    api.bindPayCode(params).then(res => {
+                        wx.showModal({
+                            title: res.msg,
+                            content: res.subMsg,
+                            showCancel: false
+                        })
+                        wx.showToast({
+                            title: res.msg,
+                            icon: "none"
+                        })
+                        this.payCodeList()
                     })
-                    this.payCodeList()
-                })
+                }else{
+                    wx.showToast({
+                        title: '该店码不存在',
+                        icon:"none"
+                    })
+                }
+               
             }
         })
     },
