@@ -28,6 +28,8 @@
 
 .m-head-warp {
     background: #0ec695;
+    position:relative;
+    padding-bottom:70rpx;
 }
 
 .m-head {
@@ -53,6 +55,7 @@
 .m-list {
     background: #fff;
     padding: 0 55rpx;
+    padding-top:130rpx;
 }
 
 .m-list>view, .m-list>navigator {
@@ -165,12 +168,22 @@
     display: flex;
     background: #fff;
     justify-content: space-between;
-    margin: 0 40rpx;
     background: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10rpx 17px rgba(0, 0, 0, 0.1);
+    border-radius:10rpx;
+    position:absolute;
+    left:40rpx;
+    right:40rpx;
+    bottom:-90rpx;
 }
 
-.member-nav>view {
+.member-nav>view, .member-nav>navigator {
     text-align: center;
     width: 33.333333%;
+    padding:30rpx 0;
+    font-size:27rpx;
+}
+.member-nav .ico{
+    font-size:55rpx;
+    margin-bottom:15rpx;
 }

@@ -24,18 +24,18 @@
 
         <view wx:if="{{role == 0}}" class='member-nav'>
             <view>
-                <view class='icon-order'></view> 订单</view>
+                <view class='ico icon-order'></view> 订单</view>
             <view>
-                <view class='icon-orders'></view>到账</view>
+                <view class='ico icon-orders'></view>到账</view>
         </view>
 
         <view wx:else class='member-nav'>
-            <view>
-                <view class='icon-order'></view>收款</view>
-            <view>
-                <view class='icon-orders'></view>交接班</view>
-            <view>
-                <view class='icon-coupon'></view>核券</view>
+            <navigator url='/pages/pos/pos'>
+                <view class='ico icon-order'></view>收款
+            </navigator>
+            <view><view class='ico icon-orders'></view>交接班</view>
+            <navigator  url='/pages/checkCoupon/checkCoupon'>
+                <view class='ico icon-coupon'></view>核券</navigator>
         </view>
 
 

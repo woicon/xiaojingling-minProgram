@@ -15,8 +15,8 @@ page {
 }
 
 .btn-creatpay {
-    color: #ff6d50;
-    background: #fff;
+    background: #ff6d50;
+    color: #fff;
     display: flex;
     position: relative;
     z-index: 2;
@@ -27,7 +27,7 @@ page {
 }
 
 .key-btngroup .btn-creatpay text {
-    color: #ff6d50;
+    color: #fff;
     width: 48rpx;
     font-size: 48rpx;
     margin-top: 0;
@@ -37,6 +37,7 @@ page {
 .btn-creatpay.creatpay-touch {
     background: #ff6d50;
     color: #fff;
+    opacity:.7;
 }
 
 .btn-creatpay.creatpay-touch text {
@@ -190,8 +191,7 @@ total-warp {
     text-align: right;
     font-size: 80rpx;
     color: #fff;
-    transition: 0.2s;
-    font-weight: 800;
+    transition: 0.05s;
     display: flex;
     align-items: center;
     line-height: normal;

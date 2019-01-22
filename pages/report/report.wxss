@@ -538,7 +538,6 @@
 .p-head{
     display: flex;
     background:#fff;
-    padding:30rpx 0;
 }
 
 .p-head>view{
@@ -546,6 +545,7 @@
     width:50%;
     text-align:center;
     color:#888;
+    height:80px;
 }
 .p-num{
     font-size:48rpx;
@@ -561,12 +561,12 @@
     text-align:center;
 }
 .p-tab>view picker{
-    padding:20rpx 0;
+   line-height:46px;
     font-size:28rpx;
 }
 .r-item{
-    padding:40rpx;
     background:#fff;
+    padding:30rpx;
 }
 .coupon-title{
     font-size:30rpx;
@@ -583,4 +583,5 @@
 }
 .r-item>.coupon-bar>view{
     color:#999;
+    font-size:22rpx;
 }

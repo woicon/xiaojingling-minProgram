@@ -5,11 +5,35 @@
     <template is="bottomloading" />
 </view>
 <block wx:else>
-    <view class='report-head' style='top:{{headHeight}}px'>
-        <view class='navbar bline' bindtap='toggleCat'>
-            <view wx:for="{{navBar}}" style='width:33.33333%' class='{{currentCat==index ? "active" : ""}}' wx:key="navBar" id="{{index}}">{{item}}</view>
+    <view class='report-head' style='top:{{headHeight}}px;{{currentCat == 2 ? "":""}}'>
+        <view class='navbar ' bindtap='toggleCat'>
+            <view wx:for="{{navBar}}" style='width:33.33333%' class='bline {{currentCat==index ? "active" : ""}}' wx:key="navBar" id="{{index}}">{{item}}</view>
         </view>
-        <block wx:if="{{currentCat!=2}}" >
+        <block wx:if="{{currentCat == 2}}">
+            <view class='p-tab bline'>
+                <view>
+                    <picker range='{{couponList}}' mode='selector' range-key='couponName' bindchange='changeCoupon'>全部优惠券</picker>
+                </view>
+                <view>
+                    <picker range='{{employeeList}}' mode='selector' range-key='operatorName' bindchange='changeEmployee'>全部店员</picker>
+                </view>
+            </view>
+            <view class='p-head bline'>
+                <view>
+                    <view class='p-num'>{{todayCount}}</view>
+                    今天核销
+                </view>
+                <view>
+                    <view class='p-num'>{{yesterdayCount}}</view>
+                    昨日核销
+                </view>
+            </view>
+            <view class='tab'>
+                <view bindtap='toggleCheckTab' wx:for="{{['近7天','近30天','更多']}}" data-id="{{index}}" wx:key="checkTab" class='{{currentCheck == index?"active":""}}'>{{item}}</view>
+
+            </view>
+        </block>
+        <block wx:else>
             <view class='tab'>
                 <view wx:for="{{['昨日','今日','其他']}}" bindtap='toggleReport' wx:key="reportTab" class='{{reportTab == index ? "active":""}}' data-index="{{index}}">{{item}}</view>
             </view>
@@ -20,7 +44,7 @@
             </view>
         </block>
     </view>
-    <scroll-view scroll-y class='scroll-report {{isPX?"pxScroll":""}}' style='top:{{120+headHeight}}px;top:{{currentCat==2 ?headHeight+40+"px":""}}'>
+    <scroll-view scroll-y class='scroll-report {{isPX?"pxScroll":""}}' style='top:{{120+headHeight}}px;top:{{currentCat==2 ?headHeight+40+120+50+"px":""}}'>
         <import src="trade.wxml" />
         <import src="member.wxml" />
         <import src="recharge.wxml" />
@@ -330,28 +354,6 @@
             </view>
         </block>
         <block wx:elif="{{currentCat == 2}}">
-            <view class='p-tab bline'>
-                <view>
-                    <picker range='{{couponList}}' mode='selector' range-key='couponName' bindchange='changeCoupon'>全部优惠券</picker>
-                </view>
-                <view>
-                    <picker range='{{employeeList}}' mode='selector' range-key='operatorName' bindchange='changeEmployee'>全部店员</picker>
-                </view>
-            </view>
-            <view class='p-head bline'>
-                <view>
-                    <view class='p-num'>{{todayCount}}</view>
-                    今天核销
-                </view>
-                <view>
-                    <view class='p-num'>{{yesterdayCount}}</view>
-                    昨日核销
-                </view>
-            </view>
-            <view class='tab'>
-                <view bindtap='toggleCheckTab' wx:for="{{['近7天','近30天','更多']}}" data-id="{{index}}" wx:key="checkTab" class='{{currentCheck == index?"active":""}}'>{{item}}</view>
-               
-            </view>
             <view>
                 <view wx:for="{{recordList}}" wx:key="recordList" class='bline r-item'>
                     <view>
