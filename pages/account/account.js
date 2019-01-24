@@ -21,23 +21,21 @@ Page({
     onLoad(options) {
         let params = {
             version:'1.0',
-            sign_type:'MD5',
             input_charset:'UTF-8',
             partner_id: "10036122233150929",
-            transitionId: "000000000180565",
+            transitionId: options.id,
+            sign_type:'MD5',
             service: 'channel_fee_query',
             operationDatetime: new Date().Format('yyyy-MM-dd hh:mm:ss'),
             core_merchant_no: app.commonParams("merchantCode"),
             coreMerchantCode: app.commonParams("appId"),
             applicationName:"提现小程序",
-            sign:"02E039A8FB4D7FF322CD3C7E7103E184"
         }
         api.si(params,'none').then(res=>{
             let mcDetails = JSON.parse(res.mcDetails)
             wx.setStorageSync("storeCode", mcDetails[0].platformMerchant)
             console.log("SI == McDetails=====+>",mcDetails)
             this.detail()  //详情获得 CA
-          
         })
         this.initDate()
     },
@@ -55,11 +53,11 @@ Page({
         //提现费率详情 需要获得 certificateNo  accountType
         let datas = {
             applicationName:'提现小程序',
-            isAdmin: true,
+          //  isAdmin: true,
             operationDatetime:new Date().Format('yyyy-MM-dd hh:mm:ss'),
-            operatorName:'xiaochengx',
-            operationLoginName:'username',
-            agencyCodeName:'222',
+          //  operatorName:'xiaochengxu',
+         //   operationLoginName:'username',
+          //  agencyCodeName:'222',
             service: 'agent_app_store_details',
             storeCode: wx.getStorageSync("storeCode"),
             merchantPaymentMode:1
@@ -74,6 +72,7 @@ Page({
                     accountType: mcDetails.accountType,
                     caAccount: mcDetails.caAccount
                 })
+                wx.setStorageSync('storeDetail', mcDetails)
 
                 this.balance()  //余额查询
             })
@@ -84,15 +83,15 @@ Page({
         let params ={
             service:'trade_credit_account_query',
             account_no: ca.caAccount,
+            //fund_pool_no:
         }
         api.ksApi(Object.assign(params,commonParams))
         .then(res=>{
             console.log("余额查询=====>",JSON.parse(res.tradeDetails))
             let tradeDetails = JSON.parse(res.tradeDetails)
             this.getExchangList()
-            
             this.setData({
-                trade: tradeDetails[0],
+                balance: tradeDetails[0],
                 isPageLoad:false
             })
         })
@@ -110,8 +109,8 @@ Page({
             withdraw_account_no: ca.caAccount,
             service: 'trade_single_withdraw_remittance_page_details',
             fund_pool_no:"PN01000000000000001", //客商资金池编号
-            gmt_created_start:"2018-06-01 15:03:20",
-            gmt_created_end:"2018-06-30 15:03:20",
+            gmt_created_start:"2018-12-01 15:03:20",
+            gmt_created_end:"2018-12-30 15:03:20",
         }
         api.ksApi(Object.assign(params, commonParams))
         .then(res=>{
@@ -134,11 +133,15 @@ Page({
             start: start
         })
     },
-    onReady: function() {
-
+    toExtract(e){
+        wx.setStorageSync("balance", this.data.balance)
+        wx.navigateTo({
+            url: '/pages/accountWithdrawal/accountWithdrawal',
+        })
     },
-
-    onShow: function() {
-
+    toggleType(e){
+        this.setData({
+            currentTab:e.target.dataset.index
+        })
     },
 })

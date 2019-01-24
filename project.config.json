@@ -33,7 +33,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 21,
+			"current": 10,
 			"list": [
 				{
 					"id": -1,
@@ -99,7 +99,8 @@
 					"id": 10,
 					"name": "account",
 					"pathName": "pages/account/account",
-					"query": ""
+					"query": "id=000000000180490",
+					"scene": null
 				},
 				{
 					"id": -1,

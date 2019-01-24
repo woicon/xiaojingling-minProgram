@@ -29,7 +29,7 @@
 .m-head-warp {
     background: #0ec695;
     position:relative;
-    padding-bottom:70rpx;
+    padding-top:140rpx;
 }
 
 .m-head {
@@ -55,7 +55,6 @@
 .m-list {
     background: #fff;
     padding: 0 55rpx;
-    padding-top:130rpx;
 }
 
 .m-list>view, .m-list>navigator {
@@ -142,12 +141,28 @@
     flex-basis: 60rpx;
     flex-shrink: 0;
 }
-
 .banks {
     font-size: 30rpx;
-    flex-grow: 2;
+    display: flex;
+    align-items:center;
+    flex: 1;
+    justify-content: space-between;
+    margin-right:50rpx;
 }
-
+.banks::after{
+    content: '';
+    display: block;
+    width:13rpx;
+    height:13rpx;
+    border:2px solid #fff;
+    border-left:none;
+    border-bottom:none;
+    transform:rotate(45deg);
+    opacity: .4;
+}
+.banks picker{
+    width:100%;
+}
 .banks-text {
     color: #fff;
     font-size: 23rpx;
@@ -169,21 +184,17 @@
     background: #fff;
     justify-content: space-between;
     background: #fff;
-    box-shadow: 0 10rpx 17px rgba(0, 0, 0, 0.1);
-    border-radius:10rpx;
-    position:absolute;
-    left:40rpx;
-    right:40rpx;
-    bottom:-90rpx;
+    
+
 }
 
 .member-nav>view, .member-nav>navigator {
     text-align: center;
-    width: 33.333333%;
     padding:30rpx 0;
+    width:50%;
     font-size:27rpx;
 }
 .member-nav .ico{
-    font-size:55rpx;
+    font-size:79rpx;
     margin-bottom:15rpx;
 }

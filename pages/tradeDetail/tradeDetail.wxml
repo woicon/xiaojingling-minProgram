@@ -5,7 +5,7 @@
         <view class='amt'>{{detail.withdrawAccountOutAmt}}</view>
     </view>
          <view class='tag'>
-     <view class='ico icon-ok'></view>
+     <view class='ico icon-ok' wx:if="{{detail.status != 03}}"></view>
      {{status[detail.status]}}
      </view>
 </view>

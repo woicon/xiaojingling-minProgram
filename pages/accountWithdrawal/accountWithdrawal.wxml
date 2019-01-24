@@ -1,25 +1,25 @@
 <view class='w-head'>
     <view> 提现到账银行卡号</view>
-    <view class='w-code'>中国银行 尾号8123</view>
+    <view class='w-code'>{{selBag.bankName}} {{cardNo}}</view>
 </view>
 <view>
     <view class='w-input'>
         <view>
         <!-- <view class='w-title'>提现金额</view> -->
-        <view class='w-gets'><text>¥</text>900</view>
-        <view class='w-money'>可以提现金额 <text class='price'> ¥900.00</text></view>
+        <view class='w-gets'><text>¥</text><input bindinput='changeTotal' type='digit' value='{{total}}'></input></view>
+        <view class='w-money'>可以提现金额 <text class='price'> ¥{{balance.availableBalance}}</text></view>
              </view>
-        <view class='w-all'>全部提现</view>
+        <view class='w-all' bindtap="allTotal" hover-class='touch'>全部提现</view>
     </view>
-    <view class='lines-warp'>
+    <view class='lines-warp' wx:if="{{balance.accountType ==1 }}">
         <view class='lines'>
             <label>提现预留手机号</label>
-            <input placeholder='输入银行预留手机号'></input>
+            <input placeholder='输入银行预留手机号' maxlength='11' bindinput='changePhone' type="number"></input>
         </view>
         <view  class='lines'>
             <label>短信验证码</label>
-            <input placeholder='输入短信验证码'></input>
-            <view class='sendmsg'>发送短信验证码</view>
+            <input placeholder='输入短信验证码' type="number" maxlength='4'></input>
+            <view bindtap="{{disableSend || endTime > 0 ? endTime :'sendCode'}}" class='sendmsg {{disableSend || endTime > 0 ? "disable" :""}}'>{{endTime > 0 ? endTime+'s后重发' :'发送验证码'}}</view>
         </view>
     </view>
     <view class='tip'>温馨提示：工作日8:30-17:15提现，当天到账（两小时内），其他时间提现，第二个工作日到账</view>

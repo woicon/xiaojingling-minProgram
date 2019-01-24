@@ -7,13 +7,14 @@
     background:#fff;
 }
 .w-head{
-    font-size:26rpx;
+    font-size:24rpx;
+    color:#999;
 }
 .w-code{
-    font-size:28rpx;
+    font-size:30rpx;
     font-weight:800;
     margin-top:12rpx;
-    color:#666;
+    color:#444;
 }
 input{
     color:#444;
@@ -40,26 +41,54 @@ input{
 .w-gets{
     font-size:60rpx;
     font-weight:800;
+    display: flex;
+    align-items:center;
+}
+.w-gets input{
+    flex:1;
+    padding:0 0 0 10rpx;
+    line-height:60rpx;
 }
 .w-gets text{
     font-size:28rpx;
 }
 .tip{
-    font-size:24rpx;
-    padding:40rpx;
-    color:#999;
+    font-size:22rpx;
+    padding:20rpx 40rpx;
+    color:#888;
     line-height:1.5;
 }
 .w-all{
-    text-align:center;
     padding:10rpx 20rpx;
     font-size:28rpx;
+    width:180rpx;
+    text-align:center;
+    line-height:40rpx;
+    background:#eee;
+    color:#555;
+    border-radius:4rpx;
 }
 .lines-warp{
     background:#fff;
     margin:20rpx 0;
 }
-
+.lines input{
+    text-align:right;
+}
 .button-bar{
     margin:0 40rpx;
+}
+
+.sendmsg{
+    background:#0ec695;
+    color: #fff;
+    width:180rpx;
+    text-align:center;
+    line-height:60rpx;
+    border-radius:4rpx;
+    font-size:26rpx;
+}
+.sendmsg.disable{
+    background:#eee;
+    color:#666;
 }

@@ -3,11 +3,10 @@ var api = require('../../openApi/api.js')
 var base = require('../../utils/util.js')
 Page({
     data: {
-
+        role: app.commonParams("role")
     },
-    onLoad: function(options) {
+    onLoad(options) {
         app.checkLogin()
-        
         wx.setNavigationBarTitle({
             title: '个人中心',
         })
@@ -21,12 +20,38 @@ Page({
                 userInfo: null
             })
         }
+    },
+    onShow() {
+        this.setData({
+            member: wx.getStorageSync("login")
+        })
         this.checkBag()
         this.ksAccountList()
     },
-    ksAccountList(){
-        api.ksAccountList({}).then(res=>{
+    ksAccountList() {
+        api.ksAccountList({}).then(res => {
             console.log(res)
+            let list = res.accountList
+            this.initBag(list, 0)
+        })
+    },
+    cutNum(str) {
+        return str.substring(str.length - 4)
+    },
+    changeAccount(e) {
+        this.initBag(this.data.bag, e.detail.value)
+    },
+    initBag(accountList, index) {
+        this.setData({
+            bag: accountList,
+            selBag: accountList[index],
+            selNum: this.cutNum(accountList[index].balanceAccount)
+        })
+    },
+    extract() {
+        wx.setStorageSync("selBag", this.data.selBag)
+        wx.navigateTo({
+            url: `/pages/account/account?id=${this.data.selBag.transactionId}`,
         })
     },
     checkBag() {
@@ -44,9 +69,11 @@ Page({
                         bagList[i].endNum = bagList[i].balanceAccount.substr(bagList[i].balanceAccount.length - 4)
                     }
                     wx.setStorageSync("bag", bagList[0])
+
                     this.setData({
                         bag: bagList
                     })
+                    this.getKsUrl()
                 }
             })
     },
@@ -58,7 +85,8 @@ Page({
             userInfo: e.detail.userInfo
         })
     },
-    getKsUrl: function() {
+    getKsUrl() {
+        console.log(this.data.bag)
         let parmas = {
             orderNo: `${new Date().Format('yyyyMMddHHmmss')}${base.randomNum(5)}`,
             codeName: app.commonParams("merchantCode"),
@@ -69,11 +97,11 @@ Page({
             .then(res => {
                 console.log(res.obj.resp_url)
                 wx.setStorageSync("rsurl", res.obj.resp_url)
-                if (res.code = "001801") {
-                    wx.navigateTo({
-                        url: `/pages/txH5/txH5?url=${res.obj.resp_url}`,
-                    })
-                }
+                // if (res.code = "001801") {
+                //     wx.navigateTo({
+                //         url: `/pages/txH5/txH5?url=${res.obj.resp_url}`,
+                //     })
+                // }
             })
     },
     exitSys() {
@@ -99,51 +127,29 @@ Page({
             }
         })
     },
-
-    onReady() {
-
-    },
     clipNo: function(e) {
         console.log(e)
         wx.setClipboardData({
             data: e.currentTarget.id,
             success: function(res) {
                 wx.getClipboardData({
-                    success: function(res) {
-                    }
+                    success: function(res) {}
                 })
             }
         })
     },
-    onShow() {
-        this.setData({
-            member: wx.getStorageSync("login")
-        })
-    },
     callServ: function() {
-       wx.navigateTo({
-           url: `/pages/customerService/customerService`,
-       })
+        wx.navigateTo({
+            url: `/pages/customerService/customerService`,
+        })
         // wx.makePhoneCall({
         //     phoneNumber: '4000122155'
         // })
     },
-    onHide: function() {
+    toggleBag() {
 
     },
-
-    onUnload: function() {
-
-    },
-    onPullDownRefresh: function() {
-
-    },
-
-    onReachBottom: function() {
-
-    },
-
-    onShareAppMessage: function() {
+    onShareAppMessage() {
 
     }
 })

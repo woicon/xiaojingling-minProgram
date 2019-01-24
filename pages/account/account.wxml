@@ -4,39 +4,43 @@
 </view>
 <block wx:else>
     <view class='heads'>
-        <view>
-            <view class='h-title'>账户余额 </view>
-            <view class='price'>{{trade.availableBalance}}</view>
+        <view class='heads-info'>
+            <view>
+                <view class='h-title'>账户余额 </view>
+                <view class='price'>{{balance.availableBalance}}</view>
+            </view>
         </view>
-        <view class='outbtn'>提现</view>
+        <view class='outbtn' bindtap='toExtract'>提现</view>
     </view>
-    <view class='list'>
-        <view class='bline' hover-class='touch'>提现明细</view>
-        <view hover-class='touch'>结算明细</view>
+    <view class='tab'>
+        <view wx:for="{{['提现明细','结算明细']}}" data-index="{{index}}" bindtap='toggleType' wx:key="tabs" class='{{currentTab == index ? "active" : ""}}' hover-class='touch'>{{item}}</view>
     </view>
 
-    <view class='timebar'>
+    <view class='timebar bline'>
         <view>
+        <view class='dates'>
             <picker mode="date"  value="{{startDate}}" start="start" end="{{endDate}}" bindchange="bindDateChange">
             {{startDate}}
             </picker>
         </view>
-        <view>至</view>
-         <view>
+        <view class='timebar-al'>至</view>
+         <view class='dates'>
             <picker mode="date"  value="{{endDate}}" start="{{startDate}}" end="{{tadayDate}}" bindchange="bindDateChange">
             {{endDate}}
             </picker>
+        </view>
         </view>
     </view>
     <view class='list'>
         <view wx:for="{{trade}}" wx:key="trade" class='item bline' bindtap='toDetail' data-id="{{index}}">
             <view class='amt'>{{item.withdrawAccountOutAmt}}</view>
             <view class='dates'>
-                <view>{{item.gmtCreated}}</view>
-                <view>{{item.outTradeNo}}</view>
+            
+                <view class='list-no'>{{item.outTradeNo}}</view>
+                    <view>{{item.gmtCreated}}</view>
             </view>
             <view>
-                <view class='tag'>{{status[item.status]}} </view>
+                <view class='tag {{item.status == 03? "disable" : ""}}' >{{status[item.status]}} </view>
             </view>
         </view>
     </view>

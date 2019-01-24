@@ -16,46 +16,55 @@
         </view>
         <view class='b' wx:if="{{bag}}">
             <view class='banks'>
-                <view>我的钱包</view>
-                <view class='banks-text'>{{bag[0].accountHolder}} {{bag[0].bankName}} 尾号 {{bag[0].endNum}}</view>
+                <picker range='{{bag}}' range-key='balanceAccount' bindchange='changeAccount'>
+                    <view bindtap='toggleBag'>
+                        <view>我的钱包</view>
+                        <view class='banks-text'>{{selBag.bankName}} 尾号:{{selNum}}</view>
+                    </view>
+                </picker>
             </view>
-            <view class='button' hover-class='button-touch' catchtap='getKsUrl'>提现</view>
+            <view class='button' hover-class='button-touch' catchtap='extract'>提现</view>
         </view>
-
-        <view wx:if="{{role == 0}}" class='member-nav'>
-            <view>
-                <view class='ico icon-order'></view> 订单</view>
-            <view>
-                <view class='ico icon-orders'></view>到账</view>
-        </view>
-
-        <view wx:else class='member-nav'>
-            <navigator url='/pages/pos/pos'>
-                <view class='ico icon-order'></view>收款
-            </navigator>
-            <view><view class='ico icon-orders'></view>交接班</view>
-            <navigator  url='/pages/checkCoupon/checkCoupon'>
-                <view class='ico icon-coupon'></view>核券</navigator>
-        </view>
-
-
     </view>
 
+    <view wx:if="{{role == 0}}" class='member-nav bline'>
+        <view>
+            <view class='ico icon-order'></view> 订单</view>
+        <view>
+            <view class='ico icon-orders'></view>到账</view>
+    </view>
+
+    <view wx:else class='member-nav bline'>
+        <navigator url='/pages/pos/pos'>
+            <view class='ico ico-cash'></view>收款
+        </navigator>
+        <!-- <view><view class='ico icon-orders'></view>交接班</view> -->
+        <navigator url='/pages/checkCoupon/checkCoupon'>
+            <view class='ico ico-clear'></view>核券</navigator>
+    </view>
 
     <view class='m-list'>
+        <!-- <navigator wx:if="{{bag}}" url='/pages/account/account' hover-class='nav-touch'>
+            <view class='ico icon-setting'></view>
+            <view class='m-name'>我的钱包</view>
+            <text>提现</text>
+        </navigator> -->
+
         <navigator url='/pages/setAudio/setAudio' hover-class='nav-touch' wx:if="{{member.role!=0}}">
             <view class='ico icon-setting'></view>
             <view class='m-name'>云喇叭设置</view>
         </navigator>
         <navigator url='/pages/payCard/payCard' hover-class='nav-touch' wx:if="{{member.role!=0}}">
-            <view class='ico icon-setting'></view>
+            <view class='ico icon-myservice'></view>
             <view class='m-name'>店码设置</view>
         </navigator>
+
+        <!--
         <navigator wx:if="{{member.role!=0}}" url='/pages/pos/pos' class='phones' hover-class='nav-touch'>
             <view class='ico icon-mpos'></view>
             <view class='m-name'>收银</view>
         </navigator>
-        <!-- <view bindtap='toAgent' hover-class='nav-touch'>
+        <view bindtap='toAgent' hover-class='nav-touch'>
             <view class='ico icon-myservices'></view>
             <view class='m-name'>我的服务商</view>
         </view> -->
@@ -65,7 +74,7 @@
         </view> -->
         <view class='phones' bindtap='callServ' hover-class='nav-touch'>
             <view class='ico icon-call'></view>
-            <view class='m-name'> 客服热线</view>
+            <view class='m-name'>在线客服</view>
             <text></text>
         </view>
         <!-- <navigator url='/pages/help/help' hover-class='nav-touch'>

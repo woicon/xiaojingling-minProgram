@@ -45,7 +45,7 @@ function parseParam(obj, encode) {
     }
     return ret.join('&')
 }
-module.exports = (params, isSi) => {
+module.exports = (params, isSi, key) => {
     if (params.sign) {
         delete params.sign
     }
@@ -71,7 +71,9 @@ module.exports = (params, isSi) => {
         return params
     } else if (isSi === 'ks') {
         //客商验签
-        let singparams = `${parseParam(sortObj(params))}4cbf6354b6778d155399781592dd368b`
+        let keys = key || '4cbf6354b6778d155399781592dd368b'
+        console.log(keys)
+        let singparams = `${parseParam(sortObj(params))}${keys}`
         let sign = md5(singparams)
         params.sign = sign
         params.sign_type = 'MD5'
@@ -84,3 +86,8 @@ module.exports = (params, isSi) => {
     }
 
 }
+
+// pool_no: PN01000000000000213
+// core_merchant_no: KS_N1453170986
+// pid: 18110120453815253
+// key: 519e220dc1cc6ab517ffff60b59a8d51
