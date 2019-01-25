@@ -33,8 +33,9 @@ Page({
         }
         api.si(params,'none').then(res=>{
             let mcDetails = JSON.parse(res.mcDetails)
+            console.log(mcDetails)
             wx.setStorageSync("storeCode", mcDetails[0].platformMerchant)
-            console.log("SI == McDetails=====+>",mcDetails)
+            console.log("SI == McDetails=====>",mcDetails)
             this.detail()  //详情获得 CA
         })
         this.initDate()

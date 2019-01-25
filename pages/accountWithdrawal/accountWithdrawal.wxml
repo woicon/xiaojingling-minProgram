@@ -25,4 +25,4 @@
     <view class='tip'>温馨提示：工作日8:30-17:15提现，当天到账（两小时内），其他时间提现，第二个工作日到账</view>
 </view>
 <view class='button-bar'>
-<view class='button'>确认提现</view></view>
+<view class='button' bindtap='withdrawal'>确认提现</view></view>
