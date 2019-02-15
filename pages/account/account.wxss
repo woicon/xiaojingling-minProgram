@@ -1,7 +1,7 @@
 .heads {
     background: #0ec695;
     color: #fff;
-    padding: 40rpx;
+    padding:100rpx 40rpx;
 }
 
 .price {

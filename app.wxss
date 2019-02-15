@@ -1,6 +1,7 @@
 /**app.wxss**/
 @import "icon.wxss";
 @import "ico.wxss";
+
 .container {
     height: 100%;
     display: flex;
@@ -43,7 +44,7 @@ page {
 
 .lines:last-child::after {
     border: none;
-    background:transparent;
+    background: transparent;
 }
 
 .lines text {
@@ -113,7 +114,7 @@ page {
     border-radius: 5rpx;
     text-align: center;
     font-size: 32rpx;
-    margin: 30rpx 0 0;
+    margin: 30rpx 40rpx 0;
     padding: 0 0;
     height: 78rpx;
     line-height: 78rpx;
@@ -605,4 +606,59 @@ page {
     color: #fff;
     font-size: 34rpx;
     text-align: center;
+}
+
+
+
+
+/* 、、 */
+
+.o-bar>picker {
+    width: 50%;
+    text-align: center;
+    font-size: 24rpx;
+    color: #444;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.o-bar>picker view {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 90rpx;
+}
+
+.o-bar>view {
+    line-height: 90rpx;
+    width: 30%;
+    font-size: 25rpx;
+    text-align: left;
+    font-weight: 800;
+}
+
+.o-bar>view:first-child {
+    width: 40%;
+}
+
+.o-bar>picker view{
+    width:100%;
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    top:0;
+}
+.o-bar>picker view::after {
+    content: '';
+    display: block;
+    width: 10rpx;
+    height: 10rpx;
+    border: 2px solid #ddd;
+    border-top: none;
+    border-right: none;
+    transform: rotate(-45deg);
+    margin-left: 30rpx;
+   
 }

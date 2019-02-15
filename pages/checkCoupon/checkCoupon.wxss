@@ -22,3 +22,6 @@
 .check input {
     flex:1;
 }
+.button{
+    margin: 40rpx ;
+}

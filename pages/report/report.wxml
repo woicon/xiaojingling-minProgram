@@ -11,26 +11,19 @@
         </view>
         <block wx:if="{{currentCat == 2}}">
             <view class='p-tab bline'>
-                <view>
-                    <picker range='{{couponList}}' mode='selector' range-key='couponName' bindchange='changeCoupon'>全部优惠券</picker>
-                </view>
-                <view>
-                    <picker range='{{employeeList}}' mode='selector' range-key='operatorName' bindchange='changeEmployee'>全部店员</picker>
-                </view>
+                <picker range='{{couponList}}' mode='selector' range-key='couponName' bindchange='changeCoupon'>
+                    <view> 全部优惠券</view>
+                </picker>
+                <picker range='{{employeeList}}' mode='selector' range-key='operatorName' bindchange='changeEmployee'>
+                    <view>全部店员</view>
+                </picker>
             </view>
             <view class='p-head bline'>
-                <view>
-                    <view class='p-num'>{{todayCount}}</view>
-                    今天核销
-                </view>
-                <view>
-                    <view class='p-num'>{{yesterdayCount}}</view>
-                    昨日核销
-                </view>
+                <view><view class='p-num'>{{todayCount}}</view>今天核销</view>
+                <view><view class='p-num'>{{yesterdayCount}}</view>昨日核销</view>
             </view>
             <view class='tab'>
                 <view bindtap='toggleCheckTab' wx:for="{{['近7天','近30天','更多']}}" data-id="{{index}}" wx:key="checkTab" class='{{currentCheck == index?"active":""}}'>{{item}}</view>
-
             </view>
         </block>
         <block wx:else>
@@ -45,9 +38,9 @@
         </block>
     </view>
     <scroll-view scroll-y class='scroll-report {{isPX?"pxScroll":""}}' style='top:{{120+headHeight}}px;top:{{currentCat==2 ?headHeight+40+120+50+"px":""}}'>
-        <import src="trade.wxml" />
+        <!-- <import src="trade.wxml" />
         <import src="member.wxml" />
-        <import src="recharge.wxml" />
+        <import src="recharge.wxml" /> -->
         <!-- <template wx:if="{{currentCat == 0}}" is="trade" />
         <template wx:elif="{{currentCat == 1}}" is="member" />
         <template wx:elif="{{currentCat == 2}}" is="recharge" /> -->

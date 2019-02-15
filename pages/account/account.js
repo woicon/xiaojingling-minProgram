@@ -20,26 +20,27 @@ Page({
     },
     onLoad(options) {
         let params = {
-            version:'1.0',
-            input_charset:'UTF-8',
+            version: '1.0',
+            input_charset: 'UTF-8',
             partner_id: "10036122233150929",
             transitionId: options.id,
-            sign_type:'MD5',
+            sign_type: 'MD5',
             service: 'channel_fee_query',
             operationDatetime: new Date().Format('yyyy-MM-dd hh:mm:ss'),
             core_merchant_no: app.commonParams("merchantCode"),
             coreMerchantCode: app.commonParams("appId"),
-            applicationName:"提现小程序",
+            applicationName: "提现小程序",
         }
-        api.si(params,'none').then(res=>{
+        api.si(params, 'none').then(res => {
             let mcDetails = JSON.parse(res.mcDetails)
             console.log(mcDetails)
             wx.setStorageSync("storeCode", mcDetails[0].platformMerchant)
-            console.log("SI == McDetails=====>",mcDetails)
+            console.log("SI == McDetails == ", mcDetails)
             this.detail()  //详情获得 CA
         })
         this.initDate()
     },
+    
     setDate(arr){
         return arr.map((item,index,arr)=>{
             for(let i in item){
@@ -74,7 +75,6 @@ Page({
                     caAccount: mcDetails.caAccount
                 })
                 wx.setStorageSync('storeDetail', mcDetails)
-
                 this.balance()  //余额查询
             })
     },
@@ -115,17 +115,17 @@ Page({
         }
         api.ksApi(Object.assign(params, commonParams))
         .then(res=>{
+            console.log(res)
             this.setData({
                 trade: this.setDate(JSON.parse(res.tradeDetails))
             })
-           
         })
     },
     initDate(){
         let nowDate = new Date()
         let tadayDate = nowDate.Format("yyyy-MM-dd"),
             startDate = new Date(nowDate.setDate(nowDate.getDate() - 31)).Format("yyyy-MM-dd"),
-            start = new Date(nowDate.setDate(nowDate.getDate() - 1000)).Format("yyyy-MM-dd");
+            start = new Date(nowDate.setDate(nowDate.getDate() - 1000)).Format("yyyy-MM-dd")
         console.log(tadayDate, startDate)
         this.setData({
             tadayDate: tadayDate,

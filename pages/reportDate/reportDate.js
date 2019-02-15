@@ -219,12 +219,12 @@ Page({
                 break
         }
     },
-    endTimes: function() {
+    endTimes() {
         this.setData({
             dateTimeArray: wx.getStorageSync("dateEndArray")
         })
     },
-    goBack: function() {
+    goBack() {
         let reportTime = this.data.reportTime
         let searchDates = this.data.searchDates
         var pages = getCurrentPages()
@@ -240,31 +240,5 @@ Page({
             })
             wx.navigateBack()
         }
-    },
-
-    onReady: function() {
-
-    },
-
-    onShow: function() {
-
-    },
-
-    onHide: function() {},
-
-    onUnload: function() {
-
-    },
-
-    onPullDownRefresh: function() {
-
-    },
-
-    onReachBottom: function() {
-
-    },
-
-    onShareAppMessage: function() {
-
     }
 })

@@ -1,0 +1,31 @@
+.heads {
+    text-align: center;
+    background: #fff;
+    padding: 60rpx 0;
+    color: #444;
+    font-weight: 800;
+}
+
+.heads .ico {
+    font-size: 90rpx;
+    margin-bottom: 15rpx;
+}
+
+.heads .icon-ok {
+    color: #0ec695;
+}
+
+.heads .icon-clear {
+    color: orangered;
+}
+
+.list {
+    background: #fff;
+    font-size:26rpx;
+     color: #666;
+}
+
+
+.list text {
+    color: #555;
+}

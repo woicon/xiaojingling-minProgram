@@ -16,16 +16,28 @@
 .navbar>view {
     text-align: center;
     font-size: 32rpx;
-    border-bottom: 2px solid #fff;
     line-height: 40px;
     box-sizing: border-box;
+    position: relative;
 }
 
 .navbar>view.active {
     color: #0ec695;
-    border-bottom: 2px solid #0ec695;
     position: relative;
     z-index: 90;
+}
+
+.navbar>view.active::after {
+    content: '';
+    display: block;
+    width: 60rpx;
+    height: 6rpx;
+    background: #0ec695;
+    position: absolute;
+    left: 50%;
+    margin-left: -30rpx;
+    bottom: 0;
+    border-radius: 90px;
 }
 
 .r-head {
@@ -535,53 +547,75 @@
     margin-bottom: -7px;
     margin-left: 12px;
 }
-.p-head{
+
+.p-head {
     display: flex;
-    background:#fff;
+    background: #fff;
 }
 
-.p-head>view{
-    font-size:28rpx;
-    width:50%;
-    text-align:center;
-    color:#888;
-    height:80px;
+.p-head>view {
+    font-size: 28rpx;
+    width: 50%;
+    text-align: center;
+    color: #888;
+    height: 80px;
 }
-.p-num{
-    font-size:48rpx;
-    font-weight:800;
-    color:#333;
+
+.p-num {
+    font-size: 48rpx;
+    font-weight: 800;
+    color: #333;
 }
-.p-tab{
+
+.p-tab {
     display: flex;
-    background:#fff;
+    background: #fff;
 }
-.p-tab>view{
-    width:50%;
-    text-align:center;
+
+.p-tab picker {
+    width: 50%;
+    text-align: center;
+    line-height: 46px;
+    font-size: 28rpx;
 }
-.p-tab>view picker{
-   line-height:46px;
-    font-size:28rpx;
-}
-.r-item{
-    background:#fff;
-    padding:30rpx;
-}
-.coupon-title{
-    font-size:30rpx;
-    font-weight:800;
-}
-.r-item>view{
+.p-tab picker>view{
     display: flex;
-    justify-content:space-between;
-    font-size:24rpx;
-    color:#444;
+    align-items:center;
+    justify-content:center;
+
 }
-.coupon-bar{
-    margin-top:20rpx;
+.p-tab picker>view::after{
+    content:'';
+    display:block;
+    width:18rpx;
+    height:18rpx;
+    border: 2px solid #eee;
+    border-left:none;
+    border-top:none;
+    transform: rotate(45deg);
 }
-.r-item>.coupon-bar>view{
-    color:#999;
-    font-size:22rpx;
+.r-item {
+    background: #fff;
+    padding: 30rpx;
+}
+
+.coupon-title {
+    font-size: 30rpx;
+    font-weight: 800;
+}
+
+.r-item>view {
+    display: flex;
+    justify-content: space-between;
+    font-size: 24rpx;
+    color: #444;
+}
+
+.coupon-bar {
+    margin-top: 20rpx;
+}
+
+.r-item>.coupon-bar>view {
+    color: #999;
+    font-size: 22rpx;
 }

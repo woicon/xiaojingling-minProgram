@@ -42,3 +42,7 @@
     font-size:34rpx;
     padding:40rpx 40rpx;
 }
+
+.button{
+    margin:40rpx;
+}

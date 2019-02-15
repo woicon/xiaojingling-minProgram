@@ -7,6 +7,7 @@ const API = "https://api.liantuofu.com/open/" //正式环境
 //const API = "http://testclubshop.liantuobank.com/open/" //测试环境
 const siApi = "http://shopcashiersi.liantuobank.com/ShopCashier_SI/"
 const ksApi = "https://kshbank.liantuobank.com/front/baseV3/gateway.in"
+//const ksApi = "http://192.168.140.11:8000/front/baseV3/gateway.in"
 const oldSi = "http://front.51ebill.com/front/baseV3/gateway.in"
 
 function ajax(url, params, signs, method) {

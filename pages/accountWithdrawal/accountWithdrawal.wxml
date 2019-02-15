@@ -18,11 +18,11 @@
         </view>
         <view  class='lines'>
             <label>短信验证码</label>
-            <input placeholder='输入短信验证码' type="number" maxlength='4'></input>
-            <view bindtap="{{disableSend || endTime > 0 ? endTime :'sendCode'}}" class='sendmsg {{disableSend || endTime > 0 ? "disable" :""}}'>{{endTime > 0 ? endTime+'s后重发' :'发送验证码'}}</view>
+            <input placeholder='输入短信验证码' bindinput='verCode' type="number" maxlength='6'></input>
+            <view bindtap="{{disableSend || endTime > 0 ? '' :'sendCode'}}" class='sendmsg {{disableSend || endTime > 0 ? "disable" :""}}'>{{endTime > 0 ? endTime+'s后重发' :'发送验证码'}}</view>
         </view>
     </view>
     <view class='tip'>温馨提示：工作日8:30-17:15提现，当天到账（两小时内），其他时间提现，第二个工作日到账</view>
 </view>
 <view class='button-bar'>
-<view class='button' bindtap='withdrawal'>确认提现</view></view>
+<view class='button {{checkOk ? "" : "button-disable"}}' bindtap='{{checkOk ? "withdrawal" : ""}}'>确认提现</view></view>

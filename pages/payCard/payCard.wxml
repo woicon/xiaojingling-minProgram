@@ -1,6 +1,5 @@
 <view class='c-head'>
-    <view>
-        <view class='ico-shop'></view> {{login.merchantName}}</view>
+    <view>{{login.merchantName}}</view>
 </view>
 <view class='list'>
     <view wx:for="{{list}}" wx:key="terminalList" class='bline'>

@@ -10,7 +10,7 @@ Page({
         reportDateFormat: null,
         disNext: true,
         navBar: null,
-        currentCheck:0,
+        currentCheck: 0,
         currentCat: 2,
     },
     onLoad(options) {
@@ -25,6 +25,10 @@ Page({
                 reportDate: new Date().Format('yyyyMMdd'),
                 taday: base.formatDate(nowDate, 'yyyy-MM-dd'),
                 yestaday: base.formatDate(nowDate.getTime() - base.dayValue, 'yyyy-MM-dd'),
+                couponDate: {
+                    beginTime: base.formatDate(nowDate.getTime() - base.dayValue * 7, 'yyyyMMddhhmmss'),
+                    endTime: base.formatDate(nowDate.getTime() - base.dayValue, 'yyyyMMddhhmmss'),
+                },
                 reportDateFormat: new Date().Format('yyyy-MM-dd'),
                 role: role, //role  0总部 1门店 2员工 3店长
                 navBar: role === 0 ? ['营业统计', '会员统计'] : ['营业统计', '会员统计', '核销统计'],
@@ -34,8 +38,24 @@ Page({
             console.log(error)
         }
     },
+    couponParams(arg) {
+        console.log(arg)
+        const nowDate = new Date()
+        let params = this.couponDate(7 || date)
+        if (arg) {
+            params = Object.assign(params, arg)
+        }
+        return params
+    },
+    couponDate(days) {
+        //优惠券时间
+        const nowDate = new Date()
+        return {
+            beginTime: base.formatDate(nowDate.getTime() - base.dayValue * days, 'yyyyMMddhhmmss'),
+            endTime: base.formatDate(nowDate.getTime() - base.dayValue, 'yyyyMMddhhmmss'),
+        }
+    },
     reportparams(date) {
-
         return this.data.searchDate ? this.data.searchDate : {
             beginDate: date,
             endDate: date
@@ -80,7 +100,6 @@ Page({
                     var cashier = (res[1].code != 'FAILED') ? res[1] : null
                     var trade = (res[0].code != 'FAILED') ? res[0].statistics : null
                     let recharge = res[2].rechargeStatistics
-
                     this.setData({
                         isPageLoad: false,
                         trade: trade,
@@ -208,13 +227,16 @@ Page({
                 this.getReport(base.formatDate(this.data.taday, 'yyyyMMdd'))
                 break
             case 2:
-                wx.navigateTo({
-                    url: '/pages/reportDate/reportDate',
-                })
+                this.toReportDate()
                 break
         }
         this.setData({
             reportTab: e.target.dataset.index
+        })
+    },
+    toReportDate(couponDate){
+        wx.navigateTo({
+                url: `/pages/reportDate/reportDate?isCopuon=${!!couponDate}`,
         })
     },
     moreDepartment() {
@@ -275,6 +297,8 @@ Page({
     },
     toggleCat(e) {
         let currentCat = e.target.id
+        console.log(currentCat)
+
         this.setData({
             currentCat: e.target.id
         })
@@ -290,19 +314,18 @@ Page({
         return api.newMemberCount(this.reportparams())
     },
     //核销优惠券记录
-    couponConsumeRecordList(date) {
-        return api.couponConsumeRecordList(this.reportparams(this.data.searchDate || this.data.reportDate))
+    couponConsumeRecordList(date,arg) {
+        return api.couponConsumeRecordList(this.couponParams(date,arg))
     },
+
     //查询核券数量
     couponConsumeCount() {
         return api.couponConsumeCount({})
     },
-
     //核销优惠券记录
     couponConsumeList() {
         return api.couponConsumeList({})
     },
-
     //员工列表
     employeeList() {
         return api.employeeList({})
@@ -312,12 +335,12 @@ Page({
             this.couponConsumeCount(),
             this.couponConsumeList(),
             this.employeeList(),
-            this.couponConsumeRecordList()
+            this.couponConsumeRecordList({}, 7)
         ]
         Promise.all(init).then(res => {
             console.log(res)
             this.setData({
-                isPageLoad:false,
+                isPageLoad: false,
                 couponList: res[1].couponList,
                 todayCount: res[0].todayCount,
                 yesterdayCount: res[0].yesterdayCount,
@@ -333,14 +356,25 @@ Page({
 
     },
     //核券时间切换
-    toggleCheckTab(e){
+    toggleCheckTab(e) {
         this.setData({
-            currentCheck:e.target.dataset.id
+            currentCheck: e.target.dataset.id
         })
-        this.initCouponCheck()
+        let id = e.target.dataset.id
+        switch (id){
+            case 0 :
+                this.couponConsumeRecordList(this.couponDate(7))
+                break
+            case 1:
+                this.couponConsumeRecordList(this.couponDate(30))
+                break
+            case 2:
+                this.toReportDate(true)
+                break
+        }
     },
     //优惠券查询
-    initPage(){
+    initPage() {
         if (this.data.currentCat == 2) {
             this.initCouponCheck()
         } else {

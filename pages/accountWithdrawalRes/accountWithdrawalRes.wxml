@@ -1,0 +1,22 @@
+<view class='heads'>
+    <view class="ico {{detial.status != '03'?'icon-ok':'icon-clear'}}"></view>
+
+    <view>{{status[detail.status]}}</view>
+</view>
+
+<view class='list'>
+    <view class='lines'>提现金额
+        <text>{{detail.withdrawAccountOutAmt}}</text>
+    </view>
+    <view class='lines'>提现订单号
+        <text>{{detail.outTradeNoExt}}</text>
+    </view>
+    <view class='lines'>提现时间
+        <text>{{detail.gmtCreated}}</text>
+    </view>
+    <view class='lines'>到账银行卡
+        <text>{{detail.receiveExternalAccount}}</text>
+    </view>
+</view>
+
+<view class='button' bindtap='toAccount'>完成</view>
