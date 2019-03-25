@@ -1,0 +1,15 @@
+<scroll-view class='scroll-contents' >
+    <view wx:if="{{itTop}}" class='getmore f-c-c'>
+        <view wx:if="{{topHasMore}}">
+            <template is="bottomloading" />
+        </view>
+        <view wx:else>没有更多</view>
+    </view>
+    <slot></slot>
+    <view wx:if="{{orderIsBottm}}" class='getmore f-c-c'>
+        <view wx:if="{{bottomHasMore}}">
+            <template is="bottomloading" />
+        </view>
+        <view wx:else>没有更多</view>
+    </view>
+</scroll-view>

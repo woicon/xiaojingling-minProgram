@@ -10,16 +10,6 @@ Page({
         wx.setNavigationBarTitle({
             title: '个人中心',
         })
-        try {
-            let userInfo = wx.getStorageSync("userInfo")
-            this.setData({
-                userInfo: userInfo
-            })
-        } catch (error) {
-            this.setData({
-                userInfo: null
-            })
-        }
     },
     onShow() {
         this.setData({
@@ -77,14 +67,7 @@ Page({
                 }
             })
     },
-    getUserInfo(e) {
-        const userInfo = e.detail
-        wx.setStorageSync("userInfo", e.detail.userInfo)
-        const authInfo = wx.getStorageSync("authInfo")
-        this.setData({
-            userInfo: e.detail.userInfo
-        })
-    },
+
     getKsUrl() {
         console.log(this.data.bag)
         let parmas = {

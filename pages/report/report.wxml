@@ -19,8 +19,10 @@
                 </picker>
             </view>
             <view class='p-head bline'>
-                <view><view class='p-num'>{{todayCount}}</view>今天核销</view>
-                <view><view class='p-num'>{{yesterdayCount}}</view>昨日核销</view>
+                <view>
+                    <view class='p-num'>{{todayCount}}</view>今天核销</view>
+                <view>
+                    <view class='p-num'>{{yesterdayCount}}</view>昨日核销</view>
             </view>
             <view class='tab'>
                 <view bindtap='toggleCheckTab' wx:for="{{['近7天','近30天','更多']}}" data-id="{{index}}" wx:key="checkTab" class='{{currentCheck == index?"active":""}}'>{{item}}</view>
@@ -353,15 +355,12 @@
                         <view class='coupon-title'>{{item.couponName}}</view>
                         <view> {{item.memberName}}</view>
                     </view>
-
                     <view class='coupon-bar'>
                         <view>券号：{{item.couponNo}}</view>
                         <view>{{item.consumeTime}}</view>
                     </view>
                 </view>
             </view>
-
-            <view></view>
         </block>
     </scroll-view>
 </block>

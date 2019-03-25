@@ -248,7 +248,6 @@ Page({
                 let department = this.data.department
                 department.statisticsList = department.statisticsList.concat(res.statisticsList)
                 department.pageNumber = res.pageNumber
-
                 this.setData({
                     department: department
                 })
@@ -382,7 +381,6 @@ Page({
         }
     },
     onShow() {
-        console.log("onshow")
         this.initPage()
     }
 })

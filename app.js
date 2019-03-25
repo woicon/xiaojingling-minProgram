@@ -19,6 +19,9 @@ App({
         this.types = types
         this.base = require('./utils/util.js')
         this.checkLogin()
+        let nod = require('./libs/aes/public.js')
+        console.log(nod, nod.Decrypt('ALhHd7bcTjj6/5cynbPaj9cx4TkC9n7RyXBvPWi56hGItdZwo+r+B6nP0GuqvvLE16gVgPftaWBSE/MuazlFLMG6FknZnIUYDnuFsH6PUw8qjnYP9qYSPbadICzlS6JDFKwVRQpwPjXnxh1mF1b9Kg=='))
+       
     },
     globalData: {
         userInfo: null
@@ -41,6 +44,7 @@ App({
                 url: '/pages/login/login',
             })
         }
+        console.log('s')
     },
     //检测更新
     updateManager() {

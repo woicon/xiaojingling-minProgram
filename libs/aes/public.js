@@ -1,6 +1,6 @@
 var CryptoJS = require('aes.js');  //引用AES源码js
 console.log(CryptoJS)
-var key = CryptoJS.enc.Utf8.parse("LIN_zizhang_V587");//十六位十六进制数作为秘钥
+var key = CryptoJS.enc.Utf8.parse("fiubHNPc701P_d0z");//十六位十六进制数作为秘钥
 
 //解密方法
 function Decrypt(word) {
