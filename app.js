@@ -32,7 +32,9 @@ App({
             let login = wx.getStorageSync("login")
             return login[arg]
         } catch (error) {
-            console.log(error)
+            wx.redirectTo({
+                url: '/pages/login/login',
+            })
         }
     },
     checkLogin() {

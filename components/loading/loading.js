@@ -3,11 +3,12 @@ Component({
   properties: {
       color: {
           type: String,
-          value: '#77777', 
-          observer: function (newVal, oldVal, changedPath) {
-
-          }
+          value: '#77777',
       },
+      text:{
+          type:String,
+          value:'',
+      }
   },
 
   data: {

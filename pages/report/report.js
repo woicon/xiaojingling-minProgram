@@ -16,9 +16,6 @@ Page({
     onLoad(options) {
         app.checkLogin()
         const nowDate = new Date()
-        wx.setNavigationBarTitle({
-            title: '收款报表',
-        })
         try {
             let role = app.commonParams('role')
             this.setData({
@@ -32,6 +29,7 @@ Page({
                 reportDateFormat: new Date().Format('yyyy-MM-dd'),
                 role: role, //role  0总部 1门店 2员工 3店长
                 navBar: role === 0 ? ['营业统计', '会员统计'] : ['营业统计', '会员统计', '核销统计'],
+                headTitle:app.commonParams('merchantName'),
                 ...app.systemInfo
             })
         } catch (error) {
@@ -145,6 +143,7 @@ Page({
                 break
         }
     },
+    //时间天数切换
     stepDate(e) {
         let reportDate = this.data.reportDateFormat
         const currDate = new Date(reportDate)
@@ -200,6 +199,7 @@ Page({
             reportTab: reportTab
         })
     },
+    //切换报表
     toggleReport(e) {
         let event = e.target.dataset
         let reportDate = this.data.reportDateFormat
@@ -234,11 +234,12 @@ Page({
             reportTab: e.target.dataset.index
         })
     },
-    toReportDate(couponDate){
+    toReportDate(couponDate) {
         wx.navigateTo({
-                url: `/pages/reportDate/reportDate?isCopuon=${!!couponDate}`,
+            url: `/pages/reportDate/reportDate?isCopuon=${!!couponDate}`,
         })
     },
+    //更多员工
     moreDepartment() {
         let params = this.reportparams(this.data.reportDate)
         params.pageNumber = this.data.department.pageNumber + 1
@@ -254,6 +255,7 @@ Page({
                 })
             })
     },
+    //更多门店
     moreCashier() {
         let cashier = this.data.cashier
         let params = this.reportparams(this.data.reportDate)
@@ -274,6 +276,7 @@ Page({
                 })
             })
     },
+    //切换统计门店
     storeChange(e) {
         if (e.detail.value == 0) {
             this.getReport(this.data.reportDate)
@@ -295,6 +298,7 @@ Page({
             selStore: e.detail.value
         })
     },
+    //切换分类
     toggleCat(e) {
         let currentCat = e.target.id
         console.log(currentCat)
@@ -306,7 +310,6 @@ Page({
     },
     // 充值统计
     recharge() {
-        //let params = this.reportparams()
         return api.recharge(this.reportparams())
     },
     // 会员新增数量
@@ -314,8 +317,8 @@ Page({
         return api.newMemberCount(this.reportparams())
     },
     //核销优惠券记录
-    couponConsumeRecordList(date,arg) {
-        return api.couponConsumeRecordList(this.couponParams(date,arg))
+    couponConsumeRecordList(date, arg) {
+        return api.couponConsumeRecordList(this.couponParams(date, arg))
     },
 
     //查询核券数量
@@ -330,6 +333,7 @@ Page({
     employeeList() {
         return api.employeeList({})
     },
+    //核销统计模块初始化
     initCouponCheck() {
         let init = [
             this.couponConsumeCount(),
@@ -350,23 +354,37 @@ Page({
         })
     },
     changeCoupon(e) {
-
+        console.log(e);
+        this.setData({
+            selCoupon: this.data.couponList[e.detail.value].couponName
+        })
     },
     changeEmployee(e) {
-
+        this.setData({
+            selEmployee: this.data.employeeList[e.detail.value].operatorName
+        })
     },
     //核券时间切换
     toggleCheckTab(e) {
         this.setData({
-            currentCheck: e.target.dataset.id
+            currentCheck: e.target.dataset.id,
+            listloading: true
         })
         let id = e.target.dataset.id
-        switch (id){
-            case 0 :
-                this.couponConsumeRecordList(this.couponDate(7))
+        const recordList = data => {
+            this.couponConsumeRecordList(data).then(res => {
+                this.setData({
+                    recordList: res.recordList,
+                    listloading: false
+                })
+            })
+        }
+        switch (id) {
+            case 0:
+                recordList(this.couponDate(7))
                 break
             case 1:
-                this.couponConsumeRecordList(this.couponDate(30))
+                recordList(this.couponDate(30))
                 break
             case 2:
                 this.toReportDate(true)
@@ -381,8 +399,13 @@ Page({
             this.getReport(this.data.searchDate || this.data.reportDate)
         }
     },
+    moreRecordList(e) {
+        console.log(e)
+    },
+    resRecordList(e){
+        console.log("res::::",e)
+    },
     onShow() {
-        console.log("onshow")
         this.initPage()
     }
 })

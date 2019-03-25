@@ -1,65 +1,60 @@
-<view class='auth' wx:if="{{!userInfo}}">
-    <view class='auth-txt'>为了更好的体验，需要您授权此app获取昵称，头像等信息！</view>
-    <button open-type='getUserInfo' bindgetuserinfo='getUserInfo'>确认授权</button>
+<view class='m-head-warp'>
+    <view class='m-head' bindtap='clipNo' data-id="{{member.merchantCode}}">
+        <view class='m-img'>
+            <image src='{{userInfo.avatarUrl}}'></image>
+        </view>
+        <view class='m-info'>
+            <view class='m-name'>{{member.merchantName}}</view>
+            <view class="m-ts">编号：{{member.merchantCode}} </view>
+            <!-- <text>复制</text> -->
+        </view>
+    </view>
+    <view class='b' wx:if="{{bag}}">
+        <view class='banks'>
+            <picker range='{{bag}}' range-key='balanceAccount' bindchange='changeAccount'>
+                <view bindtap='toggleBag'>
+                    <view>我的钱包</view>
+                    <view class='banks-text'>{{selBag.bankName}} 尾号:{{selNum}}</view>
+                </view>
+            </picker>
+        </view>
+        <view class='button' hover-class='button-touch' catchtap='extract'>提现</view>
+    </view>
 </view>
-<block wx:else>
-    <view class='m-head-warp'>
-        <view class='m-head' bindtap='clipNo' data-id="{{member.merchantCode}}">
-            <view class='m-img'>
-                <image src='{{userInfo.avatarUrl}}'></image>
-            </view>
-            <view class='m-info'>
-                <view class='m-name'>{{member.merchantName}}</view>
-                <view class="m-ts">编号：{{member.merchantCode}} </view>
-                <!-- <text>复制</text> -->
-            </view>
-        </view>
-        <view class='b' wx:if="{{bag}}">
-            <view class='banks'>
-                <picker range='{{bag}}' range-key='balanceAccount' bindchange='changeAccount'>
-                    <view bindtap='toggleBag'>
-                        <view>我的钱包</view>
-                        <view class='banks-text'>{{selBag.bankName}} 尾号:{{selNum}}</view>
-                    </view>
-                </picker>
-            </view>
-            <view class='button' hover-class='button-touch' catchtap='extract'>提现</view>
-        </view>
-    </view>
 
-    <view wx:if="{{role == 0}}" class='member-nav bline'>
-        <view>
-            <view class='ico icon-order'></view> 订单</view>
-        <view>
-            <view class='ico icon-orders'></view>到账</view>
-    </view>
+<view wx:if="{{role == 0}}" class='member-nav'>
+    <view>
+        <view class='ico icon-order'></view> 订单</view>
+    <view>
+        <view class='ico icon-orders'></view>到账</view>
+</view>
 
-    <view wx:else class='member-nav bline'>
-        <navigator url='/pages/pos/pos'>
-            <view class='ico ico-cash'></view>收款
-        </navigator>
-        <!-- <view><view class='ico icon-orders'></view>交接班</view> -->
-        <navigator url='/pages/checkCoupon/checkCoupon'>
-            <view class='ico ico-clear'></view>核券</navigator>
-    </view>
+<view wx:else class='member-nav bline'>
+    <navigator url='/pages/pos/pos'>
+        <view class='ico ico-cash'></view>收款
+    </navigator>
+    <!-- <view><view class='ico icon-orders'></view>交接班</view> -->
+    <navigator url='/pages/checkCoupon/checkCoupon'>
+        <view class='ico ico-clear'></view>核券</navigator>
+</view>
 
-    <view class='m-list'>
-        <!-- <navigator wx:if="{{bag}}" url='/pages/account/account' hover-class='nav-touch'>
+<view class='m-list'>
+    <!-- <navigator wx:if="{{bag}}" url='/pages/account/account' hover-class='nav-touch'>
             <view class='ico icon-setting'></view>
             <view class='m-name'>我的钱包</view>
             <text>提现</text>
         </navigator> -->
 
-        <navigator url='/pages/setAudio/setAudio' hover-class='nav-touch' wx:if="{{member.role!=0}}">
-            <view class='ico icon-setting'></view>
-            <view class='m-name'>云喇叭设置</view>
-        </navigator>
-        <navigator url='/pages/payCard/payCard' hover-class='nav-touch' wx:if="{{member.role!=0}}">
-            <view class='ico icon-myservice'></view>
-            <view class='m-name'>店码设置</view>
-        </navigator>
+    <navigator url='/pages/setAudio/setAudio' hover-class='nav-touch' wx:if="{{member.role!=0}}">
+        <view class='ico icon-setting'></view>
+        <view class='m-name'>云喇叭设置</view>
+    </navigator>
+    <navigator url='/pages/payCard/payCard' hover-class='nav-touch' wx:if="{{member.role!=0}}">
+        <view class='ico icon-myservice'></view>
+        <view class='m-name'>店码设置</view>
+    </navigator>
 
-        <!--
+    <!--
         <navigator wx:if="{{member.role!=0}}" url='/pages/pos/pos' class='phones' hover-class='nav-touch'>
             <view class='ico icon-mpos'></view>
             <view class='m-name'>收银</view>
@@ -68,32 +63,31 @@
             <view class='ico icon-myservices'></view>
             <view class='m-name'>我的服务商</view>
         </view> -->
-        <!-- <view bindtap='toPayPlat' hover-class='nav-touch'>
+    <!-- <view bindtap='toPayPlat' hover-class='nav-touch'>
             <view class='ico icon-info'></view>
             <view class='m-name'>签约信息</view>
         </view> -->
-        <view class='phones' bindtap='callServ' hover-class='nav-touch'>
-            <view class='ico icon-call'></view>
-            <view class='m-name'>在线客服</view>
-            <text></text>
-        </view>
-        <!-- <navigator url='/pages/help/help' hover-class='nav-touch'>
+    <view class='phones' bindtap='callServ' hover-class='nav-touch'>
+        <view class='ico icon-call'></view>
+        <view class='m-name'>在线客服</view>
+        <text></text>
+    </view>
+    <!-- <navigator url='/pages/help/help' hover-class='nav-touch'>
             <view class='ico icon-book'></view>
             <view class='m-name'>收款小课堂</view>
         </navigator> -->
-        <!-- <navigator wx:if="{{!isCore}}" url='/pages/desk/desk' hover-class='nav-touch'>
+    <!-- <navigator wx:if="{{!isCore}}" url='/pages/desk/desk' hover-class='nav-touch'>
             <view class='ico icon-setting'></view>
             <view class='m-name'>桌码设置</view>
         </navigator> -->
 
-        <view class='phones' hover-class='nav-touch'>
-            <view class='ico icon-about'></view>
-            <view class='m-name'>关于</view>
-            <text>{{version||'0.0.1'}}</text>
-        </view>
-        <view class='exit' bindtap='exitSys' hover-class='nav-touch'>
-            <view class='ico icon-exit'></view>
-            <view class='m-name'>退出账号</view>
-        </view>
+    <view class='phones' hover-class='nav-touch'>
+        <view class='ico icon-about'></view>
+        <view class='m-name'>关于</view>
+        <text>{{version||'0.0.1'}}</text>
     </view>
-</block>
+    <view class='exit' bindtap='exitSys' hover-class='nav-touch'>
+        <view class='ico icon-exit'></view>
+        <view class='m-name'>退出账号</view>
+    </view>
+</view>

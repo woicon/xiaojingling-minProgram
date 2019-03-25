@@ -1,0 +1,6 @@
+<view class='empty'>
+    <view>
+        <view class='ico {{icon}}'></view>
+        <text class='txt'>{{msg}}</text>
+    </view>
+</view>

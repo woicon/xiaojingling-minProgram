@@ -330,7 +330,11 @@ page {
     align-items: left;
     justify-content: center !important;
 }
-
+.f-c-sb{
+    display: flex;
+    align-items:center;
+    justify-content:space-between;
+}
 .pageloading {
     position: fixed;
     left: 0;

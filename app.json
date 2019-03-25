@@ -1,10 +1,10 @@
 {
     "pages": [
+        "pages/index/index",
         "pages/report/report",
         "pages/login/login",
         "pages/order/order",
         "pages/member/member",
-        "pages/index/index",
         "pages/pos/pos",
         "pages/reportDate/reportDate",
         "pages/orderDetail/orderDetail",
@@ -23,7 +23,8 @@
         "pages/customerService/customerService",
         "pages/help/help",
         "pages/payCard/payCard",
-        "pages/checkCoupon/checkCoupon"
+        "pages/checkCoupon/checkCoupon",
+        "pages/checkCouponUser/checkCouponUser"
     ],
     "window": {
         "backgroundTextStyle": "light",
@@ -38,6 +39,12 @@
         "selectedColor": "#0ec695",
         "color": "#979797",
         "list": [
+            {
+                "pagePath": "pages/index/index",
+                "text": "首页",
+                "iconPath": "assets/images/home.png",
+                "selectedIconPath": "assets/images/home-sel.png"
+            },
             {
                 "pagePath": "pages/report/report",
                 "text": "收款报表",
@@ -57,5 +64,11 @@
                 "selectedIconPath": "assets/images/member-sel.png"
             }
         ]
+    },
+    "usingComponents": {
+        "Contents":"components/Contents/Contents",
+        "Load":"components/loading/loading",
+        "Scrolls":"components/Scrolls/Scrolls",
+        "Empty":"components/Empty/Empty"
     }
 }

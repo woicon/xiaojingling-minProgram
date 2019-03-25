@@ -1,5 +1,7 @@
 {
-   "navigationStyle": "custom",
+    "navigationStyle": "custom",
+    "navigationBarTitleText": "收款报表",
+    "disableScroll": true,
     "usingComponents": {
         "detail": "../../components/reportDetail/detail"
     }
