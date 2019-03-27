@@ -36,7 +36,14 @@ let startDate = (num, format) => {
 function strDateFormat(str) {
     return str.replace(/^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/, "$1-$2-$3 $4:$5:$6");
 }
-
+function batFormatDate(list,attr){
+    let str = bill.orderDetails
+    for (let i in list) {
+        if (list[i][attr]) {
+            list[i][attr] = strDateFormat(list[i][attr])
+        }
+    }
+}
 function formatDate(dates, types) {
     return new Date(dates || '').Format(types)
 }
@@ -67,11 +74,12 @@ function XMLtoJSON(xml) {
     return xmlToJSON.xmlToJSON.parseString(xml, myOptions);
 }
 module.exports = {
-    formatTime: formatTime,
-    formatDate: formatDate,
+    formatTime,
+    formatDate,
     dayValue: 24 * 60 * 60 * 1000,
-    startDate: startDate,
-    strDateFormat: strDateFormat,
-    randomNum: randomNum,
-    XMLtoJSON: XMLtoJSON
+    startDate,
+    strDateFormat,
+    randomNum,
+    batFormatDate,
+    XMLtoJSON
 }

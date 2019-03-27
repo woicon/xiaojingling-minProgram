@@ -26,7 +26,7 @@
         </view>
     </view>
     <view class='scroll-cont'>
-        <Scrolls wx:if="{{coupon.length>0}}" list="{{couponList}}" listloading="{{listloading}}" bindscrolltoupper="toUpper" bindscrolltolower="toLower">
+        <Scrolls wx:if="{{coupon.length>0}}" list="{{couponList}}" listloading="{{listloading}}"  bindscrolltoupper="toUpper" bindscrolltolower="toLower">
             <view wx:for="{{coupon}}" class='coupon-item' style="background:{{item.cardTemplate.color}}">
                 <view class='coupon-title'>{{item.cardTemplate.title}}</view>
                 <view class='coupon-date'>可用日期：{{item.getDate}}-{{item.endDate}}</view>
