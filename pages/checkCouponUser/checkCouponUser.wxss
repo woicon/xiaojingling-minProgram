@@ -1,0 +1,76 @@
+/* pages/checkCouponUser/checkCouponUser.wxss */
+page{
+}
+.user-img{
+    width:140rpx;
+    margin-right:30rpx;
+}
+.user-img image{
+    width:140rpx;
+    height:140rpx;
+    border-radius:90px;
+}
+.user{
+    display: flex;
+    align-items:center;
+    padding:60rpx;
+    background:#fff;
+}
+.user-info{
+    flex:1;
+}
+.user-info>view{
+    font-size:24rpx;
+    color:#888;
+    line-height:1.8;
+}
+.user-info>view.user-name{
+    font-size:32rpx;
+    color:#444;
+    margin-bottom:15rpx;
+}
+.user-count{
+    padding:10rpx 30rpx;
+    font-size:26rpx;
+    text-align:center;
+    background:#fff;
+}
+.user-count>view{
+    width:33.333333%;
+    padding:30rpx 0;
+    font-size:24rpx;
+    color:#444;
+}
+.user-count-num{
+    font-size:26rpx;
+    color:#888;
+    text-align:center;
+    margin-top:10rpx;
+}
+.user-coun-num text{
+    font-size:20rpx;
+    color:#444;
+}
+
+.scroll-cont{
+    position: absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    top:440rpx;
+}
+.coupon-item{
+    margin:30rpx;
+    color:#fff;
+    padding:40rpx;
+    font-size:30rpx;
+    border-radius:10rpx;
+}
+.coupon-date{
+    font-size:24rpx;
+}
+.coupon-title{
+    font-weight:800;
+    font-size:30rpx;
+    margin-bottom:16rpx;
+}

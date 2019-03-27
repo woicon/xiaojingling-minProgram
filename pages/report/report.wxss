@@ -5,26 +5,28 @@
 
 .navbar {
     background: #fff;
-    color: #666;
+    color: #444;
     display: flex;
     align-items: center;
     height: 40px;
     justify-content: center;
-    font-weight: 800;
 }
 
 .navbar>view {
     text-align: center;
-    font-size: 32rpx;
+    font-size: 30rpx;
     line-height: 40px;
     box-sizing: border-box;
     position: relative;
+    color:#444;
+    opacity:.9;
 }
 
 .navbar>view.active {
     color: #0ec695;
     position: relative;
     z-index: 90;
+    opacity:1;
 }
 
 .navbar>view.active::after {
@@ -37,7 +39,6 @@
     left: 50%;
     margin-left: -30rpx;
     bottom: 0;
-    border-radius: 90px;
 }
 
 .r-head {
@@ -570,29 +571,36 @@
 .p-tab {
     display: flex;
     background: #fff;
+    height:46px;
 }
 
 .p-tab picker {
     width: 50%;
-    text-align: center;
     line-height: 46px;
     font-size: 28rpx;
+    background:transparent;
 }
-.p-tab picker>view{
+.p-tab-item{
+    color:#444;
     display: flex;
+    font-size:28rpx;
     align-items:center;
     justify-content:center;
-
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    padding:0 30rpx;
 }
-.p-tab picker>view::after{
+.p-tab-item::after{
     content:'';
     display:block;
-    width:18rpx;
-    height:18rpx;
-    border: 2px solid #eee;
+    width:10rpx;
+    height:10rpx;
+    border: 2px solid #ccc;
     border-left:none;
     border-top:none;
     transform: rotate(45deg);
+    margin-left:10rpx;
 }
 .r-item {
     background: #fff;

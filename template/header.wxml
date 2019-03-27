@@ -6,9 +6,7 @@
                     <view class="picker">{{store[selStore].merchantName}}</view>
                 </picker>
             </view>
+            <view wx:else>{{headTitle}}</view>
         </view>
     </view>
-</template>
-<template name="headerCommon">
-
 </template>

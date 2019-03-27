@@ -33,7 +33,7 @@ function ajax(url, params, signs, method) {
             url: API + url,
             data: signparams,
             method: method || 'GET',
-            success: function(data) {
+            success(data) {
                 console.log(`${url}==>返回数据`, data.data)
                 let currPage = app.currPage()
                 console.log()
@@ -46,12 +46,13 @@ function ajax(url, params, signs, method) {
                     currPage.setData({
                         error: true,
                         isPageLoad: false,
+                        loading: false,
                         errorMsg: data.data.msg
                     })
                     res(data.data)
                 }
             },
-            fail: function(error) {
+            fail(error) {
                 rej(error)
             }
         })
@@ -88,7 +89,7 @@ function siAjax(url, params) {
 }
 
 function oldSiAjax(params) {
-     let singparams = sign(params)
+    let singparams = sign(params)
     return new Promise((res, rej) => {
         wx.request({
             url: `${oldSi}`,
@@ -109,10 +110,10 @@ function oldSiAjax(params) {
     })
 }
 
-function ksAjax(params,k) {
+function ksAjax(params, k) {
     console.log(k)
     let key = k || ''
-    let singparams = sign(params, "ks",key)
+    let singparams = sign(params, "ks", key)
     return new Promise((res, rej) => {
         wx.request({
             url: `${ksApi}`,
@@ -142,6 +143,10 @@ module.exports = {
     recharge: params => ajax('statistics/recharge', params),
     //会员新增数量
     newMemberCount: params => ajax('statistics/newMemberCount', params),
+    //会员查询
+    memberGet: params => ajax('member/get', params),
+    //用户优惠券列表
+    memberCouponList: params => ajax('coupon/couponList', params),
     //款台分组交易汇总统计
     terminal: params => ajax('statistics/trade/terminal', params),
     //员工分组交易汇总统计
@@ -182,16 +187,16 @@ module.exports = {
     payCodeList: params => ajax('payCode/list', params),
     //[优惠券] - 核销优惠券记录明细
     couponConsumeRecordList: params => ajax('coupon/couponConsumeRecordList', params),
-    
+
     //[优惠券] - 查询核销优惠券数量
     couponConsumeCount: params => ajax('coupon/couponConsumeCount', params),
-    
-   // [优惠券] - 核销优惠券记录
+
+    // [优惠券] - 核销优惠券记录
     couponConsumeList: params => ajax('coupon/couponConsumeList', params),
 
     //[支付优惠] - 订单营销优惠查询
     discount: params => ajax('pay/discount', params),
- 
+
     //员工列表
     employeeList: params => ajax('employee/list', params),
 
@@ -205,6 +210,6 @@ module.exports = {
     getKsWithdrawUrl: params => siAjax('withDrawal/getKsWithdrawUrl.in', params),
 
     //转发的客商接口
-    ksApi: (params,key) => ksAjax(params,key),
+    ksApi: (params, key) => ksAjax(params, key),
     si: params => oldSiAjax(params),
 }

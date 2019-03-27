@@ -33,7 +33,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 10,
+			"current": 23,
 			"list": [
 				{
 					"id": -1,
@@ -173,6 +173,13 @@
 					"name": "accountWithdrawalRes",
 					"pathName": "pages/accountWithdrawalRes/accountWithdrawalRes",
 					"query": "id=000000000180490",
+					"scene": null
+				},
+				{
+					"id": 23,
+					"name": "checkCouponUser",
+					"pathName": "pages/checkCouponUser/checkCouponUser",
+					"query": "id=900211423679794534",
 					"scene": null
 				}
 			]

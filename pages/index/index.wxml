@@ -1,13 +1,16 @@
-<!--index.wxml-->
-<view class="container">
-  <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
-  </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view>
+
+
+<view wx:if="{{role == 0}}" class='nav'>
+    <view>
+        <view class='ico ico-order'></view> 订单</view>
+    <view>
+        <view class='ico ico-money'></view>到账</view>
+</view>
+
+
+
+<view wx:else class='nav'>
+    <navigator url='/pages/pos/pos'><view class='ico ico-cash'></view>收款</navigator>
+    <view><view class='ico ico-staff'></view>交接班</view>
+    <navigator url='/pages/checkCoupon/checkCoupon'><view class='ico ico-clear'></view>核券</navigator>
 </view>

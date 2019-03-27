@@ -1,0 +1,36 @@
+<Contents loading="{{loading}}" error="{{error}}" error-msg="{{errorMsg}}" icon="icon-coupon1">
+    <view class='user'>
+        <view class='user-img ico-user'>
+            <image src='{{member.headImgUrl}}'></image>
+        </view>
+        <view class='user-info'>
+            <view class='user-name'>{{member.memberName}}</view>
+            <view>{{member.mobile}} /{{member.levelName}}</view>
+            <view>最近消费时间：{{member.lastConsumDate}}</view>
+        </view>
+    </view>
+
+    <view class='f-c-sb user-count'>
+        <view class='rline'>
+            <view>消费/次数</view>
+            <view class='user-count-num'>
+                <text>¥</text>{{member.accumulationConsume}} / {{member.consumTimes}}</view>
+        </view>
+        <view class='rline'>
+            <view>储值/次数</view>
+            <view class='user-count-num'><text>¥</text>{{member.accumulationGiveRecharge}} / {{member.rechargeTimes}}</view>
+        </view>
+        <view>
+            <view>优惠券</view>
+            <view class='user-count-num'>{{member.couponCount}} / 99</view>
+        </view>
+    </view>
+    <view class='scroll-cont'>
+        <Scrolls wx:if="{{coupon.length>0}}" list="{{couponList}}" listloading="{{listloading}}" bindscrolltoupper="toUpper" bindscrolltolower="toLower">
+            <view wx:for="{{coupon}}" class='coupon-item' style="background:{{item.cardTemplate.color}}">
+                <view class='coupon-title'>{{item.cardTemplate.title}}</view>
+                <view class='coupon-date'>可用日期：{{item.getDate}}-{{item.endDate}}</view>
+            </view>
+        </Scrolls>
+    </view>
+</Contents>

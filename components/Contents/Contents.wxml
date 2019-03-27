@@ -1,0 +1,3 @@
+<Load class="loading" wx:if="{{loading}}" />
+<Empty wx:elif="{{error}}" msg="{{errorMsg}}" icon="{{icon}}" />
+<slot wx:else />
