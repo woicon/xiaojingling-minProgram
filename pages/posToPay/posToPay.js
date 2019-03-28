@@ -82,7 +82,6 @@ Page({
                         wx.showModal({
                             title: res.subMsg,
                             content: res.msg,
-                            confirmText:'重新扫码',
                             success:(res)=>{
                                 if(res.confirm){
                                     this.scanPay()

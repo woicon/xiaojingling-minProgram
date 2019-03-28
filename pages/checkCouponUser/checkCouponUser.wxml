@@ -22,15 +22,54 @@
         </view>
         <view>
             <view>优惠券</view>
-            <view class='user-count-num'>{{member.couponCount}} / 99</view>
+            <view class='user-count-num'>{{member.couponCount}}张</view>
         </view>
+    </view>
+    <view class='tabs'>
+        <view wx:for="{{['全部','兑换券','单品券','全场券']}}" wx:key="couponType" class='{{currentTab == index ? "active":""}}' data-index="{{index}}" bindtap='toggleCouponType'>{{item}}</view>
     </view>
     <view class='scroll-cont'>
         <Scrolls wx:if="{{coupon.length>0}}" list="{{couponList}}" listloading="{{listloading}}"  bindscrolltoupper="toUpper" bindscrolltolower="toLower">
-            <view wx:for="{{coupon}}" class='coupon-item' style="background:{{item.cardTemplate.color}}">
-                <view class='coupon-title'>{{item.cardTemplate.title}}</view>
-                <view class='coupon-date'>可用日期：{{item.getDate}}-{{item.endDate}}</view>
+            <view wx:for="{{coupon}}" bindtap='selCoupon' data-index="{{index}}" class='coupon-item {{item.checked ? "active" : ""}}' wx:key="couponList" wx:if="{{item.isUsed}}" data-type="{{item.cardTemplate.type}}">
+                <view class='coupon-num' style='background:{{item.cardTemplate.color}}'>
+                    <view wx:if="{{item.cardTemplate.type == 0 || item.cardTemplate.type == 9  ||  item.cardTemplate.type == 5 ||  item.cardTemplate.type == -1 ||  item.cardTemplate.type == 8}}"><text>¥</text> {{item.cardTemplate.specialPrice || item.cardTemplate.reduceCost}} </view>
+                    <view wx:elif="{{item.cardTemplate.type == 1 || item.cardTemplate.type == 7  }}">{{item.cardTemplate.discount}} <text>折</text> </view>
+                    <view wx:elif="{{item.cardTemplate.type == 2}}" class='icon-star'></view>
+                    <view class='coupon-type'>{{couponType[item.cardTemplate.type]}}</view>
+                </view>
+                <view class='coupon-content'>
+                    <view class='coupon-title'>{{item.cardTemplate.title}}</view>
+                    
+                    <view class='coupon-date'>有效期至：{{item.endDate}}</view>
+                </view>
             </view>
         </Scrolls>
     </view>
 </Contents>
+
+<view wx:if="{{selCoupon}}" class='panel' style='display:none'>
+    <view class='panel-content'>
+        <view class='p-head'> <image src='{{selCoupon.cardTemplate.logo}}'></image> <view>{{selCoupon.cardTemplate.brandName}}</view> </view>
+        <view class='p-tcont'>
+            <view class='p-title'> {{selCoupon.cardTemplate.title}}  </view>
+      
+            <view class='p-subtitle'> {{selCoupon.cardTemplate.subTitle}}</view>
+        </view>
+         <view class='p-box' wx:if="{{selCoupon.cardTemplate.goodItems && selCoupon.cardTemplate.goodItems.length >0}}" >
+            <view class='p-titles'>选择核销商品</view>
+            <view class='p-goods' bindtap='selGoods' wx:for="{{selCoupon.cardTemplate.goodItems}}" wx:if="{{!item.status}}" wx:key="goodsitems">
+                <view>{{item.itemName}}</view>
+                <view class='p-price'>原价：¥{{item.itemPrice}}</view>
+            </view>
+        </view>
+        <view class='p-box'>
+            <view class='p-titles'>优惠规则</view>
+            <view class='p-list'>
+                <view>优惠规则：{{selCoupon.rules}}</view>
+                <view>有效日期：{{selCoupon.endDate}}</view>
+                <view>使用须知：{{selCoupon.cardTemplate.description}}</view>
+             </view>
+        </view>
+        <view class='button'>核销优惠券</view>
+    </view>
+</view>

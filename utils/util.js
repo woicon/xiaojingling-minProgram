@@ -15,10 +15,10 @@ Date.prototype.Format = function(fmt) { //author: meizz
     var o = {
         "M+": this.getMonth() + 1, //月份
         "d+": this.getDate(),      //日
-        "h+": this.getHours(), //小时
-        "m+": this.getMinutes(), //分
-        "s+": this.getSeconds(), //秒
-        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+        "h+": this.getHours(),     //小时
+        "m+": this.getMinutes(),   //分
+        "s+": this.getSeconds(),   //秒 //季度
+        "q+": Math.floor((this.getMonth() + 3) / 3),    
         "S": this.getMilliseconds() //毫秒
     };
     if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
@@ -26,21 +26,19 @@ Date.prototype.Format = function(fmt) { //author: meizz
         if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)))
     return fmt
 }
-
 //格式化开始时间
 let startDate = (num, format) => {
     let dayValue = 24 * 60 * 60 * 1000
     return new Date(new Date().getTime() - dayValue * num).Format(format)
 }
-
 function strDateFormat(str) {
     return str.replace(/^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/, "$1-$2-$3 $4:$5:$6");
 }
+
 function batFormatDate(list,attr){
-    let str = bill.orderDetails
     for (let i in list) {
         if (list[i][attr]) {
-            list[i][attr] = strDateFormat(list[i][attr])
+            list[i][attr] = new Date(list[i][attr]).Format('yyyy-MM-dd')
         }
     }
 }

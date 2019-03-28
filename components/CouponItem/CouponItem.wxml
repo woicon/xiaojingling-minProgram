@@ -1,2 +1,4 @@
-<!--components/CouponItem/CouponItem.wxml-->
-<text>components/CouponItem/CouponItem.wxml</text>
+<view wx:for="{{coupon}}" class='coupon-item' style="background:{{item.cardTemplate.color}}" bindtap='toDetail'>
+    <view class='coupon-title'>{{item.cardTemplate.title}}</view>
+    <view class='coupon-date'>有效期至：{{item.getDate}}-{{item.endDate}}</view>
+</view>

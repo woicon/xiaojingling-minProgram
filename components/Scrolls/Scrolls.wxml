@@ -1,13 +1,13 @@
 <scroll-view class='scrolls' bindscrolltolower="scrolltolower" bindscrolltoupper="scrolltoupper"  scroll-y scroll-with-animation>
-    <view class='scroll-top' wx:if="{{istoupper}}">
+    <!-- <view class='scroll-top' wx:if="{{istoupper}}">
         <Load wx:if="{{refreshing}}">下拉加载更多</Load>
         <view class='scrolls-state' wx:else>没有更多了</view>
-    </view>
+    </view> -->
     <Load wx:if="{{listloading}}" />
     <Empty wx:elif="{{list.length <= 0}}" />
     <slot wx:else />
-    <view class='scroll-bottom' wx:if="{{istolower}}">
+    <!-- <view class='scroll-bottom' wx:if="{{istolower}}">
         <Load wx:if="{{hasmore}}" />
         <view class='scrolls-state' wx:else>没有更多了</view>
-    </view>
+    </view> -->
 </scroll-view>

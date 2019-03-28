@@ -105,22 +105,35 @@ Page({
         })
     },
 
-    touchKey: function (e) {
-        let that = this
-        let total = that.data.totalPrice
+    touchKey (e) {
+        let total = this.data.totalPrice
         let num = e.currentTarget.dataset.number
         let decimalReg = /^\d{0,8}\.{0,1}(\d{1,2})?$/
-        let _total = `${total}${num}`
-        let nums = (num == "00" && total == "0") ? total : num
-        let newTotal = total == "0" ? nums != '.' ? nums : "0." : decimalReg.test(_total) ? _total : total
-
+        console.log(num)
+        let newTotal
+        if(num != '+'){
+            let _total = `${total}${num}`
+            let nums = (total == "0") ? total : num
+            newTotal = total == "0" ? nums != '.' ? nums : "0." : decimalReg.test(_total) ? _total : total
+        }else{
+            newTotal = Number(total) + Number(num)
+        }
         this.setData({
             priceEmpty: false,
             totalPrice: newTotal.length < 8 ? newTotal : total
         })
     },
-
-    createPay: function (e) {
+    checkCoupon(e){
+        wx.scanCode({
+            success: (res) => {
+                console.log(res)
+                wx.navigateTo({
+                    url: `/pages/checkCouponUser/checkCouponUser?id=${res.result}`,
+                })
+            }
+        })
+    },
+    createPay (e) {
         let that = this
         let totalPrice = Number(this.data.totalPrice).toFixed(2)
         if (totalPrice == 0.00) {
@@ -130,7 +143,7 @@ Page({
             })
         } else {
             wx.navigateTo({
-                url: `/pages/posToPay/posToPay?total=${this.data.totalPrice}&mark=${this.data.mark ? this.data.mark : ''}`,
+                url: `/pages/posToPay/posToPay?total=${this.data.totalPrice}&mark=${this.data.orderRemark ? this.data.orderRemark : ''}`,
             })
             // wx.scanCode({
             //     onlyFromCamera: true,
@@ -146,7 +159,7 @@ Page({
     },
     markInput(e){
         this.setData({
-            mark:e.detail.value
+            orderRemark:e.detail.value
         })
     },
     creatPay: function (payerAccount) {
@@ -276,6 +289,9 @@ Page({
             priceEmpty: totalPrice.length == 0 ? true : false,
             totalPrice: totalPrice == '' ? "0" : totalPrice
         })
+    },
+    lessInput(e){
+
     },
     onHide: function () {
 

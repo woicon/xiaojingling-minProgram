@@ -10,7 +10,6 @@ Page({
     scanCopuon() {
         wx.scanCode({
             success: (res) => {
-                console.log(res)
                 this.setData({
                     couponNo: res.result
                 })

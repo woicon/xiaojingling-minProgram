@@ -7,14 +7,18 @@
         <view class='total'>
             <!-- <view class='total-title'>收款金额</view> -->
             <view class='total-price {{priceEmpty?"price-empty":""}}'>
-
                 <text wx:if="{{!priceEmpty}}">¥</text>{{priceEmpty?"请输入金额":totalPrice}}
                 <view wx:if="{{!priceEmpty}}" class='price-line'></view>
             </view>
+            <view class='total-check icon-scan' bindtap='checkCoupon'><text>核券</text></view>
+        </view>
+        <view class='mark'>
+            <view class='ico icon-info'></view>
+             <input placeholder='不参与优惠金额' bindinput='lessInput' value='{{unDiscountAmount}}' class='mark-input' placeholder-class="phcolor"></input>
         </view>
         <view class='mark'>
         <view class='ico icon-info'></view>
-        <input placeholder='订单备注' bindinput='markInput' value='{{mark}}' class='mark-input' placeholder-class="phcolor"></input>
+        <input placeholder='订单备注' bindinput='markInput' value='{{orderRemark}}' class='mark-input' placeholder-class="phcolor"></input>
         </view>
         <!-- <view class='getcoupon' bindtap='cooseCoupon'>选择优惠券</view> -->
     </view>
@@ -24,7 +28,7 @@
                 <view wx:for="123456789" class='bline rline' wx:key="keybord" bindtap='touchKey' data-number="{{item}}" hover-class='key-touch' style='height:{{keyHeight*1.7}}rpx'>{{item}}</view>
                 <view class='rline' bindtap='touchKey' data-number="0" hover-class='key-touch' style='height:{{keyHeight*1.7}}rpx'>0</view>
                 <view class='rline' bindtap='touchKey' data-number="." hover-class='key-touch' style='height:{{keyHeight*1.7}}rpx'>.</view>
-                <view class='rline' bindtap='touchKey' data-number="00" hover-class='key-touch' style='height:{{keyHeight*1.7}}rpx'>00</view>
+                <view class='rline' bindtap='touchKey' data-number="+" hover-class='key-touch' style='height:{{keyHeight*1.7}}rpx'>+</view>
             </view>
             <view class='key-btngroup'>
                 <view catchtap='delNumber' class='ico icon-delnum  delnum blines' hover-class='key-touch' style='height:{{keyHeight*1.7}}rpx'></view>
