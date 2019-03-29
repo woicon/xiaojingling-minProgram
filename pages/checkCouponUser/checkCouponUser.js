@@ -6,11 +6,11 @@ Page({
         loading: true,
         couponType: ['全部', '兑换券', '单品券', '全场券'],
         currentTab: 0,
-        selectCoupon:[]
+        selectCoupon: []
         // 0代金券 1折扣券 2兑换券 5单品代金券 6会员卡 7单品折扣 8单品特价券 9全场满减券
     },
     onLoad(options) {
-        if (options.id){
+        if (options.id) {
             this.memberGet(options.id)
             this.setData({
                 couponType: types.couponType
@@ -40,10 +40,10 @@ Page({
                     let couponRules = (item) => {
                         let relues = null
                         let leastCost = item.leastCost != 0 ? `消费满${item.leastCost}可用,` : ''
-                        switch (item.type){
+                        switch (item.type) {
                             case 0:
                                 return `价值${item.reduceCost}元代金券一张，${leastCost}不可与其他优惠共享。</text >`
-                            break
+                                break
                             case 7:
                                 return `凭此券消费打${item.discount}折，适用于购买${item.goodItem.itemName}使用，${leastCost}不可与其他优惠共享。`
                                 break
@@ -66,7 +66,7 @@ Page({
                     this.setData({
                         coupon,
                         member,
-                        selCoupon:selCoupon[0],
+                        selCoupon: selCoupon[0],
                         loading: false,
                         listloading: false
                     })
@@ -111,14 +111,44 @@ Page({
             })
         })
     },
-    selGoods(e){
+    selGoods(e) {
 
     },
-    selCoupon(e){
-        let coupon = this.data.coupon, type = e.target.dataset.type, index = e.target.dataset.index, selectCoupon = this.data.selectCoupon
-        coupon[e.target.dataset.index].checked = true
-        let checkCoupon = []
-        
+    selCoupon(e) {
+        console.log(e)
+        let coupon = this.data.coupon,
+            type = e.currentTarget.dataset.type,
+            index = e.currentTarget.dataset.index,
+            selectCoupon = this.data.selectCoupon,
+            selCoupon = coupon[index]
+
+        if (selectCoupon.length > 0) {
+            let isAll = selectCoupon.some((item) => {
+                let type = item.cardTemplate.tyep
+                return type == 1 || type == 9 || type == 2
+            })
+            let isSigle = selectCoupon.some((item) => {
+                let type = item.cardTemplate.tyep
+                return type == 5 || type == 8 || type == 7
+            })
+            let isexChange = selectCoupon.some((item) => {
+                let type = item.cardTemplate.tyep
+                return type == 3
+            })
+            
+            if (isAll){
+                wx.showToast({
+                    title: '全场券只能使用一张',
+                })
+            } else if (isSigle){
+
+            }
+
+        } else {
+            console.log(selCoupon)
+            selCoupon.checked = true
+            selectCoupon.push(selCoupon)
+        }
         this.setData({
             coupon
         })

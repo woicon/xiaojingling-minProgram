@@ -30,7 +30,7 @@
     </view>
     <view class='scroll-cont'>
         <Scrolls wx:if="{{coupon.length>0}}" list="{{couponList}}" listloading="{{listloading}}"  bindscrolltoupper="toUpper" bindscrolltolower="toLower">
-            <view wx:for="{{coupon}}" bindtap='selCoupon' data-index="{{index}}" class='coupon-item {{item.checked ? "active" : ""}}' wx:key="couponList" wx:if="{{item.isUsed}}" data-type="{{item.cardTemplate.type}}">
+            <view wx:for="{{coupon}}" bindtap='selCoupon' data-index="{{index}}" class='coupon-item {{item.checked ? "active" : ""}}' style='{{item.checked ? "border:1px solid "+item.cardTemplate.color : ""}}' wx:key="couponList" wx:if="{{item.isUsed}}" data-type="{{item.cardTemplate.type}}">
                 <view class='coupon-num' style='background:{{item.cardTemplate.color}}'>
                     <view wx:if="{{item.cardTemplate.type == 0 || item.cardTemplate.type == 9  ||  item.cardTemplate.type == 5 ||  item.cardTemplate.type == -1 ||  item.cardTemplate.type == 8}}"><text>¥</text> {{item.cardTemplate.specialPrice || item.cardTemplate.reduceCost}} </view>
                     <view wx:elif="{{item.cardTemplate.type == 1 || item.cardTemplate.type == 7  }}">{{item.cardTemplate.discount}} <text>折</text> </view>

@@ -11,9 +11,10 @@ Page({
         disNext: true,
         navBar: null,
         currentCheck: 0,
-        currentCat: 2,
+        currentCat: 0,
         istolower:false,
-        istoupper:false
+        istoupper:false,
+        r: ['0总部 ','1门店 ','2员工 ','3店长']
     },
     onLoad(options) {
         app.checkLogin()
@@ -64,6 +65,9 @@ Page({
     getReport(reportDate, role) {
         let login = wx.getStorageSync("login")
         let params = this.reportparams(reportDate)
+        if (app.commonParams('role') == 0){
+            delete params.merchantCode
+        }
         this.setData({
             srcollLoading: true
         })
@@ -394,6 +398,7 @@ Page({
     },
     //优惠券查询
     initPage() {
+        console.log("ROLES::",this.data.r[app.commonParams('role')])
         if (this.data.currentCat == 2) {
             this.initCouponCheck()
         } else {

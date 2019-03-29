@@ -12,5 +12,7 @@
 <view wx:else class='nav'>
     <navigator url='/pages/pos/pos'><view class='ico ico-cash'></view>收款</navigator>
     <view><view class='ico ico-staff'></view>交接班</view>
-    <navigator url='/pages/checkCoupon/checkCoupon'><view class='ico ico-clear'></view>核券</navigator>
+    
 </view>
+
+<view><navigator url='/pages/checkCoupon/checkCoupon'><view class='ico ico-clear'></view>核券</navigator></view>
