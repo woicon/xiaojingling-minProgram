@@ -62,17 +62,27 @@ Page({
             endDate: date
         }
     },
+    onReady(){
+        this.getHeadHeight()
+    },
+    getHeadHeight(){
+        const query = wx.createSelectorQuery()
+        query.select('#reportHead').boundingClientRect()
+        query.selectViewport().fields()
+        query.exec((rec)=>{
+            console.log(rec)
+        })
+    },
+    
     getReport(reportDate, role) {
         let login = wx.getStorageSync("login")
         let params = this.reportparams(reportDate)
-        if (app.commonParams('role') == 0){
-            delete params.merchantCode
-        }
         this.setData({
             srcollLoading: true
         })
         //0总部 1门店 2员工 3店长
         let roles = role || app.commonParams('role')
+        console.log(params)
         switch (roles) {
             case 0:
                 console.log("总部:::::")
@@ -283,9 +293,12 @@ Page({
     },
     //切换统计门店
     storeChange(e) {
+        let role = null, navBar
         if (e.detail.value == 0) {
             this.getReport(this.data.reportDate)
             wx.removeStorageSync("storeCode")
+            role = 0
+            navBar = ['营业统计', '会员统计']
             wx.setNavigationBarTitle({
                 title: app.commonParams("merchantName"),
             })
@@ -294,13 +307,17 @@ Page({
             console.log("merchantCode::::", this.data.store[e.detail.value])
             //params.merchantCode = this.data.store[e.detail.value].merchantCode
             wx.setStorageSync("storeCode", this.data.store[e.detail.value].merchantCode)
+            role = 1
             this.getReport(this.data.reportDate, 1)
             wx.setNavigationBarTitle({
                 title: this.data.store[e.detail.value].merchantName,
             })
+            navBar = ['营业统计', '会员统计', '核销统计']
         }
         this.setData({
-            selStore: e.detail.value
+            selStore: e.detail.value,
+            role,
+            navBar
         })
     },
     //切换分类

@@ -78,23 +78,24 @@
 }
 
 .report-head {
-    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
-    position: absolute;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed;
     left: 0;
     right: 0;
     z-index: 2;
 }
 
 .r-head>view:first-child {
-    /* background: #ff6d50; */
+    background: #ff6d50;
 }
 
 .r-head>view:last-child {
-    /*  background: #658ccf; */
+     background: #658ccf;
 }
 
 .r-head>view {
     height: 40px;
+    color:#fff;
 }
 
 .r-head>view view view {
@@ -243,6 +244,10 @@
 
 .rs-title .vip {
     color: #ff7a3e;
+}
+
+.rs-title .card {
+    color: #ff3e3e;
 }
 
 .rs-title .alipay {
