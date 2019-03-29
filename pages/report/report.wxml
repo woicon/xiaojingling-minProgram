@@ -47,7 +47,6 @@
         </block>
         <block wx:elif="{{currentCat == 0}}">
             <block wx:if="{{role!= 2}}">
-             
                 <view class='r bline'>
                     <view class='r-head'>
                         <view>
@@ -235,7 +234,7 @@
         </block>
         <block wx:elif="{{currentCat == 1}}">
             <view class='r bline'>
-                <view class='r-grid'>
+                <view class='r-head'>
                     <!-- <view class='bline'>
                             <view class='ico icon-iorders'></view>
                             <view>订单数
@@ -243,7 +242,7 @@
                             </view>
                         </view> -->
                     <view class='bline'>
-                        <view class='ico icon-user'></view>
+                        <view class='ico icon-users'></view>
                         <view>新增会员
                             <view class='value'>{{memberCount}}</view>
                         </view>
