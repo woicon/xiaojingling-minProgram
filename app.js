@@ -75,6 +75,12 @@ App({
             })
         })
     },
+    tip(title){
+        wx.showToast({
+            title: title,
+            icon:'none'
+        })
+    },
     //截取URL参数
     getQueryString(url) {
         let str = url.split('?')

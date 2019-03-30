@@ -132,7 +132,15 @@ page {
     line-height: 52rpx;
     margin: 0;
 }
-
+.button-line{
+    border:1px solid #0ec695;
+    color:#0ec695;
+    background:transparent;
+}
+.button-line-touch{
+    background: #0ec695;
+    color:#fff;
+}
 .button-grey {
     background: #eee;
     color: #333;
@@ -213,7 +221,7 @@ page {
     display: inline-block;
     padding: 0 44rpx;
     border: 1px solid #0ec695;
-    margin-left: -1rpx;
+    margin-left: -1px;
     font-size: 28rpx;
     color: #0ec695;
     line-height: 54rpx;

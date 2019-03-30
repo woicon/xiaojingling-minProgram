@@ -4,8 +4,8 @@ var QR = require("./qrcode.js")
 function setCanvasSize() {
     var size = {}
     try {
-        var res = wx.getSystemInfoSync()
-        var scale = 750 / 500 //不同屏幕下canvas的适配比例；
+        var res = wx.getSystemInfoSync() //不同屏幕下canvas的适配比例
+        var scale = 750 / 500   
         var width = res.windowWidth / scale
         var height = width //canvas画布为正方形
         size.w = width
@@ -19,12 +19,15 @@ function setCanvasSize() {
 function createQrCode(code, canvasId, cavW, cavH) {
     QR.qrApi.draw(code, canvasId, cavW, cavH)
 }
+function creatPayCode(code, canvasId, cavW, cavH) {
+    QR.qrApi.drawPayCode(code, canvasId, cavW, cavH)
+}
 // //绘制条形码图片
 // function createBarCode(code, canvasId, cavW, cavH) {
 //     BR.code128(wx.createCanvasContext(canvasId), code, cavW, cavH);
 // }
 module.exports = {
-    createQrCode: createQrCode,
-    // bar: createBarCode,
+    createQrCode,
+    creatPayCode,
     size: setCanvasSize
 }

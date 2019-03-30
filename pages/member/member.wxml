@@ -51,6 +51,11 @@
         <view class='m-name'>店码设置</view>
     </navigator>
 
+        <navigator url='/pages/getPayQrcode/getPayQrcode' hover-class='nav-touch' wx:if="{{member.role!=0}}">
+        <view class='ico icon-scan'></view>
+        <view class='m-name'>店码设置</view>
+    </navigator>
+
     <!--
         <navigator wx:if="{{member.role!=0}}" url='/pages/pos/pos' class='phones' hover-class='nav-touch'>
             <view class='ico icon-mpos'></view>

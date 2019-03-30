@@ -24,7 +24,8 @@
         "pages/help/help",
         "pages/payCard/payCard",
         "pages/checkCoupon/checkCoupon",
-        "pages/checkCouponUser/checkCouponUser"
+        "pages/checkCouponUser/checkCouponUser",
+        "pages/payQrcode/payQrcode"
     ],
     "window": {
         "backgroundTextStyle": "light",

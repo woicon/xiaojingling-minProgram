@@ -756,7 +756,6 @@ var QR = (function () {
                 console.warn('No canvas provided to draw QR code in!')
                 return;
             }
-
             var size = Math.min(cavW, cavH);
             str = this.utf16to8(str);//增加中文显示
             //console.log(str)
@@ -776,6 +775,67 @@ var QR = (function () {
                 }
             }
             ctx.draw();
+        },
+        drawPayCode(str, canvas, cavW, cavH, ecc){
+            ecclevel = ecc || ecclevel;
+            canvas = canvas || _canvas;
+            if (!canvas) {
+                console.warn('No canvas provided to draw QR code in!')
+                return;
+            }
+            function drawimg(img, callBack) {
+                wx.downloadFile({
+                    url: img,
+                    success: (img) => {
+                        console.log(img)
+                        callBack(img.tempFilePath)
+                    },
+                    fail(res) {
+                        console.log(res)
+                    }
+                })
+            }
+            var ctx = wx.createCanvasContext(canvas)
+            ctx.scale(.5, .5)
+            // //填充背景色
+            ctx.setFillStyle('#ffffff')
+            ctx.fillRect(0, 0, 500, 700)
+            ctx.draw(true)
+            drawimg('http://static.solaridc.com/public_upload/lft_app/dls20190329162512_1553847912242_398_order_0.png', (img) => {
+                ctx.drawImage(img, 0, 0, 500, 130)
+                ctx.draw(true)
+            })
+            ctx.setFillStyle('#0ec695')
+            ctx.fillRect(110, 140, 280, 280)
+            ctx.draw(true)
+            ctx.setFillStyle('#ffffff')
+            ctx.fillRect(112, 142, 276, 276)
+            ctx.draw(true)
+            var size = Math.min(cavW, cavH);
+            console.log(size);
+            str = this.utf16to8(str);//增加中文显示
+            //console.log(str)
+            var frame = this.getFrame(str),
+                px = Math.round(size / (width + 8));    
+                console.log(px,width,frame)
+            var roundedSize = px * (width + 8),
+                offset = Math.floor((size - roundedSize) / 2);
+            size = roundedSize;
+          //  ctx.clearRect(125, 155, cavW, cavH);
+            ctx.setFillStyle('#000000');
+            for (var i = 0; i < width; i++) {
+                for (var j = 0; j < width; j++) {
+                    if (frame[j * width + i]) {
+                        ctx.fillRect(px * (4 + i) + offset + 125, px * (4 + j) + offset + 155, px, px);
+                    }
+                }
+            }
+            ctx.draw(true);
+            drawimg('http://static.solaridc.com/public_upload/lft_app/dls20190329162431_1553847871818_194_order_0.png', (img) => {
+                ctx.drawImage(img, 0, 430, 500, 270)
+                ctx.draw(true);
+            })
+            wx.hideLoading()
         }
     }
     module.exports = {

@@ -18,7 +18,7 @@ function ajax(url, params, signs, method) {
             appId: loginInfo.appId,
             random: base.randomNum(4),
             //key: loginInfo.key
-            merchantCode: loginInfo.merchantCode
+            //merchantCode: loginInfo.merchantCode
         }
         sparams = Object.assign(params, commonparams)
     }
@@ -176,6 +176,8 @@ module.exports = {
     bindPayCode: params => ajax('bindPayCode', params),
     //支付码解除绑定
     unBindPayCode: params => ajax('unBindPayCode', params),
+    //APP获取收款二维码
+    getPayQrcode: params => ajax('getPayQrcode',params),
     //终端签到统计
     signIn: params => ajax('terminal/signIn', params),
     //终端签出统计

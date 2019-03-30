@@ -33,7 +33,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 23,
+			"current": 24,
 			"list": [
 				{
 					"id": -1,
@@ -180,6 +180,13 @@
 					"name": "checkCouponUser",
 					"pathName": "pages/checkCouponUser/checkCouponUser",
 					"query": "id=909559342632854853",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "payQrcode",
+					"pathName": "pages/payQrcode/payQrcode",
+					"query": "",
 					"scene": null
 				}
 			]

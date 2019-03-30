@@ -1,0 +1,7 @@
+<Contents loading="{{loading}}" error="{{error}}" msg="errorMsg">
+    <view class='canvas'><canvas canvasId='qrCode' style='width:250px;height:350px;' class='canvas'></canvas></view>
+    <view class='button-bar'>
+        <view class='button' hover-class='button-touch'  bindtap='saveFile'>保存到相册</view>
+        <view class='button button-line' hover-class='button-line-touch'  bindtap='clipboardCode'>复制链接</view>
+    </view>
+</Contents>

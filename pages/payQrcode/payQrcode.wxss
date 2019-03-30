@@ -1,0 +1,28 @@
+/* pages/payQrcode/payQrcode.wxss */
+page{
+    display: flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    height:100%;
+}
+.canvas{
+    box-shadow:0 12px 64px rgba(0, 0, 0, .1);
+    margin-top:-20%;
+}
+.button{
+    transition:.4s;
+}
+.button-bar{
+    display: flex;
+    align-items:center;
+    justify-content: space-between;
+    margin:90rpx 0 0;
+}
+.button-bar>view{
+    width:46%;
+    text-align:center;
+    margin:0;
+    padding:0 ;
+    box-sizing:border-box;
+}
