@@ -1,13 +1,61 @@
-<view wx:if="{{role == 0}}" class='nav'>
-    <view>
-        <view class='ico ico-order'></view> 订单</view>
-    <view>
-        <view class='ico ico-money'></view>到账</view>
-</view>
+<Contents loading="{{loading}}" error="{{error}}" error-msg="{{errorMsg}}">
+    <view class='index-head'>
+        <view wx:if="{{role == 0}}" class='nav'>
+            <view>
+                <view class='ico ico-order'></view> 订单</view>
+            <view>
+                <view class='ico ico-money'></view>到账</view>
+        </view>
+        <view wx:else class='nav'>
+            <navigator url='/pages/pos/pos'>
+                <view class='ico icon-cash'></view>收款</navigator>
+            <navigator url='/pages/checkCoupon/checkCoupon'>
+                <view class='ico icon-checkcoupon'></view>核券</navigator>
+        </view>
 
-<view wx:else class='nav'>
-    <navigator url='/pages/pos/pos'><view class='ico ico-cash'></view>收款</navigator>
-    <view><view class='ico ico-staff'></view>交接班</view>
-</view>
+        <view class='b' wx:if="{{bag && role == 0}}" bindtap='showBanks'>
+            <view class='banks'>
+                <!-- <picker range='{{bag}}' range-key='balanceAccount' bindchange='changeAccount'> -->
+                <view>
+                    <view>我的钱包</view>
+                    <view class='banks-text'>{{selBag.bankName}} 尾号:{{selNum}}</view>
+                </view>
+                <!-- </picker> -->
+            </view>
+            <view class='button' hover-class='button-touch' catchtap='extract'>提现</view>
+        </view>
+    </view>
 
-<view><navigator url='/pages/checkCoupon/checkCoupon'><view class='ico ico-clear'></view>核券</navigator></view>
+    <view class='bank-list' wx:if="{{!hideBank}}" bindtap='showBanks'>
+        <scroll-view class='bank-listcont {{bag.length > 4 ? "height-fixed":""}}' scroll-y>
+            <view wx:for="{{bag}}" data-index="{{index}}" catchtap='toggleBag' class='bank-item bline {{currentBag == index ? "active" : ""}}' wx:key="banklsit">
+                <view>
+                    <view>{{item.bankName}}</view>
+                    <view class="bank-num">尾号{{item.acc}}</view>
+                </view>
+                <view wx:if="{{currentBag == index}}" class='ico icon-checked'></view>
+            </view>
+        </scroll-view>
+    </view>
+
+    <view class='grid'>
+        <navigator class='bline'>
+            <view class='ico icon-exchange'></view>交接班</navigator>
+        <navigator class='bline lline'>
+            <view class='ico icon-shop'></view>门店管理</navigator>
+        <navigator class='bline lline'>
+            <view class='ico icon-staff'></view>员工管理</navigator>
+        <navigator class='bline'>
+            <view class='ico icon-vipes'></view>会员管理</navigator>
+        <navigator class='bline lline'>
+            <view class='ico icon-order'></view>账单</navigator>
+        <navigator class='bline lline'>
+            <view class='ico icon-books'></view>帮助</navigator>
+        <navigator class='bline'>
+            <view class='ico icon-ecoupon'></view>优惠券管理</navigator>
+        <navigator class='bline lline'>
+            <view class='ico icon-reports'></view>数据报表</navigator>
+        <navigator class='bline lline'>
+            <view class='ico icon-analysis'></view>经营分析</navigator>
+    </view>
+</Contents>

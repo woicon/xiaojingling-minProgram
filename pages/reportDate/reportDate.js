@@ -19,7 +19,7 @@ Page({
         dayVal: 24 * 60 * 60 * 1000
     },
 
-    onLoad: function(options) {
+    onLoad(options) {
         let that = this
         let taday = new Date()
         const dayVal = this.data.dayVal

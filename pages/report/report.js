@@ -3,7 +3,7 @@ const base = require('../../utils/util.js')
 const app = getApp()
 Page({
     data: {
-        isPageLoad: true,
+        loading: true,
         srcollLoading: false,
         reportTab: 1,
         reportDate: null,
@@ -11,10 +11,11 @@ Page({
         disNext: true,
         navBar: null,
         currentCheck: 0,
-        currentCat: 0,
-        istolower:false,
-        istoupper:false,
-        r: ['0总部 ','1门店 ','2员工 ','3店长']
+        currentCat: 2,
+        istolower: false,
+        countState: true,
+        istoupper: false,
+        r: ['0总部 ', '1门店 ', '2员工 ', '3店长']
     },
     onLoad(options) {
         app.checkLogin()
@@ -29,51 +30,36 @@ Page({
                     beginTime: base.formatDate(nowDate.getTime() - base.dayValue * 7, 'yyyyMMddhhmmss'),
                     endTime: base.formatDate(nowDate.getTime() - base.dayValue, 'yyyyMMddhhmmss'),
                 },
+                couponDates: {
+                    beginTime: base.formatDate(nowDate.getTime() - base.dayValue * 7, 'yyyy-MM-dd'),
+                    endTime: base.formatDate(nowDate.getTime() - base.dayValue, 'yyyy-MM-dd'),
+                },
                 reportDateFormat: new Date().Format('yyyy-MM-dd'),
                 role: role, //role  0总部 1门店 2员工 3店长
                 navBar: role === 0 ? ['营业统计', '会员统计'] : ['营业统计', '会员统计', '核销统计'],
-                headTitle:app.commonParams('merchantName'),
+                headTitle: app.commonParams('merchantName'),
                 ...app.systemInfo
             })
         } catch (error) {
             console.log(error)
         }
     },
-    couponParams(arg) {
-        console.log(arg)
-        const nowDate = new Date()
-        let params = this.couponDate(7 || date)
-        if (arg) {
-            params = Object.assign(params, arg)
-        }
-        return params
+
+    toggleCount() {
+        this.setData({
+            countState: !this.data.countState
+        })
     },
-    couponDate(days) {
-        //优惠券时间
-        const nowDate = new Date()
-        return {
-            beginTime: base.formatDate(nowDate.getTime() - base.dayValue * days, 'yyyyMMddhhmmss'),
-            endTime: base.formatDate(nowDate.getTime() - base.dayValue, 'yyyyMMddhhmmss'),
-        }
-    },
+
+
+
     reportparams(date) {
         return this.data.searchDate ? this.data.searchDate : {
             beginDate: date,
             endDate: date
         }
     },
-    onReady(){
-        this.getHeadHeight()
-    },
-    getHeadHeight(){
-        const query = wx.createSelectorQuery()
-        query.select('#reportHead').boundingClientRect()
-        query.selectViewport().fields()
-        query.exec((rec)=>{
-            console.log(rec)
-        })
-    },
-    
+
     getReport(reportDate, role) {
         let login = wx.getStorageSync("login")
         let params = this.reportparams(reportDate)
@@ -96,13 +82,13 @@ Page({
                         merchantName: '全部门店'
                     })
                     this.setData({
-                        isPageLoad: false,
+                        loading: false,
                         trade: res[0].statistics,
                         department: res[1],
                         srcollLoading: false,
                         store: store,
                         recharge: recharge,
-                        selStore: 0,
+                        selStore: this.data.selStore || 0,
                     })
                 })
                 break
@@ -115,7 +101,7 @@ Page({
                     var trade = (res[0].code != 'FAILED') ? res[0].statistics : null
                     let recharge = res[2].rechargeStatistics
                     this.setData({
-                        isPageLoad: false,
+                        loading: false,
                         trade: trade,
                         cashier: cashier,
                         srcollLoading: false,
@@ -131,7 +117,7 @@ Page({
                 params.operatorId = app.commonParams('operatorId')
                 api.tradeOperator(params).then(res => {
                     this.setData({
-                        isPageLoad: false,
+                        loading: false,
                         cashier: res,
                         srcollLoading: false,
                     })
@@ -149,7 +135,7 @@ Page({
                         var trade = res[0].statistics
                     }
                     this.setData({
-                        isPageLoad: false,
+                        loading: false,
                         trade: trade,
                         cashier: cashier,
                         srcollLoading: false,
@@ -293,7 +279,8 @@ Page({
     },
     //切换统计门店
     storeChange(e) {
-        let role = null, navBar
+        let role = null,
+            navBar
         if (e.detail.value == 0) {
             this.getReport(this.data.reportDate)
             wx.removeStorageSync("storeCode")
@@ -323,8 +310,7 @@ Page({
     //切换分类
     toggleCat(e) {
         let currentCat = e.target.id
-        console.log(currentCat)
-
+        //console.log(currentCat)
         this.setData({
             currentCat: e.target.id
         })
@@ -339,8 +325,28 @@ Page({
         return api.newMemberCount(this.reportparams())
     },
     //核销优惠券记录
-    couponConsumeRecordList(date, arg) {
-        return api.couponConsumeRecordList(this.couponParams(date, arg))
+    couponConsumeRecordList(arg, days) {
+        let params = this.setCouponDate(days)
+        if (arg) {
+            params = { ...params,
+                ...arg
+            }
+        }
+        if (this.data.selEmployee > 0) {
+            params.operatorId = this.data.employeeList[this.data.selEmployee].operatorId
+        }
+        if (this.data.selCoupon > 0) {
+            params.couponId = this.data.couponList[this.data.selCoupon].couponId
+        }
+        console.log(params)
+        return api.couponConsumeRecordList(params).then(res => {
+            this.setData({
+                recordList: res.recordList,
+                totalCount: res.totalCount,
+                listloading: false,
+                loading: false
+            })
+        })
     },
 
     //查询核券数量
@@ -361,52 +367,94 @@ Page({
             this.couponConsumeCount(),
             this.couponConsumeList(),
             this.employeeList(),
-            this.couponConsumeRecordList({}, 7)
+            // this.couponConsumeRecordList({}, 7)
         ]
         Promise.all(init).then(res => {
             console.log(res)
+            const yesterdayCount = res[0].yesterdayCount,
+                employeeList = res[2].employeeList,
+                couponList = res[1].couponList
+            couponList.unshift({
+                couponName: '全部优惠券'
+            });
+            employeeList.unshift({
+                operatorName: '全部店员'
+            })
             this.setData({
-                isPageLoad: false,
                 couponList: res[1].couponList,
                 todayCount: res[0].todayCount,
                 yesterdayCount: res[0].yesterdayCount,
                 employeeList: res[2].employeeList,
-                recordList: res[3].recordList
+                selCoupon: 0,
+                selEmployee: 0
             })
+            return true
+        }).then(res => {
+            this.couponConsumeRecordList()
         })
     },
+
     changeCoupon(e) {
-        console.log(e);
+        let index = e.detail.value,
+            setCoupon = this.data.couponList[index]
+        let arg = index > 0 ? {
+            couponId: setCoupon.couponId
+        } : {}
         this.setData({
-            selCoupon: this.data.couponList[e.detail.value].couponName
+            selCoupon: index
         })
+        this.couponConsumeRecordList(arg)
+
     },
     changeEmployee(e) {
+        const index = e.detail.value,
+            selEmployee = this.data.employeeList[index]
+        let arg = index > 0 ? {
+            operatorId: selEmployee.operatorId
+        } : {}
         this.setData({
-            selEmployee: this.data.employeeList[e.detail.value].operatorName
+            selEmployee: index
         })
+        this.couponConsumeRecordList(arg)
     },
+
+    lessDate(type, days) {
+        const nowDate = new Date()
+        return base.formatDate(nowDate.getTime() - base.dayValue * (days || 1), type)
+    },
+    setCouponDate(day) {
+        const days = day || this.data.couponDay
+        const couponDate = {
+            beginTime: this.lessDate('yyyyMMddhhmmss', days),
+            endTime: this.lessDate('yyyyMMddhhmmss'),
+        }
+        const couponDates = {
+            beginTime: this.lessDate('yyyy/MM/dd', days),
+            endTime: this.lessDate('yyyy/MM/dd'),
+        }
+        console.log(couponDate, couponDates)
+        this.setData({
+            couponDate,
+            couponDates,
+            couponDay: days
+        })
+        return couponDate
+    },
+
     //核券时间切换
     toggleCheckTab(e) {
+        const index = e.target.dataset.id
         this.setData({
-            currentCheck: e.target.dataset.id,
+            currentCheck: index,
             listloading: true
         })
-        let id = e.target.dataset.id
-        const recordList = data => {
-            this.couponConsumeRecordList(data).then(res => {
-                this.setData({
-                    recordList: res.recordList,
-                    listloading: false
-                })
-            })
-        }
-        switch (id) {
+
+        switch (index) {
             case 0:
-                recordList(this.couponDate(7))
+                this.couponConsumeRecordList({}, 7)
                 break
             case 1:
-                recordList(this.couponDate(30))
+                this.couponConsumeRecordList({}, 30)
                 break
             case 2:
                 this.toReportDate(true)
@@ -415,7 +463,7 @@ Page({
     },
     //优惠券查询
     initPage() {
-        console.log("ROLES::",this.data.r[app.commonParams('role')])
+        console.log("ROLES::", this.data.r[app.commonParams('role')])
         if (this.data.currentCat == 2) {
             this.initCouponCheck()
         } else {
@@ -425,8 +473,8 @@ Page({
     moreRecordList(e) {
         console.log(e)
     },
-    resRecordList(e){
-        console.log("res::::",e);
+    resRecordList(e) {
+        console.log("res::::", e);
     },
     onShow() {
         this.initPage()

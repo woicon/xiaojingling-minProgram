@@ -129,9 +129,7 @@ Page({
         //     phoneNumber: '4000122155'
         // })
     },
-    toggleBag() {
 
-    },
     onShareAppMessage() {
 
     }

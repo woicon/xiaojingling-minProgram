@@ -12,6 +12,10 @@ Component({
         istoupper: {
             type: Boolean,
             value: false
+        },
+        top:{
+            type: String,
+            value: '0',
         }
     },
     data: {

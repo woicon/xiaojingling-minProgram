@@ -6,7 +6,7 @@
             <!-- <text>复制</text> -->
         </view>
     </view>
-    <view class='b' wx:if="{{bag}}">
+    <!-- <view class='b' wx:if="{{bag}}">
         <view class='banks'>
             <picker range='{{bag}}' range-key='balanceAccount' bindchange='changeAccount'>
                 <view bindtap='toggleBag'>
@@ -16,9 +16,9 @@
             </picker>
         </view>
         <view class='button' hover-class='button-touch' catchtap='extract'>提现</view>
-    </view>
+    </view> -->
 </view>
-
+<!-- 
 <view wx:if="{{role == 0}}" class='member-nav bline'>
     <view>
         <view class='ico icon-order'></view> 订单</view>
@@ -30,10 +30,9 @@
     <navigator url='/pages/pos/pos'>
         <view class='ico ico-cash'></view>收款
     </navigator>
-    <!-- <view><view class='ico icon-orders'></view>交接班</view> -->
     <navigator url='/pages/checkCoupon/checkCoupon'>
         <view class='ico ico-clear'></view>核券</navigator>
-</view>
+</view> -->
 
 <view class='m-list'>
     <!-- <navigator wx:if="{{bag}}" url='/pages/account/account' hover-class='nav-touch'>
@@ -41,21 +40,21 @@
             <view class='m-name'>我的钱包</view>
             <text>提现</text>
         </navigator> -->
+    <block wx:if="{{member.role!=0}}">
+        <navigator url='/pages/setAudio/setAudio' hover-class='nav-touch'>
+            <view class='ico icon-sound'></view>
+            <view class='m-name'>云喇叭设置</view>
+        </navigator>
+        <navigator url='/pages/payCard/payCard' hover-class='nav-touch'>
+            <view class='ico icon-paycode'></view>
+            <view class='m-name'>店码设置</view>
+        </navigator>
 
-    <navigator url='/pages/setAudio/setAudio' hover-class='nav-touch' wx:if="{{member.role!=0}}">
-        <view class='ico icon-setting'></view>
-        <view class='m-name'>云喇叭设置</view>
-    </navigator>
-    <navigator url='/pages/payCard/payCard' hover-class='nav-touch' wx:if="{{member.role!=0}}">
-        <view class='ico icon-myservice'></view>
-        <view class='m-name'>店码设置</view>
-    </navigator>
-
-        <navigator url='/pages/getPayQrcode/getPayQrcode' hover-class='nav-touch' wx:if="{{member.role!=0}}">
-        <view class='ico icon-scan'></view>
-        <view class='m-name'>店码设置</view>
-    </navigator>
-
+        <navigator url='/pages/payQrcode/payQrcode' hover-class='nav-touch'>
+            <view class='ico icon-setcode'></view>
+            <view class='m-name'>收款码</view>
+        </navigator>
+    </block>
     <!--
         <navigator wx:if="{{member.role!=0}}" url='/pages/pos/pos' class='phones' hover-class='nav-touch'>
             <view class='ico icon-mpos'></view>
@@ -66,11 +65,11 @@
             <view class='m-name'>我的服务商</view>
         </view> -->
     <!-- <view bindtap='toPayPlat' hover-class='nav-touch'>
-            <view class='ico icon-info'></view>
-            <view class='m-name'>签约信息</view>
-        </view> -->
+        <view class='ico icon-infos'></view>
+        <view class='m-name'>签约信息</view>
+    </view> -->
     <view class='phones' bindtap='callServ' hover-class='nav-touch'>
-        <view class='ico icon-call'></view>
+        <view class='ico icon-contact'></view>
         <view class='m-name'>在线客服</view>
         <text></text>
     </view>

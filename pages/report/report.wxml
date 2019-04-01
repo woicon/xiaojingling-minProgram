@@ -1,31 +1,25 @@
 <import src="../../pages/template/loading.wxml" />
 <import src="../../template/header.wxml" />
-<template is="headerReport" data="{{headHeight,navBar,store,selStore,headTitle}}" />
-<view wx:if="{{isPageLoad}}" class='empty'>
-    <template is="bottomloading" />
-</view>
-<block wx:else>
-    <view class='report-head' id='reportHead' style='top:{{headHeight}}px;{{currentCat == 2 ? "":""}}'>
+<Contents loading="{{loading}}">
+    <template is="headerReport" data="{{headHeight,navBar,store,selStore,headTitle}}" />
+    <view style='top:{{headHeight}}px' class='report-head' id='reportBar'>
         <view class='navbar bline' bindtap='toggleCat'>
             <view wx:for="{{navBar}}" style='width:33.33333%' class='{{currentCat==index ? "active" : ""}}' wx:key="navBar" id="{{index}}">{{item}}</view>
         </view>
         <block wx:if="{{currentCat == 2}}">
-            <view class='p-tab bline'>
-                <picker range='{{couponList}}' mode='selector' range-key='couponName' bindchange='changeCoupon'>
-                    <view class='p-tab-item bline'>{{selCoupon || '全部优惠券'}}</view>
-                </picker>
-                <picker range='{{employeeList}}' mode='selector' range-key='operatorName' bindchange='changeEmployee'>
-                    <view class='p-tab-item bline'>{{selEmployee || '全部店员'}}</view>
-                </picker>
-            </view>
-            <view class='p-head bline'>
-                <view>
-                    <view class='p-num'>{{todayCount}}</view>今天核销</view>
-                <view>
-                    <view class='p-num'>{{yesterdayCount}}</view>昨日核销</view>
-            </view>
             <view class='tab'>
                 <view bindtap='toggleCheckTab' wx:for="{{['近7天','近30天','更多']}}" data-id="{{index}}" wx:key="checkTab" class='{{currentCheck == index?"active":""}}'>{{item}}</view>
+            </view>
+            <view class='datebar bline'>
+                <view class='datevalue'> {{couponDates.beginTime}} 至 {{couponDates.endTime}} </view>
+            </view>
+            <view class='p-tab'>
+                <picker range='{{couponList}}' mode='selector' range-key='couponName' bindchange='changeCoupon'>
+                    <view class='p-tab-item'>{{couponList[selCoupon].couponName}}</view>
+                </picker>
+                <picker class='lline' range='{{employeeList}}' mode='selector' range-key='operatorName' bindchange='changeEmployee'>
+                    <view class='p-tab-item'>{{employeeList[selEmployee].operatorName}}</view>
+                </picker>
             </view>
         </block>
         <block wx:else>
@@ -39,18 +33,14 @@
             </view>
         </block>
     </view>
-    <view class='scroll-report {{isPX?"pxScroll":""}}' style='top:{{120+headHeight}}px;top:{{currentCat==2 ?headHeight+40+120+50+"px":""}}'>
-        <block wx:if="{{srcollLoading}}">
-            <view class='pageloading'>
-                <template is="bottomloading" />
-            </view>
-        </block>
-        <block wx:elif="{{currentCat == 0}}">
+
+    <Scrolls listloading="{{listloading}}" top="{{currentCat == 2 ? headHeight+160 : headHeight+120}}" bindscrolltolower="{{currentTab == 2 ? 'moreRecordList' : ''}}" listloading="{{listloading}}" bindscrolltoupper="resRecordList" istolower="{{istolower}}" istoupper="{{istoupper}}">
+        <block wx:if="{{currentCat == 0}}">
             <block wx:if="{{role!= 2}}">
-                <view class='r bline'>
+                <view class='r'>
                     <view class='r-head'>
                         <view>
-                            <view class='ico icon-money'></view>
+                            <view class='ico icon-trade'></view>
                             <view>订单金额
                                 <view>{{trade.totalOrderCnt}}</view>
                             </view>
@@ -63,38 +53,45 @@
                         </view>
                     </view>
 
-                    <view class='rs-block'>
+                    <view class='r-grid'>
                         <view class='bline'>
+                            <view class='ico icon-orderes'></view>
                             <view>订单数
-                                <text>{{trade.totalOrderCnt}}</text>
-                            </view>
-                        </view>
-                         <view class='bline lline'>
-                            <view>实收笔数
-                                <text>{{trade.totalTradeCnt}}</text>
+                                <view class='value'>{{trade.totalOrderCnt}}</view>
                             </view>
                         </view>
                         <view class='bline lline'>
+                            <view class='ico icon-money'></view>
+                            <view>实收笔数
+                                <view class='value'>{{trade.totalTradeCnt}}</view>
+                            </view>
+                        </view>
+                        <view class='bline'>
+                            <view class='ico icon-bag'></view>
                             <view>退款金额/笔数
-                                <text>{{trade.totalRefundAmt}}/{{trade.totalRefundCnt}}</text>
+                                <view class='value'>{{trade.totalRefundAmt}}/{{trade.totalRefundCnt}}</view>
                             </view>
                         </view>
-                       
-                        <view>
+
+                        <view class='bline lline'>
+                            <view class='ico icon-refund'></view>
                             <view>优惠金额/笔
-                                <text>{{trade.totalDiscountableAmt}}/{{trade.totalDiscountableCnt}}</text>
+                                <view class='value'>{{trade.totalDiscountableAmt}}/{{trade.totalDiscountableCnt}}</view>
                             </view>
                         </view>
-                        <view class=' lline'>
+                        <view>
+                            <view class='ico icon-fee'></view>
+
                             <view>
                                 <view>手续费(元)</view>
-                                <text>{{trade.totalTradeFee}}</text>
+                                <view class='value'>{{trade.totalTradeFee}}</view>
                             </view>
                         </view>
                         <view class='lline'>
+                            <view class='ico icon-moneys'></view>
                             <view>
                                 <view>结算金额(元)</view>
-                                <text>{{trade.totalSettleAmt}}</text>
+                                <view class='value'>{{trade.totalSettleAmt}}</view>
                             </view>
                         </view>
                     </view>
@@ -104,7 +101,7 @@
                     实收金额=订单金额-退款金额 结算金额=实收金额-手续费
                 </view>
                 <view class='r-title'>支付方式统计</view>
-                <view class='rs'>
+                <view class='rs bline'>
                     <view class='rs-title'>
                         <view class="ico icon-weixin weixin"></view>
                         <view>微信支付</view>
@@ -131,7 +128,7 @@
 
                     </view>
                 </view>
-                <view class='rs'>
+                <view class='rs bline'>
                     <view class='rs-title'>
                         <view class='ico icon-alipay alipay'></view>
                         <view>支付宝支付</view>
@@ -158,7 +155,7 @@
                     </view>
                 </view>
 
-                <view class='rs'>
+                <view class='rs bline'>
                     <view class='rs-title'>
                         <view class='ico icon-vip vip'></view>
                         <view>会员支付</view>
@@ -184,7 +181,7 @@
                         </view>
                     </view>
                 </view>
-                  <view class='rs'>
+                <view class='rs'>
                     <view class='rs-title'>
                         <view class='ico icon-card card'></view>
                         <view>银行卡</view>
@@ -233,7 +230,7 @@
             </block>
         </block>
         <block wx:elif="{{currentCat == 1}}">
-            <view class='r bline'>
+            <view class='r'>
                 <view class='r-head'>
                     <!-- <view class='bline'>
                             <view class='ico icon-iorders'></view>
@@ -247,14 +244,14 @@
                             <view class='value'>{{memberCount}}</view>
                         </view>
                     </view>
-                    <view class='bline lline'>
-                        <view class='ico icon-moneys'></view>
+                    <view class='bline'>
+                        <view class='ico icon-bag'></view>
                         <view>新增充值/笔
                             <view class='value'>{{recharge.totalOrderAmt}}/{{recharge.totalTradeCnt}}</view>
                         </view>
                     </view>
                 </view>
-            </view>
+           </view>
             <view class='r'>
                 <view class='r-title'>会员充值统计</view>
                 <view class='rs-block'>
@@ -399,8 +396,18 @@
 
         </block>
         <block wx:elif="{{currentCat == 2}}">
-            <Scrolls wx:if="{{recordList.length > 0}}" bindscrolltolower="moreRecordList" listloading="{{listloading}}" bindscrolltoupper="resRecordList" istolower="{{istolower}}" istoupper="{{istoupper}}">
-                <view wx:for="{{recordList}}" wx:key="recordList" class='bline r-item'>
+            <!-- <Scrolls wx:if="{{recordList.length > 0}}"> -->
+                <view class='p-head bline' bindtap='toggleCount'>
+                       <view>
+                        <view class='p-num'>{{totalCount}}</view>共计(张)</view>
+                    <view>
+                        <view class='p-num'>{{todayCount}}</view>今天核销(张)</view>
+                    <view>
+                        <view class='p-num'>{{yesterdayCount}}</view>昨日核销(张)</view>
+                 
+                </view>
+                <block wx:if="{{recordList.length > 0}}">
+                <view wx:for="{{recordList}}" wx:key="recordList" class='r-item bline'>
                     <view>
                         <view class='coupon-title'>{{item.couponName}}</view>
                         <view> {{item.memberName}}</view>
@@ -410,8 +417,9 @@
                         <view>{{item.consumeTime}}</view>
                     </view>
                 </view>
-            </Scrolls>
-            <Empty icon="icon-coupon1" msg="没有核销记录" wx:else></Empty>
+                </block>
+            <!-- </Scrolls> -->
+                <Empty icon="icon-coupon" msg="没有核销记录" wx:else></Empty>
         </block>
-    </view>
-</block>
+    </Scrolls>
+</Contents>

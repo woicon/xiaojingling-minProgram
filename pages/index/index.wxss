@@ -8,11 +8,134 @@
     color:#fff;
 }
 .nav>view,.nav>navigator{
-    padding:40rpx 0;
+    padding:68rpx 0;
     width:33.3333333333%;
     text-align:center;
 }
 .nav .ico{
-    font-size:70rpx;
+    font-size:92rpx;
     margin-bottom:16rpx;
+}
+.grid{
+    display: flex;
+    flex-wrap:wrap;
+}
+.grid>navigator{
+    width:33.3333333%;
+    text-align:center;
+    font-size:24rpx;
+    height:180rpx;
+    display: flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    color:#555;
+}
+.grid .ico{
+    font-size:60rpx;
+    margin-bottom:14rpx;
+}
+
+
+
+.b {
+    background: rgba(0, 0, 0, 0.1);
+    padding: 32rpx 60rpx;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #fff;
+}
+
+.b .ico {
+    flex-basis: 60rpx;
+    flex-shrink: 0;
+}
+.banks {
+    font-size: 30rpx;
+    display: flex;
+    align-items:center;
+    flex: 1;
+    justify-content: space-between;
+    margin-right:50rpx;
+}
+.banks::after{
+    content: '';
+    display: block;
+    width:13rpx;
+    height:13rpx;
+    border:2px solid #fff;
+    border-left:none;
+    border-bottom:none;
+    transform:rotate(45deg);
+    opacity: .4;
+}
+.banks picker{
+    width:100%;
+}
+.banks-text {
+    color: #fff;
+    font-size: 23rpx;
+    margin-top: 10rpx;
+}
+
+.b .button {
+    font-size: 26rpx;
+    padding: 5rpx 30rpx;
+    height: 50rpx;
+    line-height: 50rpx;
+    background: transparent;
+    border: 1px solid #fff;
+    margin: 0;
+}
+
+.index-head{
+    background:#0ec695;
+    padding-top:90px;
+}
+
+.bank-list{
+    background:rgba(0, 0, 0, .3);
+    position:fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    top:0;
+    z-index:100;
+}
+.bank-item{
+    font-size:28rpx;
+    padding:20rpx 30rpx;
+    color:#444;
+    height:90rpx;
+    display: flex;
+    align-items:center;
+    justify-content:space-between;
+    font-weight:800;
+}
+.bank-item.active{
+    color:#0ec695;
+}
+.bank-item .ico{
+    font-size:44rpx;
+    color:#0ec695;
+}
+.bank-item:last-child{
+    border:none;
+}
+.bank-num{
+    font-size:26rpx;
+    margin-top:8rpx;
+    color:#999;
+}
+.bank-listcont{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    background:#fff;
+    animation: sliderInUp linear 0.4s;
+}
+.height-fixed{
+    height:580rpx;
 }

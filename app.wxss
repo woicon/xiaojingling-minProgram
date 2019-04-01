@@ -211,20 +211,20 @@ page {
     background: #fff;
     text-align: center;
     padding: 0 0;
-    height: 44px;
+    height:40px;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
 }
 
 .tab>view {
     display: inline-block;
-    padding: 0 44rpx;
+    padding: 0 50rpx;
     border: 1px solid #0ec695;
     margin-left: -1px;
     font-size: 28rpx;
     color: #0ec695;
-    line-height: 54rpx;
+    line-height: 52rpx;
 }
 
 .tab>view:first-child {
@@ -251,7 +251,6 @@ page {
 .r-info .ico {
     margin-right: 10rpx;
     color: #999;
-    transform: rotate(180deg);
     font-size: 28rpx;
 }
 
@@ -396,6 +395,7 @@ page {
     border-bottom: 1px solid #eee;
     height: 1px;
     transform: scale(0.5);
+    z-index:2;
 }
 
 .lline:after {

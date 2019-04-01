@@ -1,4 +1,6 @@
-<scroll-view class='scrolls' bindscrolltolower="scrolltolower" bindscrolltoupper="scrolltoupper"  scroll-y scroll-with-animation>
+<scroll-view class='scrolls' bindscrolltolower="scrolltolower" 
+style='top:{{top}}px'
+bindscrolltoupper="scrolltoupper"  scroll-y scroll-with-animation>
     <!-- <view class='scroll-top' wx:if="{{istoupper}}">
         <Load wx:if="{{refreshing}}">下拉加载更多</Load>
         <view class='scrolls-state' wx:else>没有更多了</view>

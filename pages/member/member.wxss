@@ -87,9 +87,9 @@
 }
 
 .m-list .ico {
-    flex-basis: 46rpx;
+    flex-basis: 48rpx;
     width: 50rpx;
-    font-size: 46rpx;
+    font-size: 48rpx;
     margin-right: 20rpx;
 }
 

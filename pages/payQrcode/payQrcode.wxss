@@ -5,24 +5,30 @@ page{
     justify-content:center;
     flex-direction:column;
     height:100%;
+    background:#0ec695;
 }
 .canvas{
-    box-shadow:0 12px 64px rgba(0, 0, 0, .1);
+    box-shadow:0 22px 80px rgba(0, 0, 0, .1);
     margin-top:-20%;
 }
 .button{
     transition:.4s;
 }
 .button-bar{
-    display: flex;
-    align-items:center;
-    justify-content: space-between;
-    margin:90rpx 0 0;
+    margin-top:60rpx;
 }
 .button-bar>view{
-    width:46%;
     text-align:center;
-    margin:0;
     padding:0 ;
     box-sizing:border-box;
+    margin:30rpx 0;
+}
+.button-bar>view.button{
+    background:#fff;
+    color:#0ec695;
+}
+.button-bar>view.button-line{
+    border:1px solid #fff;
+    background:transparent;
+    color:#fff;
 }

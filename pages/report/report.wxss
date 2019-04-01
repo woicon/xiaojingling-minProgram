@@ -20,6 +20,7 @@
     position: relative;
     color:#444;
     opacity:.9;
+    font-weight:800;
 }
 
 .navbar>view.active {
@@ -32,13 +33,13 @@
 .navbar>view.active::after {
     content: '';
     display: block;
-    width: 60rpx;
-    height: 6rpx;
+    width: 50rpx;
+    height: 10rpx;
     background: #0ec695;
     position: absolute;
     left: 50%;
-    margin-left: -30rpx;
-    bottom: 0;
+    margin-left: -25rpx;
+    bottom: -1rpx;
 }
 
 .r-head {
@@ -46,6 +47,8 @@
     justify-content: space-between;
     align-items: center;
     margin: 0 30rpx;
+    padding:40rpx 0;
+    background:#fff;
 }
 
 .r-head>view {
@@ -53,7 +56,7 @@
     display: flex;
     align-items: center;
     font-size: 24rpx;
-    padding: 30rpx 20rpx;
+    padding: 30rpx;
 }
 
 .r-head>view:first-child {
@@ -73,15 +76,11 @@
     margin-right: 20rpx;
 }
 
-.report {
-    padding-bottom: 180rpx;
-}
 
 .report-head {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    position: fixed;
-    left: 0;
-    right: 0;
+    box-shadow: 0 1px 8px rgba(100, 100, 100, 0.1);
+    background:#fff;
+    position:relative;
     z-index: 2;
 }
 
@@ -109,11 +108,11 @@
     background: #fff;
     justify-content: space-between;
     position: relative;
-    height: 40px;
+    height:40px;
 }
 
 .datebar>view {
-    padding: 20rpx 0;
+   line-height:40px;
 }
 
 .datebar .ico {
@@ -137,9 +136,8 @@
 }
 
 .datevalue {
-    font-size: 30rpx;
+    font-size: 27rpx;
     color: #555;
-    font-weight: 800;
     position: absolute;
     left: 0;
     top: 0;
@@ -172,7 +170,7 @@
 }
 
 .r-grid .value {
-    font-size: 36rpx;
+    font-size: 32rpx;
     color: #444;
     margin-top: 4rpx;
     font-weight: 800;
@@ -183,7 +181,7 @@
     align-items: center;
     width: 50%;
     font-size: 24rpx;
-    padding: 30rpx 0;
+    padding: 30rpx 30rpx;
     color: #777;
     box-sizing: border-box;
 }
@@ -226,15 +224,14 @@
 
 .rs-title {
     padding: 0 30rpx;
-    font-size: 34rpx;
+    font-size: 32rpx;
     display: flex;
-    align-items: center;
     padding-top: 30rpx;
     color: #444;
 }
 
 .rs-title .ico {
-    font-size: 42rpx;
+    font-size:40rpx;
     margin-right: 14rpx;
 }
 
@@ -265,7 +262,7 @@
 } */
 
 .rs-block>view text {
-    font-size: 28rpx;
+    font-size: 32rpx;
     display: block;
     line-height: 2;
     color: #444;
@@ -556,32 +553,35 @@
 
 .p-head {
     display: flex;
-    background: #fff;
+    background:#fff;
 }
 
 .p-head>view {
-    font-size: 28rpx;
+    font-size: 22rpx;
     width: 50%;
     text-align: center;
+    display: flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
     color: #888;
     height: 80px;
 }
 
 .p-num {
-    font-size: 48rpx;
+    font-size:50rpx;
     font-weight: 800;
     color: #333;
 }
 
 .p-tab {
     display: flex;
-    background: #fff;
-    height:46px;
+    height:40px;
 }
 
 .p-tab picker {
     width: 50%;
-    line-height: 46px;
+    line-height: 40px;
     font-size: 28rpx;
     background:transparent;
 }
@@ -622,13 +622,21 @@
     justify-content: space-between;
     font-size: 24rpx;
     color: #444;
+    align-items:center;
 }
 
 .coupon-bar {
-    margin-top: 20rpx;
+    margin-top:12rpx;
 }
 
 .r-item>.coupon-bar>view {
     color: #999;
     font-size: 22rpx;
+}
+
+.st{
+    position: fixed;
+    left:0;
+    right:0;
+    top:0
 }
