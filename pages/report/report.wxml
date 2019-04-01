@@ -34,7 +34,14 @@
         </block>
     </view>
 
-    <Scrolls listloading="{{listloading}}" top="{{currentCat == 2 ? headHeight+160 : headHeight+120}}" bindscrolltolower="{{currentTab == 2 ? 'moreRecordList' : ''}}" listloading="{{listloading}}" bindscrolltoupper="resRecordList" istolower="{{istolower}}" istoupper="{{istoupper}}">
+    <Scrolls
+    top="{{currentCat == 2 ? headHeight+160 : headHeight+120}}"
+    bind:scrolltolower="{{tolowerEvent}}"
+    hasmore="{{hasmore}}"
+    bind:scrolltoupper="resRecordList" 
+    listloading="{{listloading}}" 
+    istolower="{{istolower}}" 
+    istoupper="{{istoupper}}">
         <block wx:if="{{currentCat == 0}}">
             <block wx:if="{{role!= 2}}">
                 <view class='r'>
@@ -396,15 +403,10 @@
 
         </block>
         <block wx:elif="{{currentCat == 2}}">
-            <!-- <Scrolls wx:if="{{recordList.length > 0}}"> -->
                 <view class='p-head bline' bindtap='toggleCount'>
-                       <view>
-                        <view class='p-num'>{{totalCount}}</view>共计(张)</view>
-                    <view>
-                        <view class='p-num'>{{todayCount}}</view>今天核销(张)</view>
-                    <view>
-                        <view class='p-num'>{{yesterdayCount}}</view>昨日核销(张)</view>
-                 
+                    <view><view class='p-num'>{{totalCount}}</view>共计(张)</view>
+                    <view><view class='p-num'>{{todayCount}}</view>今天核销(张)</view>
+                    <view><view class='p-num'>{{yesterdayCount}}</view>昨日核销(张)</view>
                 </view>
                 <block wx:if="{{recordList.length > 0}}">
                 <view wx:for="{{recordList}}" wx:key="recordList" class='r-item bline'>
@@ -418,7 +420,6 @@
                     </view>
                 </view>
                 </block>
-            <!-- </Scrolls> -->
                 <Empty icon="icon-coupon" msg="没有核销记录" wx:else></Empty>
         </block>
     </Scrolls>

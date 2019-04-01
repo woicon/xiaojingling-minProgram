@@ -142,5 +142,7 @@ function dateMonthPicker(s, e) {
 }
 module.exports = {
     dateTimePicker: dateTimePicker,
-    getMonthDay: getMonthDay
+    getMonthDay: getMonthDay,
+    getLoopArray,
+    withData
 }

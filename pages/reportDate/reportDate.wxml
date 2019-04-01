@@ -24,23 +24,21 @@
 
     <block wx:elif="{{tabCurr == 1}}">
         <view class="c-item">
-            <picker mode="multiSelector" id='startTime' value="{{stTime}}" bindchange="changeDateTime" bindcolumnchange="changeDateTimeColumn" range="{{dateStartArray}}">
+            <picker mode="multiSelector" id='start' value="{{sdate}}" bindchange="changeDate" bindcolumnchange="changeDateColumn" range="{{startRange}}">
                 <view class="inputtime">
                     <view>选择开始时间</view>
                     <view>
-                        {{sTime || "请选择"}}
-                        <!-- {{dateTimeArray[0][startTime[0]]}} {{dateTimeArray[1][startTime[1]]}}:{{dateTimeArray[2][startTime[2]]}}:00 -->
+                        {{SDATE || "请选择"}}
                     </view>
                 </view>
             </picker>
         </view>
         <view class='c-item  {{sTime ? "":"disable"}}'>
-            <picker mode="multiSelector" bindtap='endTimes' id='endTime' value="{{etTime}}" disabled='{{sTime ? false : true}}' bindchange="changeDateTime" bindcolumnchange="changeDateTimeColumn" range="{{dateEndArray}}">
+            <picker mode="multiSelector" bindtap='end' id='endTime' value="{{edate}}" disabled='{{sTime ? false : true}}' bindchange="changeDate" bindcolumnchange="changeDateColumn" range="{{endRange}}">
                 <view class="inputtime">
                     <view>选择结束时间</view>
                     <view>
-                        {{eTime || "请选择"}}
-                        <!-- {{dateTimeArray[0][endTime[0]]}} {{dateTimeArray[1][endTime[1]]}}:{{dateTimeArray[2][endTime[2]]}}:00 -->
+                        {{EDATE || "请选择"}}
                     </view>
                 </view>
             </picker>

@@ -9,22 +9,77 @@ Page({
         pickerMode: "date",
         warn: ['90天', "48小时"],
         pickerViewShow: true,
-        tabCurr: 0,
+        tabCurr: 1,
         dateTimeArray: null,
         dateTime: null,
         startYear: 2018,
         endYear: 2018,
         disPicker: true,
         reportTime: null,
+        sdate: [0, 0, 0],
+        edate: [0, 0, 0],
         dayVal: 24 * 60 * 60 * 1000
     },
+    initRange(p, s) {
+        let dateArray = [],
+            days = []
+        for (var i = 0; i <= 89; i++) {
+            let day = i == 0 ? '今天' : base.formatDate(new Date().getTime() - base.dayValue * i, 'MM月dd日')
+            days.push(day)
+        }
+        dateArray[0] = days
+        dateArray[1] = dateTimePicker.getLoopArray(0, p)
+        dateArray[2] = dateTimePicker.getLoopArray(0, s)
+        console.log(dateArray)
+        return dateArray
+    },
 
+    dateRang() {
+        let startRange = this.initRange(23, 59),
+            nowDate = new Date(),
+            endRange = this.initRange(nowDate.getHours(), nowDate.getMinutes())
+        console.log({
+            startRange,
+            endRange
+        })
+        this.setData({
+            startRange,
+            endRange
+        })
+    },
+    changeDateColumn(e) {},
+    changeDate(e) {
+        console.log(e)
+        let id = e.target.id,
+            value = e.detail.value,
+            selRange = []
+        switch (id) {
+            case 'start':
+                selRange = this.data.startRange
+                this.setData({
+                    sdate: value,
+                    SDATE: this.dateValue(selRange, value)
+                })
+                break
+            case 'end':
+                selRange = this.data.endRange
+                this.setData({
+                    edate: value,
+                    SDATE: this.dateValue(selRange, value)
+                })
+                break
+        }
+    },
+    dateValue(range, arr) {
+        return `${range[0][arr[0]]} ${range[1][arr[1]]}:${range[2][arr[2]]}`
+    },
     onLoad(options) {
-        let that = this
+
+        this.dateRang()
+
+
         let taday = new Date()
         const dayVal = this.data.dayVal
-        //const endDate = taday.Format('yyyy-MM-dd')
-        //const endD = new Date(taday.getTime() - dayVal * 2)
         const endD = new Date(taday.getTime())
         const endDate = new Date(endD.Format('yyyy-MM-dd')).Format('yyyy-MM-dd')
         const startDate = new Date(endD - (24 * 60 * 60 * 1000 * 90)).Format('yyyy-MM-dd')
@@ -43,7 +98,11 @@ Page({
         }
         let st = new Date(now.getTime() - 1000 * 60 * 60 * 24).Format('yyyy-MM-dd')
         let et = new Date().Format('yyyy-MM-dd')
+
+
+
         let newYear = [st, et]
+        console.log(obj, newYear)
         obj.dateTimeArray.splice(0, 3, newYear)
         let points = obj.dateTimeArray[1]
         let seconds = obj.dateTimeArray[2]
@@ -53,12 +112,10 @@ Page({
         let mArr = []
         let sArr = []
         for (let i = 0; i <= m; i++) {
-            //console.log(i)
             const n = i.toString()
             mArr.push(n[1] ? n : '0' + n)
         }
         for (let i = 0; i <= S; i++) {
-            //console.log(i)
             const n = i.toString()
             sArr.push(n[1] ? n : '0' + n)
         }
@@ -171,7 +228,7 @@ Page({
                 }
                 this.setData({
                     etTime: etTime
-                }) 
+                })
                 break
         }
 

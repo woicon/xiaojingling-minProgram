@@ -13,7 +13,15 @@ Component({
             type: Boolean,
             value: false
         },
+        hasmore: {
+            type: Boolean,
+            value: true
+        },
         top:{
+            type: String,
+            value: '0',
+        },
+        scrollevent:{
             type: String,
             value: '0',
         }
@@ -21,39 +29,12 @@ Component({
     data: {
 
     },
-    attached() {
-        console.log("ss")
-    },
-    created() {
-        console.log("created:::")
-    },
-    lifetimes:{
-        attached(){
-            console.log("ss")
-        },
-        created(){
-            console.log("created:::")
-        }
-    },
-    attached(e) {
-        console.log("ssttt")
-    },
-    created() {
-        console.log("created:::")
-    },
     methods: {
         scrolltolower(e){
-            this.setData({
-                istolower:true,
-                hasmore: true
-            })
-            this.triggerEvent('scrolltoLower', e)
+            this.triggerEvent('scrolltolower', e)
         },
+  
         scrolltoupper(e) {
-            this.setData({
-                istoupper: true,
-                refreshing:true
-            })
             this.triggerEvent('scrolltoupper', e)
         },
     }
