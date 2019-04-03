@@ -1,5 +1,6 @@
 <view class='m-head-warp'>
     <view class='m-head' bindtap='clipNo' data-id="{{member.merchantCode}}">
+        <view class='ico '> <image src='../../assets/images/member-sel.png' style='width:66rpx;height:66rpx;'></image> </view>
         <view class='m-info'>
             <view class='m-name'>{{member.merchantName}}</view>
             <view class="m-ts">编号：{{member.merchantCode}} </view>

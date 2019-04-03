@@ -2,38 +2,46 @@ const app = getApp()
 var api = require('../../openApi/api.js')
 Page({
     data: {
-        loading:true,
-        hideBank:true
+        loading: true,
+        hideBank: true
     },
     onLoad() {
-        const role =  wx.getStorageSync("loginData").identity
-        this.setData({
-            role
-        })
-        if(role == 0){
-            this.checkBag()
-            this.ksAccountList()     
-        }else{
+        try{
+            const role = wx.getStorageSync("loginData").identity
             this.setData({
-                loading: false
+                ksRole: role,
+                role: wx.getStorageSync("login").role
+            })
+            if (role == 1) {
+                this.checkBag()
+                this.ksAccountList()
+            } else {
+                this.setData({
+                    loading: false
+                })
+            }
+        } catch (error){
+            wx.clearStorage()
+            wx.redirectTo({
+                url: '/pages/login/login',
             })
         }
     },
 
     ksAccountList() {
-        api.ksAccountList({}).then(res => {
-            console.log(res)
+        api.ksAccountList({
+            merchantCode: app.commonParams('merchantCode')
+        }).then(res => {
             let list = res.accountList
-            console.log(list)
-            if(list.length > 0 ){
+            if (list.length > 0) {
                 list = list.map(item => {
                     item.acc = this.cutNum(item.balanceAccount)
                     return item
                 })
                 this.initBag(list, 0)
-            }else{
+            } else {
                 this.setData({
-                    loading:false
+                    loading: false
                 })
             }
         })
@@ -44,7 +52,7 @@ Page({
     changeAccount(e) {
         this.initBag(this.data.bag, e.detail.value)
     },
-    showBanks(e){
+    showBanks(e) {
         this.setData({
             hideBank: !this.data.hideBank,
         })
@@ -53,10 +61,10 @@ Page({
         this.setData({
             bag: accountList,
             selBag: accountList[index],
-            currentBag:index,
+            currentBag: index,
             selNum: this.cutNum(accountList[index].balanceAccount),
-            loading:false,
-            hideBank:true
+            loading: false,
+            hideBank: true
         })
     },
     toggleBag(e) {
@@ -83,10 +91,11 @@ Page({
                         bagList[i].endNum = bagList[i].balanceAccount.substr(bagList[i].balanceAccount.length - 4)
                     }
                     wx.setStorageSync("bag", bagList[0])
-                    this.setData({
-                        bag: bagList
-                    })
-                    this.getKsUrl()
+                    // this.setData({
+                    //     bag: bagList,
+                    //     selBag: bagList[0],
+                    // })
+                    //this.getKsUrl()
                 }
             })
     }

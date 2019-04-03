@@ -2,7 +2,6 @@ import types from './utils/types'
 App({
     onLaunch() {
         //适配iPhone X //role  0总部 1门店 2员工 3店长
-        console.log(types)
         this.updateManager()
         wx.getSystemInfo({
             success: (res) => {
@@ -19,8 +18,8 @@ App({
         this.types = types
         this.base = require('./utils/util.js')
         this.checkLogin()
-        let nod = require('./libs/aes/public.js')
-        console.log(nod, nod.Decrypt('ALhHd7bcTjj6/5cynbPaj9cx4TkC9n7RyXBvPWi56hGItdZwo+r+B6nP0GuqvvLE16gVgPftaWBSE/MuazlFLMG6FknZnIUYDnuFsH6PUw8qjnYP9qYSPbadICzlS6JDFKwVRQpwPjXnxh1mF1b9Kg=='))
+        // let nod = require('./libs/aes/public.js')
+        // console.log(nod, nod.Decrypt('ALhHd7bcTjj6/5cynbPaj9cx4TkC9n7RyXBvPWi56hGItdZwo+r+B6nP0GuqvvLE16gVgPftaWBSE/MuazlFLMG6FknZnIUYDnuFsH6PUw8qjnYP9qYSPbadICzlS6JDFKwVRQpwPjXnxh1mF1b9Kg=='))
        
     },
     globalData: {

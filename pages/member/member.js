@@ -15,8 +15,8 @@ Page({
         this.setData({
             member: wx.getStorageSync("login")
         })
-        this.checkBag()
-        this.ksAccountList()
+        // this.checkBag()
+        // this.ksAccountList()
     },
     ksAccountList() {
         api.ksAccountList({}).then(res => {

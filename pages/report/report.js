@@ -66,8 +66,7 @@ Page({
         let params = this.reportparams(reportDate)
         this.setData({
             srcollLoading: true,
-            tolowerEvent:"",
-            
+            tolowerEvent: ""
         })
         //0总部 1门店 2员工 3店长
         let roles = role || app.commonParams('role')
@@ -97,7 +96,7 @@ Page({
                 break
             case 1:
                 console.log("门店:::::")
-                params.merchantCode = wx.getStorageSync("storeCode") || app.commonParams('merchantCode')
+                params.merchantCode = wx.getStorageSync("selStoreCode") || app.commonParams('merchantCode')
                 Promise.all([api.trade(params), api.tradeOperator(params), api.recharge(params), api.newMemberCount(params)]).then(res => {
                     console.log(res)
                     var cashier = (res[1].code != 'FAILED') ? res[1] : null
@@ -234,16 +233,16 @@ Page({
                 this.getReport(reportDate)
                 break
             case 2:
-                this.toReportDate()
+                this.toReportDate('trade')
                 break
         }
         this.setData({
             reportTab: e.target.dataset.index
         })
     },
-    toReportDate(couponDate) {
+    toReportDate(type) {
         wx.navigateTo({
-            url: `/pages/reportDate/reportDate?isCopuon=${!!couponDate}`,
+            url: `/pages/reportDate/reportDate?type=${type}`,
         })
     },
     //更多员工
@@ -286,31 +285,25 @@ Page({
     storeChange(e) {
         let role = null,
             navBar,
-            selStore = e.detail.value
+            selStore = e.detail.value,
+            currentCat = this.data.currentCat
         if (selStore == 0) {
             this.getReport(this.data.reportDate)
-            wx.removeStorageSync("storeCode")
+            wx.removeStorageSync("selStoreCode")
             role = 0
             navBar = ['营业统计', '会员统计']
-            wx.setNavigationBarTitle({
-                title: app.commonParams("merchantName"),
-            })
+            currentCat = 0
         } else {
-            //let params = this.data.searchDate || this.reportparams(this.data.reportDate)
-            console.log("merchantCode::::", this.data.store[e.detail.value])
-            //params.merchantCode = this.data.store[e.detail.value].merchantCode
-            wx.setStorageSync("storeCode", this.data.store[e.detail.value].merchantCode)
+            wx.setStorageSync("selStoreCode", this.data.store[e.detail.value].merchantCode)
             role = 1
             this.getReport(this.data.reportDate, 1)
-            wx.setNavigationBarTitle({
-                title: this.data.store[e.detail.value].merchantName,
-            })
             navBar = ['营业统计', '会员统计', '核销统计']
         }
         this.setData({
             selStore,
             role,
-            navBar
+            navBar,
+            currentCat
         })
     },
     //切换分类
@@ -343,7 +336,6 @@ Page({
         if (this.data.selCoupon > 0) {
             params.couponId = this.data.couponList[this.data.selCoupon].couponId
         }
-        console.log(params)
         return api.couponConsumeRecordList(params).then(res => {
             let couponPage = this.data.couponPage != 0 ? this.data.couponPage + 1 : 1,
                 recordList = res.recordList,
@@ -400,7 +392,7 @@ Page({
                 yesterdayCount: res[0].yesterdayCount,
                 employeeList: res[2].employeeList,
                 tolowerEvent: 'moreRecordList',
-                couponPage:1,
+                couponPage: 1,
                 selCoupon: 0,
                 selEmployee: 0
             })
@@ -436,15 +428,14 @@ Page({
 
     setCouponDate(day) {
         const days = day || this.data.couponDay
-        const couponDate = {
-            beginTime: this.lessDate('yyyyMMddhhmmss', days),
-            endTime: this.lessDate('yyyyMMddhhmmss'),
-        }
-        const couponDates = {
-            beginTime: this.lessDate('yyyy-MM-dd', days),
-            endTime: this.lessDate('yyyy-MM-dd'),
-        }
-        console.log(couponDate, couponDates)
+        const couponDate = this.data.searchCouponDate || {
+                beginTime: this.lessDate('yyyyMMddhhmmss', days),
+                endTime: this.lessDate('yyyyMMddhhmmss'),
+            },
+            couponDates = {
+                beginTime: this.lessDate('yyyy-MM-dd', days),
+                endTime: this.lessDate('yyyy-MM-dd'),
+            }
         this.setData({
             couponDate,
             couponDates,
@@ -458,18 +449,25 @@ Page({
         const index = e.target.dataset.id
         this.setData({
             currentCheck: index,
-            listloading: true,
-            couponPage: 0
+            couponPage: 0,
+            searchCouponDate: null,
+            couponDateValue: null
         })
         switch (index) {
             case 0:
+                this.setData({
+                    listloading: true
+                })
                 this.couponConsumeRecordList({}, 7)
                 break
             case 1:
+                this.setData({
+                    listloading: true
+                })
                 this.couponConsumeRecordList({}, 30)
                 break
             case 2:
-                this.toReportDate(true)
+                this.toReportDate("coupon")
                 break
         }
     },
@@ -485,7 +483,7 @@ Page({
     },
     moreRecordList(e) {
         this.setData({
-            istolower:true
+            istolower: true
         })
         if (this.data.hasmore) {
             this.couponConsumeRecordList({

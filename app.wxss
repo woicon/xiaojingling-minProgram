@@ -1,7 +1,5 @@
 /**app.wxss**/
 @import "icon.wxss";
-@import "ico.wxss";
-
 .container {
     height: 100%;
     display: flex;
@@ -114,7 +112,7 @@ page {
     border-radius: 5rpx;
     text-align: center;
     font-size: 32rpx;
-    margin: 30rpx 40rpx 0;
+    margin: 30rpx 0 0;
     padding: 0 0;
     height: 78rpx;
     line-height: 78rpx;
@@ -251,7 +249,7 @@ page {
 .r-info .ico {
     margin-right: 10rpx;
     color: #999;
-    font-size: 28rpx;
+    font-size: 40rpx;
 }
 
 .loading-bottom {
@@ -379,6 +377,7 @@ page {
 
 .empty .ico {
     font-size: 90rpx;
+    margin-bottom:18rpx;
 }
 
 .bline, .lline, .rline, .blines {
@@ -589,7 +588,8 @@ page {
 
 .os-value {
     color: #fff;
-    font-size: 28rpx;
+    font-size:32rpx;
+    font-weight:800;
 }
 
 .o-summary>view {

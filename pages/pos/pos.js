@@ -10,15 +10,15 @@ Page({
         payMsg: '等待输入密码',
         couponChannel: ["微信可用", "支付宝可用"],
         goodsDetail: [],
-        borderHeight: null
+        borderHeight: null,
+        hideBorder:false
     },
-    onLoad: function (options) {
-        wx.hideTabBar()
+    onLoad(options) {
         this.setData({
             isPX: app.systemInfo.isPX
         })
     },
-    onReady: function () {
+    onReady() {
         let that = this
         wx.setNavigationBarColor({
             frontColor: '#ffffff',
@@ -39,7 +39,12 @@ Page({
             })
         })
     },
-    onShow: function () {
+    showKeybord(){
+        this.setData({
+            hideBorder:false
+        })
+    },
+    onShow() {
         let that = this
         try {
             const loginData = wx.getStorageSync("loginData")
@@ -61,19 +66,20 @@ Page({
         }
     },
 
-    cooseCoupon: function () {
+    cooseCoupon() {
         this.setData({
             showCoupon: true
         })
     },
 
-    couponTotal: function (e) {
+    couponTotal(e) {
         let that = this
         let couponList = that.data.couponList
         let couponItem = couponList[e.currentTarget.id]
         let goodsDetail = that.data.goodsDetail
         let detailItem = goodsDetail[couponItem.detail] || null
         couponItem.quantity = couponItem.quantity || 0
+
         function changeTotal(doit) {
             couponItem.quantity = couponItem.quantity + doit
             detailItem.quantity = couponItem.quantity
@@ -105,25 +111,26 @@ Page({
         })
     },
 
-    touchKey (e) {
-        let total = this.data.totalPrice
-        let num = e.currentTarget.dataset.number
-        let decimalReg = /^\d{0,8}\.{0,1}(\d{1,2})?$/
-        console.log(num)
-        let newTotal
-        if(num != '+'){
-            let _total = `${total}${num}`
-            let nums = (total == "0") ? total : num
-            newTotal = total == "0" ? nums != '.' ? nums : "0." : decimalReg.test(_total) ? _total : total
-        }else{
-            newTotal = Number(total) + Number(num)
+    touchKey(e) {
+        let total = this.data.totalPrice,
+            num = e.currentTarget.dataset.number,
+            decimalReg = /^\d{0,8}\.{0,1}(\d{1,2})?$/
+        if (num != 'h') {
+            let _total = `${total}${num}`,
+                nums = (total == "0" && num == 0) ? total : num,
+                newTotal = total == "0" ? nums != '.' ? nums : "0." : decimalReg.test(_total) ? _total : total
+            console.log(nums)
+            this.setData({
+                priceEmpty: false,
+                totalPrice: newTotal.length < 8 ? newTotal : total
+            })
+        } else {
+            this.setData({
+                hideBorder: !this.data.hideBorder
+            })
         }
-        this.setData({
-            priceEmpty: false,
-            totalPrice: newTotal.length < 8 ? newTotal : total
-        })
     },
-    checkCoupon(e){
+    checkCoupon(e) {
         wx.scanCode({
             success: (res) => {
                 console.log(res)
@@ -133,7 +140,7 @@ Page({
             }
         })
     },
-    createPay (e) {
+    createPay(e) {
         let that = this
         let totalPrice = Number(this.data.totalPrice).toFixed(2)
         if (totalPrice == 0.00) {
@@ -157,12 +164,12 @@ Page({
             // })
         }
     },
-    markInput(e){
+    markInput(e) {
         this.setData({
-            orderRemark:e.detail.value
+            orderRemark: e.detail.value
         })
     },
-    creatPay: function (payerAccount) {
+    creatPay: function(payerAccount) {
         let that = this
         wx.showLoading({
             title: '收款中',
@@ -230,7 +237,7 @@ Page({
                 })
             })
     },
-    checkPay: function (checkParmas) {
+    checkPay: function(checkParmas) {
         wx.setStorageSync("checkParmas", checkParmas)
         api.checkPay(checkParmas)
             .then(res => {
@@ -250,23 +257,25 @@ Page({
                         })
                         break
                     case -1: //需要等待检测
-                        setTimeout(() => { this.checkPay(wx.getStorageSync("checkParmas")) }, 3000)
+                        setTimeout(() => {
+                            this.checkPay(wx.getStorageSync("checkParmas"))
+                        }, 3000)
                         break
                 }
             })
     },
-    paySuccess: function (data) {
+    paySuccess: function(data) {
         console.log("POSDATA::::", JSON.parse(data))
         wx.redirectTo({
             url: '/pages/posOk/posOk'
         })
     },
-    hideCoupon: function () {
+    hideCoupon: function() {
         this.setData({
             showCoupon: false
         })
     },
-    getCoupon: function (arg) {
+    getCoupon: function(arg) {
         let that = this
         const loginData = arg
         let parmas = {
@@ -280,7 +289,7 @@ Page({
         })
     },
 
-    delNumber: function () {
+    delNumber: function() {
         let totals = this.data.totalPrice
         let strTotals = totals.toString()
         let totalsLength = strTotals.length
@@ -290,23 +299,23 @@ Page({
             totalPrice: totalPrice == '' ? "0" : totalPrice
         })
     },
-    lessInput(e){
+    lessInput(e) {
 
     },
-    onHide: function () {
+    onHide: function() {
 
     },
-    onUnload: function () {
+    onUnload: function() {
 
     },
-    onPullDownRefresh: function () {
+    onPullDownRefresh: function() {
 
     },
 
-    onReachBottom: function () {
+    onReachBottom: function() {
 
     },
-    onShareAppMessage: function () {
+    onShareAppMessage: function() {
 
     }
 })

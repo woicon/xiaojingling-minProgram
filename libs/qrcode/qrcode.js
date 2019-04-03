@@ -758,7 +758,6 @@ var QR = (function () {
             }
             var size = Math.min(cavW, cavH);
             str = this.utf16to8(str);//增加中文显示
-            //console.log(str)
             var frame = this.getFrame(str),
                 ctx = wx.createCanvasContext(canvas),
                 px = Math.round(size / (width + 8));
@@ -801,7 +800,7 @@ var QR = (function () {
             ctx.setFillStyle('#ffffff')
             ctx.fillRect(0, 0, 500, 700)
             ctx.draw(true)
-            drawimg('http://static.solaridc.com/public_upload/lft_app/dls20190329162512_1553847912242_398_order_0.png', (img) => {
+            drawimg('https://www.huodonghui.com/imgPath/club/activity/1554280503269.jpg', (img) => {
                 ctx.drawImage(img, 0, 0, 500, 130)
                 ctx.draw(true)
             })
@@ -812,12 +811,9 @@ var QR = (function () {
             ctx.fillRect(112, 142, 276, 276)
             ctx.draw(true)
             var size = Math.min(cavW, cavH);
-            console.log(size);
             str = this.utf16to8(str);//增加中文显示
-            //console.log(str)
             var frame = this.getFrame(str),
-                px = Math.round(size / (width + 8));    
-                console.log(px,width,frame)
+                px = Math.round(size / (width + 8));
             var roundedSize = px * (width + 8),
                 offset = Math.floor((size - roundedSize) / 2);
             size = roundedSize;
@@ -831,7 +827,7 @@ var QR = (function () {
                 }
             }
             ctx.draw(true);
-            drawimg('http://static.solaridc.com/public_upload/lft_app/dls20190329162431_1553847871818_194_order_0.png', (img) => {
+            drawimg('https://www.huodonghui.com/imgPath/club/activity/1554280484090.jpg', (img) => {
                 ctx.drawImage(img, 0, 430, 500, 270)
                 ctx.draw(true);
             })

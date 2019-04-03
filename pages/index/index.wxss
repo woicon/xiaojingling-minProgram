@@ -6,6 +6,7 @@
     font-size:26rpx;
     background:#0ec695;
     color:#fff;
+  
 }
 .nav>view,.nav>navigator{
     padding:68rpx 0;
@@ -18,13 +19,14 @@
 }
 .grid{
     display: flex;
+    background:#fff;
     flex-wrap:wrap;
 }
 .grid>navigator{
-    width:33.3333333%;
+    width:50%;
     text-align:center;
-    font-size:24rpx;
-    height:180rpx;
+    font-size:28rpx;
+    height:220rpx;
     display: flex;
     align-items:center;
     justify-content:center;
@@ -32,19 +34,20 @@
     color:#555;
 }
 .grid .ico{
-    font-size:60rpx;
+    font-size:76rpx;
     margin-bottom:14rpx;
 }
 
 
 
 .b {
-    background: rgba(0, 0, 0, 0.1);
+    background:  #fff;
     padding: 32rpx 60rpx;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    color: #fff;
+    color:#444;
+  
 }
 
 .b .ico {
@@ -64,7 +67,7 @@
     display: block;
     width:13rpx;
     height:13rpx;
-    border:2px solid #fff;
+    border:2px solid #999;
     border-left:none;
     border-bottom:none;
     transform:rotate(45deg);
@@ -74,8 +77,8 @@
     width:100%;
 }
 .banks-text {
-    color: #fff;
-    font-size: 23rpx;
+    color: #888;
+    font-size: 25rpx;
     margin-top: 10rpx;
 }
 
@@ -84,14 +87,14 @@
     padding: 5rpx 30rpx;
     height: 50rpx;
     line-height: 50rpx;
-    background: transparent;
-    border: 1px solid #fff;
+    background: #0ec695;
+    border: 1px solid #0ec695;
+    color:#fff;
     margin: 0;
 }
 
 .index-head{
     background:#0ec695;
-    padding-top:90px;
 }
 
 .bank-list{
@@ -138,4 +141,16 @@
 }
 .height-fixed{
     height:580rpx;
+}
+
+.banks-title{
+    font-weight:800;
+    font-size:38rpx;
+    color:#0ec695;
+}
+
+.nav-touch{
+    background:transparent;
+    opacity:.4;
+    transition:.4s;
 }

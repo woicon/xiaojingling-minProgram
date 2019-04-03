@@ -1,4 +1,4 @@
-<Contents loading="{{loading}}" error="{{error}}" msg="errorMsg">
+<Contents loading="{{loading}}" error="{{error}}" msg="errorMsg" loadingcolor="#ffffff">
     <view class='canvas'><canvas canvasId='qrCode' style='width:250px;height:350px;' class='canvas'></canvas></view>
     <view class='button-bar'>
         <view class='button' hover-class='button-touch'  bindtap='saveFile'>保存到相册</view>

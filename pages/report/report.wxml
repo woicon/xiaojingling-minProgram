@@ -3,7 +3,7 @@
 <Contents loading="{{loading}}">
     <template is="headerReport" data="{{headHeight,navBar,store,selStore,headTitle}}" />
     <view style='top:{{headHeight}}px' class='report-head' id='reportBar'>
-        <view class='navbar bline' bindtap='toggleCat'>
+        <view class='navbar ' bindtap='toggleCat'>
             <view wx:for="{{navBar}}" style='width:33.33333%' class='{{currentCat==index ? "active" : ""}}' wx:key="navBar" id="{{index}}">{{item}}</view>
         </view>
         <block wx:if="{{currentCat == 2}}">
@@ -11,7 +11,10 @@
                 <view bindtap='toggleCheckTab' wx:for="{{['近7天','近30天','更多']}}" data-id="{{index}}" wx:key="checkTab" class='{{currentCheck == index?"active":""}}'>{{item}}</view>
             </view>
             <view class='datebar bline'>
-                <view class='datevalue'> {{couponDates.beginTime}} 至 {{couponDates.endTime}} </view>
+                <view class='datevalue'>
+                    <block wx:if="{{couponDateValue}}">{{couponDateValue}}</block>
+                    <block wx:else> {{ couponDates.beginTime}} 至 {{couponDates.endTime}}</block>
+                </view>
             </view>
             <view class='p-tab'>
                 <picker range='{{couponList}}' mode='selector' range-key='couponName' bindchange='changeCoupon'>
@@ -28,20 +31,13 @@
             </view>
             <view class='datebar bline' bindtap='stepDate'>
                 <view wx:if="{{!disPrv}}" class='ico prev' id='prev'></view>
-                <view class='datevalue'> {{searchDates || reportDateFormat}} </view>
+                <view class='datevalue'> {{tradeDateValue || reportDateFormat}} </view>
                 <view wx:if="{{!disNext}}" class='ico next' id="next"></view>
             </view>
         </block>
     </view>
 
-    <Scrolls
-    top="{{currentCat == 2 ? headHeight+160 : headHeight+120}}"
-    bind:scrolltolower="{{tolowerEvent}}"
-    hasmore="{{hasmore}}"
-    bind:scrolltoupper="resRecordList" 
-    listloading="{{listloading}}" 
-    istolower="{{istolower}}" 
-    istoupper="{{istoupper}}">
+    <Scrolls top="{{currentCat == 2 ? headHeight+165 : headHeight+125}}" bind:scrolltolower="{{tolowerEvent}}" hasmore="{{hasmore}}" bind:scrolltoupper="resRecordList" listloading="{{listloading}}" istolower="{{istolower}}" istoupper="{{istoupper}}">
         <block wx:if="{{currentCat == 0}}">
             <block wx:if="{{role!= 2}}">
                 <view class='r'>
@@ -245,43 +241,65 @@
                                 <view class='value'>{{trade.totalOrderCnt}}</view>
                             </view>
                         </view> -->
-                    <view class='bline'>
+                    <view class=''>
                         <view class='ico icon-users'></view>
                         <view>新增会员
                             <view class='value'>{{memberCount}}</view>
                         </view>
                     </view>
-                    <view class='bline'>
-                        <view class='ico icon-bag'></view>
+                    <view class=''>
+                        <view class='ico icon-moneys'></view>
                         <view>新增充值/笔
                             <view class='value'>{{recharge.totalOrderAmt}}/{{recharge.totalTradeCnt}}</view>
                         </view>
                     </view>
                 </view>
-           </view>
+            </view>
             <view class='r'>
                 <view class='r-title'>会员充值统计</view>
-                <view class='rs-block'>
-                    <view class='bline'>新增充值/笔
-                        <text>{{recharge.totalOrderAmt + recharge.totalGiveAmt}}/{{recharge.totalOrderCnt}}</text>
+                <view class='r-grid'>
+                    <view class='bline'>
+                        <view class='ico icon-trade'></view>
+                        <view>新增充值
+                            <view class='value'> {{recharge.totalOrderAmt + recharge.totalGiveAmt}}</view>
+                        </view>
                     </view>
-                    <view class='bline lline'>实充金额（元）
-                        <text>{{recharge.totalTradeAmt}}</text>
+                    <view class='bline lline'>
+                        <view class='ico icon-orderes'></view>
+                        <view>新增充值笔数
+                            <view class='value'>{{recharge.totalOrderCnt}}</view>
+                        </view>
                     </view>
-                    <view class='bline lline'>赠送金额（元）
-                        <text>{{recharge.totalGiveAmt}}</text>
+                    <view class='bline'>
+                        <view class='ico icon-money'></view>
+                        <view>实充金额（元）
+                            <view class='value'>{{recharge.totalTradeAmt}}</view>
+                        </view>
                     </view>
-                    <view>会员充值手续费（元）
-                        <text>{{recharge.totalTradeFee}}</text>
+                    <view class='bline lline'>
+                        <view class='ico icon-refund'></view>
+                        <view>赠送金额（元）
+                            <view class='value'>{{recharge.totalGiveAmt}}</view>
+                        </view>
                     </view>
 
-                    <view class='lline'>结算金额
-                        <text>{{recharge.totalOrderAmt + recharge.totalTradeFee}}</text>
+                    <view class=''>
+                        <view class='ico icon-fee'></view>
+                        <view>会员充值手续费（元）
+                            <view class='value'>{{recharge.totalTradeFee}}</view>
+                        </view>
+                    </view>
+
+                    <view class='lline'>
+                        <view class='ico icon-bag'></view>
+                        <view>结算金额
+                            <view class='value'>{{recharge.totalOrderAmt + recharge.totalTradeFee}}</view>
+                        </view>
                     </view>
                 </view>
             </view>
             <view class="r-info">
-                <view class='ico icon-warn'></view>
+                <view class='ico icon-info'></view>
                 <view>
                     <view>新增充值 = 实充金额+赠送金额</view>
                     <view>结算金额 = 实充金额+充值手续费</view>
@@ -348,7 +366,6 @@
                     </view>
                 </view>
             </view>
-
             <view class='r'>
                 <view class='r-title'>会员卡统计</view>
                 <view class='r-grid r-grid-min'>
@@ -374,7 +391,6 @@
                     </view>
                 </view>
             </view>
-
             <view class='r'>
                 <view class='r-title'>会员消费统计</view>
                 <view class='r-grid r-grid-min'>
@@ -400,16 +416,18 @@
                     </view>
                 </view>
             </view>
-
         </block>
         <block wx:elif="{{currentCat == 2}}">
-                <view class='p-head bline' bindtap='toggleCount'>
-                    <view><view class='p-num'>{{totalCount}}</view>共计(张)</view>
-                    <view><view class='p-num'>{{todayCount}}</view>今天核销(张)</view>
-                    <view><view class='p-num'>{{yesterdayCount}}</view>昨日核销(张)</view>
-                </view>
-                <block wx:if="{{recordList.length > 0}}">
-                <view wx:for="{{recordList}}" wx:key="recordList" class='r-item bline'>
+            <view class='p-head bline' bindtap='toggleCount'>
+                <view>
+                    <view class='p-num'>{{totalCount}}</view>共计(张)</view>
+                <view>
+                    <view class='p-num'>{{todayCount}}</view>今天核销(张)</view>
+                <view>
+                    <view class='p-num'>{{yesterdayCount}}</view>昨日核销(张)</view>
+            </view>
+            <block wx:if="{{recordList.length > 0}}">
+                <view wx:for="{{recordList}}" wx:key="recordList" class='r-item'>
                     <view>
                         <view class='coupon-title'>{{item.couponName}}</view>
                         <view> {{item.memberName}}</view>
@@ -419,8 +437,8 @@
                         <view>{{item.consumeTime}}</view>
                     </view>
                 </view>
-                </block>
-                <Empty icon="icon-coupon" msg="没有核销记录" wx:else></Empty>
+            </block>
+            <Empty icon="icon-checkcoupon" msg="没有核销记录" wx:else></Empty>
         </block>
     </Scrolls>
 </Contents>

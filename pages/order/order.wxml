@@ -122,10 +122,8 @@
                         </view>
                     </view>
                 </view>
-                <view class='empty' wx:else>
-                    <view class='ico icon-orders'></view>
-                    <view class='txt'>没有查询到对应的数据</view>
-                </view>
+
+                <Empty icon="icon-analysis" msg="没有查询到对应的数据" wx:else/>
                 <view wx:if="{{orderIsBottm}}" class='getmore f-c-c'>
                     <view wx:if="{{orderHasMore}}">
                         <template is="bottomloading" />

@@ -8,7 +8,7 @@
     color: #444;
     display: flex;
     align-items: center;
-    height: 40px;
+    height: 45px;
     justify-content: center;
 }
 
@@ -34,7 +34,7 @@
     content: '';
     display: block;
     width: 50rpx;
-    height: 10rpx;
+    height: 8rpx;
     background: #0ec695;
     position: absolute;
     left: 50%;
@@ -164,7 +164,7 @@
 }
 
 .r-grid .ico {
-    font-size: 46rpx;
+    font-size: 44rpx;
     margin-right: 30rpx;
     margin-left: 30rpx;
 }
@@ -571,7 +571,7 @@
 .p-num {
     font-size:50rpx;
     font-weight: 800;
-    color: #333;
+    color: #0ec695;
 }
 
 .p-tab {
@@ -610,11 +610,12 @@
 .r-item {
     background: #fff;
     padding: 30rpx;
+    margin:30rpx;
+    border-radius:8rpx;
 }
 
 .coupon-title {
     font-size: 30rpx;
-    font-weight: 800;
 }
 
 .r-item>view {

@@ -78,10 +78,7 @@
                         </view>
                     </view>
                 </view>
-                <view class='empty' wx:else>
-                    <view class='ico icon-orders'></view>
-                    <view class='txt'>没有查询到对应的数据</view>
-                </view>
+                 <Empty  wx:else icon="icon-analysis" msg='没有查询到对应的数据'/>
                 <view wx:if="{{orderIsBottm}}" class='getmore f-c-c'>
                     <view wx:if="{{orderHasMore}}">
                         <template is="bottomloading" />
@@ -91,10 +88,5 @@
             </block>
         </scroll-view>
     </block>
-
-    <view class='empty' wx:else>
-        <view class='ico icon-orders'></view>
-        <view class='txt'>没有订单记录</view>
-    </view>
-
+    <Empty wx:else icon="icon-analysis" msg='没有订单记录'/>
 </block>

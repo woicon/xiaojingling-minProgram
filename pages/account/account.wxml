@@ -12,11 +12,11 @@
         </view>
         <view class='outbtn' bindtap='toExtract'>提现</view>
     </view>
-    <view class='tab'>
+    <view class='tab' wx:if="{{nnn}}">
         <view wx:for="{{['提现明细','结算明细']}}" data-index="{{index}}" bindtap='toggleType' wx:key="tabs" class='{{currentTab == index ? "active" : ""}}' hover-class='touch'>{{item}}</view>
     </view>
 
-    <view class='timebar bline'>
+    <view class='timebar bline' wx:if="{{nnn}}">
         <view>
         <view class='dates'>
             <picker mode="date"  value="{{startDate}}" start="start" end="{{endDate}}" bindchange="bindDateChange">

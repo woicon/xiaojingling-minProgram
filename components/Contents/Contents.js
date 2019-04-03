@@ -5,6 +5,10 @@ Component({
             type:Boolean,
             value:true
         },
+        loadingcolor:{
+            type: String,
+            value: '#cccccc'
+        },
         error:{
             type: Boolean,
             value: false

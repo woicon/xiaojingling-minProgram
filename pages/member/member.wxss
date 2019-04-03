@@ -33,11 +33,22 @@
 }
 
 .m-head {
-    padding: 60rpx 40rpx;
+    padding:80rpx 40rpx 60rpx;
     display: flex;
     align-items: center;
 }
-
+.m-head .ico{
+    font-size:50rpx;
+    width:100rpx;
+    height:100rpx;
+    background:#fff;
+    color:#0ec695;
+    border-radius:90px;
+    display: flex;
+    align-items:center;
+    justify-content:center;
+    margin-right:26rpx;
+}
 .m-img {
     margin-right: 20rpx;
 }
@@ -88,13 +99,14 @@
 
 .m-list .ico {
     flex-basis: 48rpx;
-    width: 50rpx;
+    width: 46rpx;
     font-size: 48rpx;
     margin-right: 20rpx;
 }
 
 .m-name {
-    flex-grow: 2;
+    flex:1;
+    font-size:32rpx;
 }
 
 .m-list>view:after, .m-list>navigator::after {

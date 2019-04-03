@@ -3,7 +3,7 @@ Page({
     data: {
         login: {}
     },
-    onLoad: function(options) {
+    onLoad(options) {
         wx.setNavigationBarColor({
             frontColor: '#000000',
             backgroundColor: '#ffffff',
@@ -12,10 +12,11 @@ Page({
             title: '收款小精灵商户通',
         })
     },
-    login: function(e) {
+    login(e) {
         let parmas = e.detail.value
         api.login(parmas)
             .then(res => {
+                console.log(res)
                 wx.setStorageSync("login", res)
                 if (res.code == 'FAILED') {
                     wx.showToast({
@@ -26,16 +27,16 @@ Page({
                     this.loginSi(parmas)
                         .then(res => {
                             wx.reLaunch({
-                                url: '/pages/report/report',
+                                url: '/pages/index/index',
                             })
                         })
                 }
             })
     },
-    loginSi: function(parmas) {
+    loginSi(parmas) {
         let arg = {
-            loginName:parmas.userName,
-            password:parmas.passWord
+            loginName: parmas.userName,
+            password: parmas.passWord
         }
         return api.loginSi(arg)
             .then((res) => {
@@ -64,7 +65,6 @@ Page({
         })
     },
     loginInput(e) {
-        console.log(e)
         const login = this.data.login
         login[e.target.id] = e.detail.value
         const loginDisable = (login.passWord && login.userName) ? false : true
@@ -84,31 +84,5 @@ Page({
         this.setData({
             focus: e.currentTarget.dataset.index
         })
-    },
-    onReady: function() {
-
-    },
-
-    onShow: function() {
-
-    },
-
-    onHide: function() {
-
-    },
-    onUnload: function() {
-
-    },
-
-    onPullDownRefresh: function() {
-
-    },
-
-    onReachBottom: function() {
-
-    },
-
-    onShareAppMessage: function() {
-
     }
 })
