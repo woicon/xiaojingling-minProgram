@@ -1,6 +1,7 @@
 const api = require('../../openApi/api.js')
 var base = require('../../utils/util.js')
 import types from '../../utils/types'
+const app = getApp()
 Page({
     data: {
         loading: true,
@@ -115,40 +116,48 @@ Page({
 
     },
     selCoupon(e) {
-        console.log(e)
         let coupon = this.data.coupon,
             type = e.currentTarget.dataset.type,
             index = e.currentTarget.dataset.index,
             selectCoupon = this.data.selectCoupon,
             selCoupon = coupon[index]
-
-        if (selectCoupon.length > 0) {
+       
+            selectCoupon.push(selCoupon)
             let isAll = selectCoupon.some((item) => {
-                let type = item.cardTemplate.tyep
-                return type == 1 || type == 9 || type == 2
+                let type = item.cardTemplate.type
+                return type == 1 || type == 9 || type == -2 || type == 0
             })
             let isSigle = selectCoupon.some((item) => {
-                let type = item.cardTemplate.tyep
+                let type = item.cardTemplate.type
                 return type == 5 || type == 8 || type == 7
             })
             let isexChange = selectCoupon.some((item) => {
-                let type = item.cardTemplate.tyep
-                return type == 3
+                let type = item.cardTemplate.type
+                return type == 2
             })
-            
+
+            //兑换  types = (item) => item.cardTemplate.type == 2
+            //单品 types = (item) => item.cardTemplate.type == 5 || item.cardTemplate.type == 7 || item.cardTemplate.type == 8 || item.cardTemplate.type == -1
+            //全场 types = (item) => item.cardTemplate.type == 0 || item.cardTemplate.type == 9 || item.cardTemplate.type == 1 || item.cardTemplate.type == -2
+            // 全场券 只能核销一张
+            // 单品券 不限制核销数量
+            // 兑换券 不限制核销数量
+            // 兑换券 可 与单品券混核 也可以与全场券
+            // 单品全场不能混核
+
+
+            console.log(isAll, isSigle, isexChange)
             if (isAll){
-                wx.showToast({
-                    title: '全场券只能使用一张',
-                })
+                app.tip('全场券只能使用一张')
             } else if (isSigle){
-
+                app.tip('xx全场券只能使用一张')
+            } else if (isexChange){
+                app.tip('ss全场券只能使用一张')
             }
-
-        } else {
             console.log(selCoupon)
             selCoupon.checked = true
             selectCoupon.push(selCoupon)
-        }
+   
         this.setData({
             coupon
         })

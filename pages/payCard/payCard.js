@@ -33,11 +33,11 @@ Page({
                 console.log(code.result)
                 let cardUrl = code.result
                 if (cardUrl.indexOf('pay?code=')!=-1){
-                    console.log('sss')
                     let cardCode = app.getQueryString(cardUrl)
                     console.log(cardCode)
                     let params = {
-                        payCode: cardCode.code
+                        payCode: cardCode.code,
+                        merchantCode: app.commonParams("merchantCode")
                     }
                    app.commonParams('role') == 2 ? params.operatorId = app.commonParams('operatorId') : ''
                     api.bindPayCode(params).then(res => {
@@ -75,7 +75,8 @@ Page({
     },
     delPayCode(e) {
         let params = {
-            payCode: e.target.dataset.id
+            payCode: e.target.dataset.id,
+            merchantCode: app.commonParams("merchantCode")
         }
         api.unBindPayCode(params).then(res => {
             wx.showToast({

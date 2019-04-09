@@ -5,9 +5,9 @@ const API = "https://api.liantuofu.com/open/" //正式环境
 //const API = "http://intshop.51ebill.com/open/"  //灰度环境
 //const API ="http://wdtest.liantuo.com/open/"  //本地调试
 //const API = "http://testclubshop.liantuobank.com/open/" //测试环境
+//const ksApi = "http://192.168.140.11:8000/front/baseV3/gateway.in"
 const siApi = "http://shopcashiersi.liantuobank.com/ShopCashier_SI/"
 const ksApi = "https://kshbank.liantuobank.com/front/baseV3/gateway.in"
-//const ksApi = "http://192.168.140.11:8000/front/baseV3/gateway.in"
 const oldSi = "http://front.51ebill.com/front/baseV3/gateway.in"
 
 function ajax(url, params, signs, method) {
@@ -149,6 +149,10 @@ module.exports = {
     memberCouponList: params => ajax('coupon/couponList', params),
     //款台分组交易汇总统计
     terminal: params => ajax('statistics/trade/terminal', params),
+
+    //商户分组交易汇总统计
+    merchant: params => ajax('statistics/trade/merchant', params),
+
     //员工分组交易汇总统计
     tradeOperator: params => ajax('statistics/trade/operator', params),
     //商户分组交易概要统计

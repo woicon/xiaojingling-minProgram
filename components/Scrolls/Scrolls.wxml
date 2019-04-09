@@ -7,8 +7,7 @@ scroll-y scroll-with-animation>
         <Load wx:if="{{refreshing}}">下拉加载更多</Load>
         <view class='scrolls-state' wx:else>没有更多了</view>
     </view> -->
-    <Load wx:if="{{listloading}}" />
-    <Empty wx:elif="{{list.length <= 0}}" />
+    <Load class="loading"  wx:if="{{listloading}}" />
     <slot wx:else />
     <view class='scroll-bottom' wx:if="{{istolower}}">
         <Load wx:if="{{hasmore}}" />

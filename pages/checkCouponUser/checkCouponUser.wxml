@@ -5,7 +5,7 @@
         </view>
         <view class='user-info'>
             <view class='user-name'>{{member.memberName}}</view>
-            <view>{{member.mobile}} /{{member.levelName}}</view>
+            <view><text class='icon-level'></text> {{member.levelName}} / {{member.mobile}} </view>
             <view>最近消费时间：{{member.lastConsumDate}}</view>
         </view>
     </view>
@@ -42,12 +42,14 @@
                     
                     <view class='coupon-date'>有效期至：{{item.endDate}}</view>
                 </view>
+
+                <view wx:if="{{item.checked}}" class='icon-checked'></view>
             </view>
         </Scrolls>
     </view>
 </Contents>
 
-<view wx:if="{{selCoupon}}" class='panel'>
+<view wx:if="{{selCoupon}}" class='panel' style='display:none'>
     <view class='panel-content'>
         <view class='p-head'> <image src='{{selCoupon.cardTemplate.logo}}'></image> <view>{{selCoupon.cardTemplate.brandName}}</view> </view>
         <view class='p-tcont'>

@@ -58,12 +58,12 @@
 .s-item{
     font-size:24rpx;
     padding:14rpx 20rpx;
-    border-left:1px solid #eee;
 }
 .s-name{
-    font-size:26rpx;
-    width:30%;
+    font-size:28rpx;
+    width:40%;
     color:#444;
+    font-weight:800;
     padding-right:20rpx;
     padding:10rpx 0;
 }
@@ -74,6 +74,7 @@
 .s-num{
     color:#444;
     font-weight:800;
+    font-size:30rpx;
 }
 .r-detail{
     padding:0 20rpx 20rpx;
@@ -85,21 +86,7 @@
   box-sizing:border-box;
   border:none;
 }
-.bline {
-    position: relative;
-}
 
-.bline:after {
-    content: '';
-    display: block;
-    height: 1px;
-    left: -50%;
-    right: -50%;
-    bottom: 0;
-    position: absolute;
-    border-bottom: 1px solid #eee;
-    transform: scale(0.5);
-}
-.detail>view:last-child:after{
+.detail>view:last-child::before{
     border:none;
 }

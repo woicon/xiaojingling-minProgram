@@ -8,10 +8,16 @@
 }
 .scrolls-state{
     text-align:center;
-    padding:20rpx 0;
+    
     color:#888;
-    font-size:22rpx;
+    font-size:24rpx;
 }
 scroll-view{
     position:relative;
+}
+.scroll-bottom{
+    padding:60rpx 0;
+}
+.scrolls .loading{
+    padding-top:20%;
 }

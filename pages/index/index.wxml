@@ -25,8 +25,6 @@
         <navigator url='/pages/checkCoupon/checkCoupon' class='bline lline' hover-class='nav-touch'>
             <view class='ico icon-checkcoupon'></view>核券</navigator>
     </view>
-
-
     <view class='bank-list' wx:if="{{!hideBank}}" bindtap='showBanks'>
         <scroll-view class='bank-listcont {{bag.length > 4 ? "height-fixed":""}}' scroll-y>
             <view wx:for="{{bag}}" data-index="{{index}}" catchtap='toggleBag' class='bank-item bline {{currentBag == index ? "active" : ""}}' wx:key="banklsit">

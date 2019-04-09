@@ -25,7 +25,8 @@
         "pages/payCard/payCard",
         "pages/checkCoupon/checkCoupon",
         "pages/checkCouponUser/checkCouponUser",
-        "pages/payQrcode/payQrcode"
+        "pages/payQrcode/payQrcode",
+        "pages/reportDetail/reportDetail"
     ],
     "window": {
         "backgroundTextStyle": "light",
@@ -70,6 +71,7 @@
         "Contents":"components/Contents/Contents",
         "Load":"components/loading/loading",
         "Scrolls":"components/Scrolls/Scrolls",
-        "Empty":"components/Empty/Empty"
+        "Empty":"components/Empty/Empty",
+        "ReportDetail":"components/ReportDetail/ReportDetail"
     }
 }

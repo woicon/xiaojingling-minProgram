@@ -27,7 +27,7 @@ Page({
             let role = app.commonParams('role')
             this.setData({
                 reportDate: this.lessDate('yyyyMMdd'),
-                reportDateFormat: this.lessDate('yyyy-MM-dd'),
+                tradeDateValue: this.lessDate('yyyy-MM-dd'),
                 taday: this.lessDate('yyyy-MM-dd'),
                 yestaday: this.lessDate('yyyy-MM-dd'),
                 couponDate: this.setCouponDate(7),
@@ -76,7 +76,13 @@ Page({
             case 0:
                 console.log("总部:::::")
                 //获取门店
-                let report = [api.trade(params), api.tradeMerchant(params), api.merchantList({}), api.recharge(params), api.newMemberCount(params), api.terminal(params)]
+                let report = [api.trade(params), 
+                api.tradeMerchant(params), 
+                api.merchantList({}), 
+                api.recharge(params), 
+                api.newMemberCount(params), 
+                api.terminal(params), 
+                api.merchant(params)]
                 Promise.all(report).then(res => {
                     console.log(res)
                     let store = res[2].merchantList
@@ -100,12 +106,17 @@ Page({
             case 1:
                 console.log("门店:::::")
                 params.merchantCode = wx.getStorageSync("selStoreCode") || app.commonParams('merchantCode')
-                Promise.all([api.trade(params), api.tradeOperator(params), api.recharge(params), api.newMemberCount(params), api.terminal(params)]).then(res => {
+                Promise.all([api.trade(params), 
+                api.tradeOperator(params), 
+                api.recharge(params), 
+                api.newMemberCount(params), 
+                api.terminal(params), 
+                api.merchant(params)]).then(res => {
                     console.log(res)
                     let cashier = (res[1].code != 'FAILED') ? res[1] : null,
                         trade = (res[0].code != 'FAILED') ? res[0].statistics : null,
-                        terminal = (res[4].code != 'FAILED') ? res[4].statisticsList : null,
-                        recharge = res[2].rechargeStatistics
+                        recharge = res[2].rechargeStatistics,
+                        terminal = (res[4].code != 'FAILED') ? res[4].statisticsList : null
                     this.setData({
                         loading: false,
                         trade,
@@ -154,21 +165,21 @@ Page({
     },
     //时间天数切换
     stepDate(e) {
-        let reportDate = this.data.reportDateFormat
+        let reportDate = this.data.tradeDateValue
         const currDate = new Date(reportDate)
         const ms = base.dayValue
         let _prportDate = null
         const tadayMs = new Date().getTime()
         let disNext = this.data.disNext
         let activeDate = null
-        let reportDateFormat = null
+        let tradeDateValue = null
         if (e.target.id === 'next') {
             this.setData({
                 srcollLoading: true
             })
             activeDate = currDate.getTime() + ms
             reportDate = base.formatDate(activeDate, 'yyyyMMdd')
-            reportDateFormat = base.formatDate(activeDate, "yyyy-MM-dd")
+            tradeDateValue = base.formatDate(activeDate, "yyyy-MM-dd")
             console.log(activeDate)
             this.getReport(reportDate)
             this.nextView(activeDate)
@@ -178,14 +189,14 @@ Page({
             })
             activeDate = currDate.getTime() - ms
             reportDate = base.formatDate(activeDate, 'yyyyMMdd')
-            reportDateFormat = base.formatDate(activeDate, "yyyy-MM-dd")
+            tradeDateValue = base.formatDate(activeDate, "yyyy-MM-dd")
             this.getReport(reportDate)
             this.nextView(activeDate)
         }
         if (e.target.id) {
             this.setData({
-                reportDate: reportDate,
-                reportDateFormat: reportDateFormat
+                reportDate,
+                tradeDateValue
             })
         }
     },
@@ -210,13 +221,13 @@ Page({
     },
     //切换报表
     toggleReport(e) {
-        let id = e.target.dataset.index
-        let reportDate = this.data.reportDate
+        let id = e.target.dataset.index,
+            reportDate = this.data.reportDate
         switch (id) {
             case 0:
                 reportDate = this.lessDate('yyyyMMdd', 1)
                 this.setData({
-                    reportDateFormat: this.lessDate('yyyy-MM-dd', 1),
+                    tradeDateValue: this.lessDate('yyyy-MM-dd', 1),
                     reportDate,
                     searchDates: null,
                     searchDate: null,
@@ -228,7 +239,7 @@ Page({
             case 1:
                 reportDate = this.lessDate('yyyyMMdd')
                 this.setData({
-                    reportDateFormat: this.data.taday,
+                    tradeDateValue: this.data.taday,
                     reportDate,
                     searchDates: null,
                     searchDate: null,
@@ -501,6 +512,20 @@ Page({
     },
     resRecordList(e) {
         console.log("res::::", e);
+    },
+    goDetail(date, type) {
+        let data = this.data,
+            d = (date instanceof Object) ?
+            wx.setStorageSync("searchDate", date) : `date=${date}`
+        wx.navigateTo({
+            url: `/pages/reportDetail/reportDetail?${d}&type=${type}&reportTab=${data.reportTab}&tradeDateValue=${data.tradeDateValue}`,
+        })
+    },
+    moreTerimnal() {
+        this.goDetail(this.data.searchDate || this.data.reportDate, 'terminal')
+    },
+    moreOperator() {
+        this.goDetail(this.data.searchDate || this.data.reportDate, 'operator')
     },
     onShow() {
         this.initPage()

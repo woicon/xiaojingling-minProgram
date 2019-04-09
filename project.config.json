@@ -33,7 +33,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 4,
+			"current": 25,
 			"list": [
 				{
 					"id": -1,
@@ -188,6 +188,13 @@
 					"name": "payQrcode",
 					"pathName": "pages/payQrcode/payQrcode",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": 25,
+					"name": "reportDetail",
+					"pathName": "pages/reportDetail/reportDetail",
+					"query": "type=terminal&reportTab=1&searchDate={\"beginDate\":\"20190406\",\"endDate\":\"20190409\",\"beg…04581\",\"sign\":\"d7ea0840cc8e209a4e1bc1beb96f4942\"}&reportDateFormat=2019-04-08&title=款台统计",
 					"scene": null
 				}
 			]

@@ -3,7 +3,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height:80rpx;
+    height:120rpx;
 }
 
 .loading>view {

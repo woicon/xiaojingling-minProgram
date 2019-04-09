@@ -10,7 +10,7 @@
                 <text wx:if="{{!priceEmpty}}">¥</text>{{priceEmpty?"请输入金额":totalPrice}}
                 <view wx:if="{{!priceEmpty}}" class='price-line'></view>
             </view>
-            <!-- <view class='total-check icon-scans' bindtap='checkCoupon'><text>核券</text></view> -->
+            <view class='total-check icon-scans' bindtap='checkCoupon'><text>核券</text></view>
         </view>
         <!-- <view class='mark'>
             <view class='ico icon-info'></view>

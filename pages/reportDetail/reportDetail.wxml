@@ -1,0 +1,16 @@
+<!--pages/reportDetail/reportDetail.wxml-->
+<Contents loading="{{loading}}" error="{{error}}" error-msg="{{errorMsg}}">
+    <view class='report-head'>
+        <view class='tab'>
+            <view wx:for="{{['昨日','今日','其他']}}" bindtap='toggleReport' wx:key="reportTab" class='{{reportTab == index ? "active":""}}' data-index="{{index}}">{{item}}</view>
+        </view>
+        <view class='datebar bline' bindtap='stepDate'>
+            <view wx:if="{{!disPrv}}" class='ico prev' id='prev'></view>
+            <view class='datevalue'> {{tradeDateValue}} </view>
+            <view wx:if="{{!disNext}}" class='ico next' id="next"></view>
+        </view>
+    </view>
+    <Scrolls top="80" listloading="{{listloading}}" bind:scrolltolower="moreDetail" istolower="{{istolower}}" hasmore="{{hasmore}}">
+        <ReportDetail details="{{terminal.statisticsList || operator.statisticsList}}" />
+    </Scrolls>
+</Contents>

@@ -102,58 +102,8 @@
     font-weight: 800;
 }
 
-.datebar {
-    display: flex;
-    align-items: center;
-    background: #fff;
-    justify-content: space-between;
-    position: relative;
-    height:40px;
-}
 
-.datebar>view {
-   line-height:40px;
-}
 
-.datebar .ico {
-    display: flex;
-    width: 100rpx;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    z-index: 2;
-}
-
-.datebar .ico:after {
-    content: '';
-    display: block;
-    width: 16rpx;
-    height: 16rpx;
-    border: 2px solid #ccc;
-    border-right: none;
-    border-top: none;
-    transform: rotate(45deg);
-}
-
-.datevalue {
-    font-size: 27rpx;
-    color: #555;
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    text-align: center;
-    z-index: 0;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.datebar .next {
-    transform: rotate(180deg);
-}
 
 .r-grid {
     overflow: hidden;
@@ -170,7 +120,7 @@
 }
 
 .r-grid .value {
-    font-size: 32rpx;
+    font-size: 30rpx;
     color: #444;
     margin-top: 4rpx;
     font-weight: 800;
@@ -210,6 +160,7 @@
     overflow: hidden;
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
 }
 
 .rs-block>view {
@@ -262,7 +213,7 @@
 } */
 
 .rs-block>view text {
-    font-size: 32rpx;
+    font-size: 30rpx;
     display: block;
     line-height: 2;
     color: #444;
@@ -362,48 +313,6 @@
 .m-ts {
     font-size: 24rpx;
     margin-top: 10rpx;
-}
-
-.scroll-report {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 260rpx;
-    bottom: 0;
-}
-
-.shop-item {
-    display: flex;
-    align-items: center;
-    background: #fff;
-    padding: 20rpx 30rpx;
-}
-
-.shop-item:last-child::before {
-    border: none;
-}
-
-.s-item {
-    font-size: 24rpx;
-    padding-left: 20rpx;
-    border-left: 1px solid #eee;
-}
-
-.s-name {
-    font-size: 24rpx;
-    width: 220rpx;
-    color: #888;
-    padding-right: 20rpx;
-}
-
-.s-title {
-    color: #888;
-    margin-bottom: 10rpx;
-}
-
-.s-num {
-    color: #444;
-    font-weight: 800;
 }
 
 .r-detail>view {
