@@ -121,48 +121,49 @@ Page({
             index = e.currentTarget.dataset.index,
             selectCoupon = this.data.selectCoupon,
             selCoupon = coupon[index]
-       
-            selectCoupon.push(selCoupon)
-            let isAll = selectCoupon.some((item) => {
-                let type = item.cardTemplate.type
-                return type == 1 || type == 9 || type == -2 || type == 0
-            })
-            let isSigle = selectCoupon.some((item) => {
-                let type = item.cardTemplate.type
-                return type == 5 || type == 8 || type == 7
-            })
-            let isexChange = selectCoupon.some((item) => {
-                let type = item.cardTemplate.type
-                return type == 2
-            })
 
-            //兑换  types = (item) => item.cardTemplate.type == 2
-            //单品 types = (item) => item.cardTemplate.type == 5 || item.cardTemplate.type == 7 || item.cardTemplate.type == 8 || item.cardTemplate.type == -1
-            //全场 types = (item) => item.cardTemplate.type == 0 || item.cardTemplate.type == 9 || item.cardTemplate.type == 1 || item.cardTemplate.type == -2
-            // 全场券 只能核销一张
-            // 单品券 不限制核销数量
-            // 兑换券 不限制核销数量
-            // 兑换券 可 与单品券混核 也可以与全场券
-            // 单品全场不能混核
+        selectCoupon.push(selCoupon)
+        let isAll = selectCoupon.every((item) => {
+            let type = item.cardTemplate.type
+            return type == 1 || type == 9 || type == -2 || type == 0
+        })
+        let isSigle = selectCoupon.some((item) => {
+            let type = item.cardTemplate.type
+            return type == 5 || type == 8 || type == 7
+        })
+        let isexChange = selectCoupon.some((item) => {
+            let type = item.cardTemplate.type
+            return type == 2
+        })
+
+        //兑换  types = (item) => item.cardTemplate.type == 2
+        //单品 types = (item) => item.cardTemplate.type == 5 || item.cardTemplate.type == 7 || item.cardTemplate.type == 8 || item.cardTemplate.type == -1
+        //全场 types = (item) => item.cardTemplate.type == 0 || item.cardTemplate.type == 9 || item.cardTemplate.type == 1 || item.cardTemplate.type == -2
+        // 全场券 只能核销一张
+        // 单品券 不限制核销数量
+        // 兑换券 不限制核销数量
+        // 兑换券 可 与单品券混核 也可以与全场券
+        // 单品全场不能混核
 
 
-            console.log(isAll, isSigle, isexChange)
-            if (isAll){
-                app.tip('全场券只能使用一张')
-            } else if (isSigle){
-                app.tip('xx全场券只能使用一张')
-            } else if (isexChange){
-                app.tip('ss全场券只能使用一张')
-            }
-            console.log(selCoupon)
-            selCoupon.checked = true
-   
+        console.log(isAll, isSigle, isexChange)
+        if (isAll) {
+            app.tip('全场券只能使用一张')
+
+        } else if (isSigle) {
+            app.tip('xx全场券只能使用一张')
+        } else if (isexChange) {
+            app.tip('ss全场券只能使用一张')
+        }
+        console.log(selCoupon)
+        selCoupon.checked = true
+
         this.setData({
             coupon
         })
     },
-    backToPos(){
-     
+    backToPos() {
+
         wx.setStorageSync("selCoupon", this.data.selCoupon)
         this.setData({
             selCoupon: false
