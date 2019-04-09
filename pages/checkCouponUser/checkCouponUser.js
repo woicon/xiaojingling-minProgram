@@ -156,7 +156,6 @@ Page({
             }
             console.log(selCoupon)
             selCoupon.checked = true
-            selectCoupon.push(selCoupon)
    
         this.setData({
             coupon
