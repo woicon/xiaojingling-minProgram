@@ -17,6 +17,7 @@ Page({
         istoupper: false,
         recordList: [],
         hasmore: true,
+        couponPage: 0,
         r: ['0总部 ', '1门店 ', '2员工 ', '3店长']
     },
     onLoad(options) {
@@ -75,11 +76,12 @@ Page({
             case 0:
                 console.log("总部:::::")
                 //获取门店
-                let report = [api.trade(params), api.tradeMerchant(params), api.merchantList({}), api.recharge(params), api.newMemberCount(params)]
+                let report = [api.trade(params), api.tradeMerchant(params), api.merchantList({}), api.recharge(params), api.newMemberCount(params), api.terminal(params)]
                 Promise.all(report).then(res => {
                     console.log(res)
                     let store = res[2].merchantList
                     let recharge = res[3].rechargeStatistics
+                    var terminal = (res[5].code != 'FAILED') ? res[5].statistics : null
                     store.unshift({
                         merchantName: '全部门店'
                     })
@@ -88,8 +90,9 @@ Page({
                         trade: res[0].statistics,
                         department: res[1],
                         srcollLoading: false,
-                        store: store,
-                        recharge: recharge,
+                        store,
+                        terminal,
+                        recharge,
                         selStore: this.data.selStore || 0,
                     })
                 })
@@ -97,17 +100,19 @@ Page({
             case 1:
                 console.log("门店:::::")
                 params.merchantCode = wx.getStorageSync("selStoreCode") || app.commonParams('merchantCode')
-                Promise.all([api.trade(params), api.tradeOperator(params), api.recharge(params), api.newMemberCount(params)]).then(res => {
+                Promise.all([api.trade(params), api.tradeOperator(params), api.recharge(params), api.newMemberCount(params), api.terminal(params)]).then(res => {
                     console.log(res)
-                    var cashier = (res[1].code != 'FAILED') ? res[1] : null
-                    var trade = (res[0].code != 'FAILED') ? res[0].statistics : null
-                    let recharge = res[2].rechargeStatistics
+                    let cashier = (res[1].code != 'FAILED') ? res[1] : null,
+                        trade = (res[0].code != 'FAILED') ? res[0].statistics : null,
+                        terminal = (res[4].code != 'FAILED') ? res[4].statisticsList : null,
+                        recharge = res[2].rechargeStatistics
                     this.setData({
                         loading: false,
-                        trade: trade,
-                        cashier: cashier,
+                        trade,
+                        cashier,
                         srcollLoading: false,
-                        recharge: recharge,
+                        recharge,
+                        terminal,
                         memberCount: res[3].count,
                         department: null
                     })
@@ -336,13 +341,17 @@ Page({
         if (this.data.selCoupon > 0) {
             params.couponId = this.data.couponList[this.data.selCoupon].couponId
         }
+        let _couponPage = this.data.couponPage
         return api.couponConsumeRecordList(params).then(res => {
-            let couponPage = this.data.couponPage != 0 ? this.data.couponPage + 1 : 1,
+            console.log(_couponPage)
+            let couponPage = _couponPage == 0 ? 1 : _couponPage + 1,
                 recordList = res.recordList,
                 totalCount = res.totalCount,
                 _recordList = this.data.recordList,
                 hasmore = recordList.length > 0 ? true : false
+
             recordList = couponPage > 1 ? _recordList.concat(recordList) : recordList
+            console.log("couponPage::::::", couponPage)
             console.log(recordList)
             this.setData({
                 recordList,
@@ -392,7 +401,7 @@ Page({
                 yesterdayCount: res[0].yesterdayCount,
                 employeeList: res[2].employeeList,
                 tolowerEvent: 'moreRecordList',
-                couponPage: 1,
+                couponPage: 0,
                 selCoupon: 0,
                 selEmployee: 0
             })
@@ -475,7 +484,6 @@ Page({
     initPage(currentCat) {
         console.log("ROLES::", this.data.r[app.commonParams('role')])
         if (this.data.currentCat == 2) {
-            console.log("currentCat===2")
             this.initCouponCheck()
         } else {
             this.getReport(this.data.searchDate || this.data.reportDate)

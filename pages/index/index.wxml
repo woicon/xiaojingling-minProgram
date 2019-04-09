@@ -1,7 +1,5 @@
 <Contents loading="{{loading}}" error="{{error}}" error-msg="{{errorMsg}}">
-    <view style='background:url(https://www.huodonghui.com/imgPath/club/activity/1554284679646.jpg) no-repeat center;background-size:100%; height:496rpx;position: relative;'>
-     
-    </view>
+     <image src='../../assets/images/bg.jpg' style='width:100%;border:none;display:block' mode='widthFix'></image>
        <view class='b bline' wx:if="{{ bag && (role == 1 || role == 0) }}" bindtap='showBanks'>
             <view class='banks'>
                 <!-- <picker range='{{bag}}' range-key='balanceAccount' bindchange='changeAccount'> -->

@@ -70,6 +70,6 @@
                 <view>使用须知：{{selCoupon.cardTemplate.description}}</view>
              </view>
         </view>
-        <view class='button'>核销优惠券</view>
+        <view class='button' bindtap='backToPos'>核销优惠券</view>
     </view>
 </view>

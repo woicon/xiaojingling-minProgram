@@ -315,12 +315,10 @@ page {
 @keyframes sliderUp {
     from {
         transform: translateY(90rpx);
-        opacity: 0.2;
     }
 
     to {
         transform: translateY(0);
-        opacity: 1;
     }
 }
 
@@ -363,11 +361,9 @@ page {
     flex-direction: column;
     justify-content: center;
     color: #999;
+    animation: sliderUp 0.4s ease-in forwards;
 }
 
-.empty .ico, .empty .txt {
-    animation: sliderUp 0.4s ease-in both;
-}
 
 .empty .txt {
     font-size: 26rpx;

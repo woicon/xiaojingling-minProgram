@@ -153,6 +153,14 @@ Page({
             coupon
         })
     },
+    backToPos(){
+     
+        wx.setStorageSync("selCoupon", this.data.selCoupon)
+        this.setData({
+            selCoupon: false
+        })
+        wx.navigateBack()
+    },
     toUpper(e) {
         console.log("toUpper:::", e)
     },

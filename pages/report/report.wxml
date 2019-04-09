@@ -214,6 +214,7 @@
             <block wx:if="{{terminal && terminal.length!=0}}">
                 <view class='r-title'>款台统计</view>
                 <detail details="{{terminal}}"></detail>
+                  <view class='more' bindtap='moreCashier' wx:if="{{cashier.totalPage > 1 && cashier.pageNumber < cashier.totalPage}}">查看更多</view>
             </block>
             <block wx:if="{{cashier && cashier.length!=0}}">
                 <view class='r-title' wx:if="{{role!=2}}">收银员统计</view>

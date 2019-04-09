@@ -59,16 +59,14 @@ page {
     right: 0;
     bottom: 0;
     overflow: hidden;
-    animation: sliderInUp ease-in 0.4s;
 }
 
 .key-border.show {
-    animation: sliderInUp ease-in 0.6s forwards;
+    animation: sliderUp ease-in 0.4s forwards;
 }
 
 .key-border.hide {
     animation: sliderDown ease-out 0.4s forwards;
-    overflow: visible;
 }
 .key-numbergroup>view.hidekey{
     font-size:60rpx;
@@ -80,6 +78,15 @@ page {
 
     100% {
         transform: translateY(100%);
+    }
+}
+@keyframes sliderUp {
+    0% {
+        transform: translateY(100%);
+    }
+    100% {
+        
+        transform: translateY(0);
     }
 }
 

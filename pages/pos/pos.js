@@ -112,13 +112,14 @@ Page({
     },
 
     touchKey(e) {
+        console.log(e)
         let total = this.data.totalPrice,
-            num = e.currentTarget.dataset.number,
+            num = e.target.dataset.number,
             decimalReg = /^\d{0,8}\.{0,1}(\d{1,2})?$/
         if (num != 'h') {
             let _total = `${total}${num}`,
                 nums = (total == "0" && num == 0) ? total : num,
-                newTotal = total == "0" ? nums != '.' ? nums : "0." : decimalReg.test(_total) ? _total : total
+                newTotal = total == "0" ? (nums != '.' ? nums : "0.") : (decimalReg.test(_total) ? _total : total)
             console.log(nums)
             this.setData({
                 priceEmpty: false,

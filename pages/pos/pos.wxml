@@ -24,11 +24,11 @@
     </view>
     <view class='key-border {{hideBorder? "hide" : "show"}}'>
         <view class='key-warp {{isPX?"bline":""}}'>
-            <view class='key-numbergroup'>
-                <view wx:for="123456789" class='bline rline' wx:key="keybord" bindtap='touchKey' data-number="{{item}}" hover-class='key-touch' style='height:{{keyHeight*1.7}}rpx'>{{item}}</view>
-                 <view class='icon-keybord hidekey rline' bindtap='touchKey' data-number="h" hover-class='key-touch' style='height:{{keyHeight*1.7}}rpx'></view>
-                <view class='rline' bindtap='touchKey' data-number="0" hover-class='key-touch' style='height:{{keyHeight*1.7}}rpx'>0</view>
-                <view bindtap='touchKey ' data-number="." hover-class='key-touch' style='height:{{keyHeight*1.7}}rpx'>.</view>
+            <view class='key-numbergroup' bindtap='touchKey'>
+                <view wx:for="123456789" class='bline rline' wx:key="keybord" data-number="{{item}}" hover-class='key-touch' style='height:{{keyHeight*1.7}}rpx'>{{item}}</view>
+                 <view class='icon-keybord hidekey rline' data-number="h" hover-class='key-touch' style='height:{{keyHeight*1.7}}rpx'></view>
+                <view class='rline' data-number="0" hover-class='key-touch' style='height:{{keyHeight*1.7}}rpx'>0</view>
+                <view data-number="." hover-class='key-touch' style='height:{{keyHeight*1.7}}rpx'>.</view>
                
             </view>
             <view class='key-btngroup'>

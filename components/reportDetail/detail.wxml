@@ -1,7 +1,7 @@
 <view class='detail'>
 <view wx:key="shopReport" wx:for="{{detail}}" class='bline {{currIndex == index?"dopen":""}}' bindtap='_toggleDetail' data-index="{{index}}">
     <view class='shop-item'>
-        <view class='s-name'>{{item.merchantName || item.operatorName}}</view>
+        <view class='s-name'>{{item.merchantName || item.operatorName || item.terminalName}}</view>
         <view class='s-item'>
             <view class='s-title'>实收金额/笔</view>
             <view class='s-num'>{{item.totalTradeAmt}}/{{item.totalTradeCnt}}</view>
