@@ -1,0 +1,13 @@
+/* components/Bar/Bar.wxss */
+.page-bar{
+    background:#fff;
+    height:100rpx;
+    position: fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    z-index: 99;
+}
+.page-bar.px{
+    padding-bottom:34px;
+}

@@ -1,0 +1,74 @@
+page{
+    padding-bottom:300rpx;
+}
+.list{
+    background:#fff;
+}
+.page-bar{
+    height:120rpx !important;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+}
+.page-bar .button{
+    width:640rpx;
+    margin-top:0;
+}
+.panel-button{
+    margin:0;
+}
+.staff-name{
+    font-size:35rpx;
+}
+.panel-list{
+    margin-bottom:25rpx;
+}
+.lists-mobile{
+    font-size:24rpx;
+    color:#999;
+    margin-top:10rpx;
+}
+.panel-list>view{
+    display: flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size:28rpx;
+    padding:20rpx 0;
+}
+.panel-head{
+    display: flex;
+    align-items:center;
+    padding:20rpx 0 40rpx;
+}
+.panel-head .ico{
+    width: 80rpx;
+    height:80rpx;
+    background:#0ec695;
+    color:#fff;
+    border-radius:90px;
+    margin-right:20rpx;
+    font-size:40rpx;
+}
+.head-cont{
+    flex:1;
+}
+
+.lists-cont{
+    display: flex;
+    align-items:center;
+}
+.lists-cont .ico{
+    width:80rpx;
+    height:80rpx;
+    display: flex;
+    align-items:center;
+    font-size:40rpx;
+    justify-content:center;
+    background:#eee;
+    color:#999;
+    margin-right:20rpx;
+    border-radius:90px;
+}
+.lists-cont .cont{
+    flex: 1;
+}

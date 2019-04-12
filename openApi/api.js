@@ -6,7 +6,7 @@ const API = "https://api.liantuofu.com/open/" //正式环境
 //const API ="http://wdtest.liantuo.com/open/"  //本地调试
 //const API = "http://testclubshop.liantuobank.com/open/" //测试环境
 //const ksApi = "http://192.168.140.11:8000/front/baseV3/gateway.in"
-const siApi = "http://shopcashiersi.liantuobank.com/ShopCashier_SI/"
+const siApi = "https://shopcashiersi.liantuobank.com/ShopCashier_SI/"
 const ksApi = "https://kshbank.liantuobank.com/front/baseV3/gateway.in"
 const oldSi = "http://front.51ebill.com/front/baseV3/gateway.in"
 
@@ -49,6 +49,8 @@ function ajax(url, params, signs, method) {
                         loading: false,
                         errorMsg: data.data.msg
                     })
+                    res(data.data)
+                } else if (!data.data.code){
                     res(data.data)
                 }
             },
@@ -111,7 +113,6 @@ function oldSiAjax(params) {
 }
 
 function ksAjax(params, k) {
-    console.log(k)
     let key = k || ''
     let singparams = sign(params, "ks", key)
     return new Promise((res, rej) => {
@@ -175,13 +176,15 @@ module.exports = {
     //新增接口
     //[兑换券] - 核销兑换券
     giftConsume: params => ajax('coupon/giftConsume', params),
+    //核销优惠券
+    couponConsume: params => ajax('coupon/consume', params),
 
     //支付码绑定
     bindPayCode: params => ajax('bindPayCode', params),
     //支付码解除绑定
     unBindPayCode: params => ajax('unBindPayCode', params),
     //APP获取收款二维码
-    getPayQrcode: params => ajax('getPayQrcode',params),
+    getPayQrcode: params => ajax('getPayQrcode', params),
     //终端签到统计
     signIn: params => ajax('terminal/signIn', params),
     //终端签出统计
@@ -193,28 +196,53 @@ module.exports = {
     payCodeList: params => ajax('payCode/list', params),
     //[优惠券] - 核销优惠券记录明细
     couponConsumeRecordList: params => ajax('coupon/couponConsumeRecordList', params),
-
     //[优惠券] - 查询核销优惠券数量
     couponConsumeCount: params => ajax('coupon/couponConsumeCount', params),
-
     // [优惠券] - 核销优惠券记录
     couponConsumeList: params => ajax('coupon/couponConsumeList', params),
 
     //[支付优惠] - 订单营销优惠查询
     discount: params => ajax('pay/discount', params),
+    discount: params => ajax('pay/discount', params),
+    //用户次卡详情
+    timesCardDetail: params => ajax('timescard/userTimesCardDetail', params),
+    //用户次卡核销
+    timesCardConsume: params => ajax('timescard/userTimesCardConsume', params),
 
     //员工列表
     employeeList: params => ajax('employee/list', params),
+    //测试修改员工
+    employeeModify: params => ajax('employee/modify', params),
+    //测试获取所有角色
+    employeeRoles: params => ajax('employee/roles', params),
+    //测试员工信息查询
+    employeeQuery: params => ajax('employee/query', params),
+    //新增员工
+    employeeAdd: params => ajax('employee/add', params),
+
+
+    //会员管理
+    //会员模板接口
+    memberCardTemplate: params => ajax('member/getMemberCardTemplate', params),
+    //对接会员修改
+    memberModify: params => ajax('member/modify', params),
+    //对接会员列表接口
+    memberList: params => ajax('member/getClubMemberList', params),
+    //对接会员查询
+    memberGet: params => ajax('member/get', params),
+    //对接会员支付授权码
+    payAuthCode: params => ajax('member/payAuthCode', params),
+    //对接会员支付授权码
+    memberRegist: params => ajax('member/regist', params),
+    //对接会员查询（小程序用 免签）
+    memberMiniGet: params => ajax('member/miniGet', params),
 
     //SI 客商提现获取transition_id列表接口
-
     ///open/settle/ksAccountList
     ksAccountList: params => ajax('settle/ksAccountList', params),
-
     payPlatFormInforKs: params => siAjax('withDrawal/payPlatFormInforKs.in', params),
     loginSi: params => siAjax('android/login.in', params),
     getKsWithdrawUrl: params => siAjax('withDrawal/getKsWithdrawUrl.in', params),
-
     //转发的客商接口
     ksApi: (params, key) => ksAjax(params, key),
     si: params => oldSiAjax(params),

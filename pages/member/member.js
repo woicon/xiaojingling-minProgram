@@ -13,7 +13,8 @@ Page({
     },
     onShow() {
         this.setData({
-            member: wx.getStorageSync("login")
+            member: wx.getStorageSync("login"),
+            loginName: wx.getStorageSync("loginName")
         })
         // this.checkBag()
         // this.ksAccountList()

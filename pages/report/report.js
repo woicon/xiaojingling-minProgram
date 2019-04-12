@@ -133,11 +133,27 @@ Page({
                 console.log("员工:::::::")
                 params.merchantCode = app.commonParams('merchantCode')
                 params.operatorId = app.commonParams('operatorId')
-                api.tradeOperator(params).then(res => {
+
+                Promise.all([api.trade(params),
+                api.tradeOperator(params),
+                api.recharge(params),
+                api.newMemberCount(params),
+                api.terminal(params),
+                api.merchant(params)]).then(res => {
+                    console.log(res)
+                    let cashier = (res[1].code != 'FAILED') ? res[1] : null,
+                        trade = (res[0].code != 'FAILED') ? res[0].statistics : null,
+                        recharge = res[2].rechargeStatistics,
+                        terminal = (res[4].code != 'FAILED') ? res[4].statisticsList : null
                     this.setData({
                         loading: false,
-                        cashier: res,
+                        trade,
+                        cashier,
                         srcollLoading: false,
+                        recharge,
+                        terminal,
+                        memberCount: res[3].count,
+                        department: null
                     })
                 })
                 break
@@ -345,6 +361,9 @@ Page({
             params = { ...params,
                 ...arg
             }
+        }
+        if(this.data.role == 3){
+            params.operatorId = app.commonParams('operatorId')
         }
         if (this.data.selEmployee > 0) {
             params.operatorId = this.data.employeeList[this.data.selEmployee].operatorId

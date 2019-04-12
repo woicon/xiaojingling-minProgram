@@ -1,63 +1,96 @@
-<Contents loading="{{loading}}" error="{{error}}" error-msg="{{errorMsg}}" icon="icon-coupon1">
-    <view class='user'>
-        <view class='user-img ico-user'>
-            <image src='{{member.headImgUrl}}'></image>
+<Contents loading="{{loading}}" error="{{error}}" error-msg="{{errorMsg}}" icon="icon-ecoupon">
+    <view style='{{hideTop?"display:none":""}}'>
+        <view class='user'>
+            <view class='user-img ico-user'>
+                <image src='{{member.headImgUrl}}'></image>
+            </view>
+            <view class='user-info'>
+                <view class='user-name'>{{member.memberName}}
+                    <text>{{member.mobile}}</text> </view>
+                <view class='user-level'>
+                    <text class='icon-level'></text> {{member.levelName}} </view>
+                <view>最近消费时间：{{member.lastConsumDate}}</view>
+            </view>
         </view>
-        <view class='user-info'>
-            <view class='user-name'>{{member.memberName}}</view>
-            <view><text class='icon-level'></text> {{member.levelName}} / {{member.mobile}} </view>
-            <view>最近消费时间：{{member.lastConsumDate}}</view>
-        </view>
-    </view>
 
-    <view class='f-c-sb user-count'>
-        <view class='rline'>
-            <view>消费/次数</view>
-            <view class='user-count-num'>
-                <text>¥</text>{{member.accumulationConsume}} / {{member.consumTimes}}</view>
-        </view>
-        <view class='rline'>
-            <view>储值/次数</view>
-            <view class='user-count-num'><text>¥</text>{{member.accumulationGiveRecharge}} / {{member.rechargeTimes}}</view>
-        </view>
-        <view>
-            <view>优惠券</view>
-            <view class='user-count-num'>{{member.couponCount}}张</view>
+        <view class='f-c-sb user-count'>
+            <view class='rline'>
+                <view>消费/次数</view>
+                <view class='user-count-num'>
+                    <text>¥</text>{{member.accumulationConsume}}/{{member.consumTimes}}</view>
+            </view>
+            <view class='rline'>
+                <view>储值/次数</view>
+                <view class='user-count-num'>
+                    <text>¥</text>{{member.accumulationGiveRecharge}}/{{member.rechargeTimes}}</view>
+            </view>
+            <view>
+                <view>优惠券</view>
+                <view class='user-count-num'>{{member.couponCount}}张</view>
+            </view>
         </view>
     </view>
     <view class='tabs'>
         <view wx:for="{{['全部','兑换券','单品券','全场券']}}" wx:key="couponType" class='{{currentTab == index ? "active":""}}' data-index="{{index}}" bindtap='toggleCouponType'>{{item}}</view>
     </view>
-    <view class='scroll-cont'>
-        <Scrolls wx:if="{{coupon.length>0}}" list="{{couponList}}" listloading="{{listloading}}"  bindscrolltoupper="toUpper" bindscrolltolower="toLower">
-            <view wx:for="{{coupon}}" bindtap='selCoupon' data-index="{{index}}" class='coupon-item {{item.checked ? "active" : ""}}' style='{{item.checked ? "border:1px solid "+item.cardTemplate.color : ""}}' wx:key="couponList" wx:if="{{item.isUsed}}" data-type="{{item.cardTemplate.type}}">
-                <view class='coupon-num' style='background:{{item.cardTemplate.color}}'>
-                    <view wx:if="{{item.cardTemplate.type == 0 || item.cardTemplate.type == 9  ||  item.cardTemplate.type == 5 ||  item.cardTemplate.type == -1 ||  item.cardTemplate.type == 8}}"><text>¥</text> {{item.cardTemplate.specialPrice || item.cardTemplate.reduceCost}} </view>
-                    <view wx:elif="{{item.cardTemplate.type == 1 || item.cardTemplate.type == 7  }}">{{item.cardTemplate.discount}} <text>折</text> </view>
-                    <view wx:elif="{{item.cardTemplate.type == 2}}" class='icon-star'></view>
+    <view class='scroll-cont' style='{{selectCoupon.length > 0 ? "bottom:100rpx;":""}}{{hideTop?"top:90rpx":""}}'>
+        <Scrolls wx:if="{{coupon.length>0}}" list="{{couponList}}" listloading="{{listloading}}" bindscrolltoupper="toUpper" bindscrolltolower="toLower" bind:scroll="couponScroll">
+            <view wx:for="{{coupon}}" bindtap='selCoupon' data-index="{{index}}" class='coupon-item {{item.checked ? "active" : ""}}' wx:key="couponList" wx:if="{{item.isUsed}}" data-type="{{item.cardTemplate.type}}">
+                <view class='coupon-num'>
+                    <!-- style='background:{{item.cardTemplate.color}}' -->
+                    <view wx:if="{{item.cardTemplate.type == 0 || item.cardTemplate.type == 9  ||  item.cardTemplate.type == 5 ||  item.cardTemplate.type == -1 ||  item.cardTemplate.type == 8}}">
+                        <text>¥</text> {{item.cardTemplate.specialPrice || item.cardTemplate.reduceCost}} </view>
+                    <view wx:elif="{{item.cardTemplate.type == 1 || item.cardTemplate.type == 7  }}">{{item.cardTemplate.discount}}
+                        <text>折</text> </view>
+                    <view wx:elif="{{item.cardTemplate.type == 2}}" class='icon-gift-sel'></view>
                     <view class='coupon-type'>{{couponType[item.cardTemplate.type]}}</view>
                 </view>
                 <view class='coupon-content'>
                     <view class='coupon-title'>{{item.cardTemplate.title}}</view>
-                    
-                    <view class='coupon-date'>有效期至：{{item.endDate}}</view>
+                    <view class='coupon-date'>有效期至 {{item.endDate}}</view>
                 </view>
-
-                <view wx:if="{{item.checked}}" class='icon-checked'></view>
+                <view wx:if="{{item.checked}}" class='ico icon-checked'></view>
+                <view wx:else class='ico disable icon-check '></view>
             </view>
         </Scrolls>
     </view>
+    <view class='coupon-length' wx:if="{{selectCoupon.length > 0}}">
+        <view class='coupon-list-tag' bindtap='toggleSel'>已选优惠券 {{selectCoupon.length}} 张</view>
+        <view bindtap='backToPos' class='tocheck'>核销优惠券</view>
+    </view>
+    <view wx:if="{{selectCoupon.length>0 && selStatus}}" class='coupon-list' catchtap='toggleSel'>
+        <scroll-view scroll-y>
+            <view wx:for="{{selectCoupon}}" class='bline coupon-list-item' wx:key="selectCoupon">
+                <view catchtap='couponDetail' data-index="{{index}}" class='coupon-list-info'>
+                    <view class='coupon-list-title '> {{item.cardTemplate.title}}</view>
+                    <view class='coupon-list-type'>{{couponType[item.cardTemplate.type]}}</view>
+                </view>
+                <view catchtap='delChoose' data-no="{{item.couponNo}}" class='ico icon-clear'></view>
+            </view>
+        </scroll-view>
+    </view>
+
+    <!-- <view class='panel'>
+        <view class='panel-content'>
+          <view>选择核销商品</view>
+          <view wx:for="{{goodItems}}">
+            {{}}
+          </view>
+        </view>
+    </view> -->
 </Contents>
 
-<view wx:if="{{selCoupon}}" class='panel' style='display:none'>
+<view wx:if="{{showDetail}}" class='panel' catchtap='hideSelect'>
     <view class='panel-content'>
-        <view class='p-head'> <image src='{{selCoupon.cardTemplate.logo}}'></image> <view>{{selCoupon.cardTemplate.brandName}}</view> </view>
+        <view class='p-head'>
+            <image src='{{selCoupon.cardTemplate.logo}}'></image>
+            <view>{{selCoupon.cardTemplate.brandName}}</view>
+        </view>
         <view class='p-tcont'>
-            <view class='p-title'> {{selCoupon.cardTemplate.title}}  </view>
-      
+            <view class='p-title'> {{selCoupon.cardTemplate.title}} </view>
             <view class='p-subtitle'> {{selCoupon.cardTemplate.subTitle}}</view>
         </view>
-         <view class='p-box' wx:if="{{selCoupon.cardTemplate.goodItems && selCoupon.cardTemplate.goodItems.length >0}}" >
+        <view class='p-box' wx:if="{{selCoupon.cardTemplate.goodItems && selCoupon.cardTemplate.goodItems.length >0}}">
             <view class='p-titles'>选择核销商品</view>
             <view class='p-goods' bindtap='selGoods' wx:for="{{selCoupon.cardTemplate.goodItems}}" wx:if="{{!item.status}}" wx:key="goodsitems">
                 <view>{{item.itemName}}</view>
@@ -70,7 +103,7 @@
                 <view>优惠规则：{{selCoupon.rules}}</view>
                 <view>有效日期：{{selCoupon.endDate}}</view>
                 <view>使用须知：{{selCoupon.cardTemplate.description}}</view>
-             </view>
+            </view>
         </view>
         <view class='button' bindtap='backToPos'>核销优惠券</view>
     </view>

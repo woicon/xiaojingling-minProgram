@@ -1,0 +1,102 @@
+/* pages/staffModify/staffModify.wxss */
+
+.form-info {
+    font-size:24rpx;
+    color: #999;
+    margin: 20rpx 40rpx;
+    display: flex;
+    align-items: center;
+    width:60%;
+    margin-bottom:40rpx;
+}
+
+.form-info .ico {
+    font-size: 40rpx;
+    margin-right: 15rpx;
+}
+
+.form-item {
+    background: #fff;
+    padding: 0 40rpx;
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.form-item::before {
+    content: '';
+    display: block;
+    height: 1px;
+    border-bottom: 1px solid #eee;
+    position: absolute;
+    bottom: 0;
+    left: -50%;
+    right: -50%;
+    transform: scale(0.5);
+}
+.form-item:last-child::before,.noborder::before{
+    border:none;
+}
+.form-attr {
+    font-size: 30rpx;
+    margin-bottom: 10rpx;
+    width: 160rpx;
+    color:#555;
+}
+.form-attr text{
+    color:red;
+}
+.form-input {
+    flex: 1;
+    display: flex;
+    align-items:center;
+    justify-content:space-between;
+}
+.form-input .ico{
+    padding:20rpx;
+    font-size:34rpx;
+    color:#999;
+    position:relative;
+    z-index:9;
+}
+.form-input .ico.active{
+    color:#0ec695;
+}
+.form-input input, .form-input .picker-value ,.form-value{
+    color: #444;
+    font-size: 32rpx;
+    padding: 30rpx 0;
+    width: 100%;
+    text-align: right;
+}
+.form-value.disable{
+    opacity:.4;
+}
+.form-input picker {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.form-input .picker-value {
+    text-align: right;
+    width: 480rpx;
+}
+
+.form-input picker::after {
+    content: '';
+    display: block;
+    width: 13rpx;
+    height: 13rpx;
+    border: 2px solid #ccc;
+    border-left: none;
+    border-bottom: none;
+    transform: rotate(45deg);
+}
+
+.button {
+    margin: 40rpx;
+}

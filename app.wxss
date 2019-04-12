@@ -727,3 +727,64 @@ page {
     margin-left: 30rpx;
    
 }
+
+/* //common style */
+.lists{
+    background:#fff;
+}
+.lists>view{
+    padding:25rpx 40rpx;
+    position:relative;
+    display: flex;
+    align-items:center;
+    justify-content:space-between;
+}
+.lists>view .lists-content{
+    flex: 1;
+}
+.lists>view::after,.lists>view::before{
+    content: '';
+    display: block;
+}
+.lists>view:last-child::before{
+    border:none;
+}
+.lists>view::before{
+    position:absolute;
+    bottom:0;
+    left: -50%;
+    right: -50%;
+    bottom: -1px;
+    border-bottom: 1px solid #eee;
+    height: 1px;
+    transform: scale(0.5);
+    z-index:2;
+}
+.lists>view::after{
+    width:14rpx;
+    height:14rpx;
+    border:2px solid #ccc;
+    border-left:none;
+    border-bottom:none;
+    transform:rotate(45deg);
+}
+
+.panel {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 200;
+}
+
+.panel-content {
+    width: 580rpx;
+    margin: 20% auto 0;
+    background: #fff;
+    padding: 40rpx;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8rpx;
+}
+

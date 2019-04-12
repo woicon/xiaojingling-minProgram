@@ -22,7 +22,7 @@
     background:#fff;
     flex-wrap:wrap;
 }
-.grid>navigator{
+.grid>navigator,.grid>view{
     width:50%;
     text-align:center;
     font-size:28rpx;

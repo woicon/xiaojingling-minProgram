@@ -1,11 +1,11 @@
 // components/Scrolls/Scrolls.js
 Component({
     properties: {
-        listloading:{
-            type:Boolean,
-            value:true
+        listloading: {
+            type: Boolean,
+            value: true
         },
-        istolower:{
+        istolower: {
             type: Boolean,
             value: false
         },
@@ -17,11 +17,15 @@ Component({
             type: Boolean,
             value: true
         },
-        top:{
+        top: {
             type: String,
             value: '0',
         },
-        scrollevent:{
+        bottom: {
+            type: String,
+            value: 'inherit',
+        },
+        scrollevent: {
             type: String,
             value: '0',
         }
@@ -30,12 +34,15 @@ Component({
 
     },
     methods: {
-        scrolltolower(e){
+        scrolltolower(e) {
             this.triggerEvent('scrolltolower', e)
         },
-  
+
         scrolltoupper(e) {
             this.triggerEvent('scrolltoupper', e)
         },
+        scroll(e) {
+            this.triggerEvent('scroll', e)
+        }
     }
 })

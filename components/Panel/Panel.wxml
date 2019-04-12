@@ -1,0 +1,7 @@
+<view class="panel" wx:if="{{status}}">
+    <view class='panel-content'>
+        <slot />
+    </view>
+    <view class='icon-clear' wx:if="{{showClose}}" bindtap='close'></view>
+    <view class='panel-mask' bindtap='close'></view>
+</view>

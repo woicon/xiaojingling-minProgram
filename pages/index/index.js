@@ -76,6 +76,16 @@ Page({
             url: `/pages/account/account?id=${this.data.selBag.transactionId}`,
         })
     },
+    checkTimesCard(e){
+        wx.scanCode({
+            success:(res)=>{
+                console.log(res)
+                wx.navigateTo({
+                    url: `/pages/timesCardDetail/timesCardDetail?cardNo=${res.result}`,
+                })
+            }
+        })
+    },
     checkBag() {
         let parmas = {
             codeName: app.commonParams("merchantCode"),

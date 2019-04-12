@@ -1,0 +1,41 @@
+<Contents loading="{{loading}}" error="{{error}}" error-msg="{{errorMsg}}" icon="icon-staff">
+
+        <view class='lists'>
+            <view wx:for="{{list}}" class='lists-item' bindtap='staffDetail' id="{{item.operatorId}}" data-index="{{index}}" wx:key="stafflist">
+                <view class='lists-cont'>
+                    <view class='ico icon-user-sel'></view>
+                    <view>
+                        <view class='staff-name'>{{item.operatorName}}</view>
+                        <view class='lists-mobile'>{{item.mobile}}</view>
+                    </view>
+                </view>
+            </view> 
+        </view>
+  
+    <Bar>
+        <view class='button' hover-class='button-touch' bindtap='addStaff'>添加员工</view>
+    </Bar>
+    <Panel wx:if="{{detail}}" bind:close="hidePanel">
+        <view class='panel-head'>
+            <view class='ico icon-user-sel f-c-c'></view>
+            <view class='head-cont'>
+                <view>{{detail.operatorName}} </view>
+                <view class='lists-mobile'>{{detail.mobile}}</view>
+            </view>
+        </view>
+        <view class='panel-list'>
+            <view class='bline'>登录名
+                <view>{{detail.loginName}}</view>
+            </view>
+           
+            <view class='bline'>状态
+                <view class='button button-mini'>{{status[detail.status]}}</view>
+            </view>
+            <view class='bline' wx:if="{{detail.sexId}}">性别
+                <view>{{sex[detail.sexId]}}</view>
+            </view>
+
+        </view>
+        <view class='button panel-button' id="{{detail.operatorId}}" hover-class='button-touch' bindtap='editStaff' >编辑</view>
+    </Panel>
+</Contents>

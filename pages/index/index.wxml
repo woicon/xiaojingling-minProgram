@@ -1,29 +1,48 @@
 <Contents loading="{{loading}}" error="{{error}}" error-msg="{{errorMsg}}">
-     <image src='../../assets/images/bg.jpg' style='width:100%;border:none;display:block' mode='widthFix'></image>
-       <view class='b bline' wx:if="{{ bag && (role == 1 || role == 0) }}" bindtap='showBanks'>
-            <view class='banks'>
-                <!-- <picker range='{{bag}}' range-key='balanceAccount' bindchange='changeAccount'> -->
-                <view>
-                    <view class='banks-title'>我的钱包</view>
-                    <view class='banks-text'>{{selBag.bankName}} 尾号:{{selNum}}</view>
-                </view>
-                <!-- </picker> -->
+    <image src='../../assets/images/bg.jpg' style='width:100%;border:none;display:block' mode='widthFix'></image>
+    <view class='b bline' wx:if="{{ bag && (role == 1 || role == 0) }}" bindtap='showBanks'>
+        <view class='banks'>
+            <!-- <picker range='{{bag}}' range-key='balanceAccount' bindchange='changeAccount'> -->
+            <view>
+                <view class='banks-title'>我的钱包</view>
+                <view class='banks-text'>{{selBag.bankName}} 尾号:{{selNum}}</view>
             </view>
-            <view class='button' hover-class='button-touch' catchtap='extract'>提现</view>
+            <!-- </picker> -->
         </view>
+        <view class='button' hover-class='button-touch' catchtap='extract'>提现</view>
+    </view>
     <!-- <view class='index-head'>
          </view> -->
     <view wx:if="{{role == 0}}" class='grid'>
-        <navigator url='/pages/order/order' open-type="switchTab" hover-class='nav-touch'>
+        <navigator class='bline rline' url='/pages/order/order' open-type="switchTab" hover-class='nav-touch'>
             <view class='ico icon-order'></view>订单</navigator>
-        <navigator url='/pages/help/help' hover-class='nav-touch'>
+        <navigator url='/pages/staff/staff' class='bline'  hover-class='nav-touch'>
+            <view class='ico icon-staff'></view>员工管理</navigator>
+                <navigator class=' rline' url='/pages/help/help' hover-class='nav-touch'>
             <view class='ico icon-books'></view>帮助</navigator>
     </view>
-    <view wx:else class='grid'>
-        <navigator url='/pages/pos/pos' class='bline' hover-class='nav-touch'>
+      <view wx:elif="{{role == 2}}" class='grid'>
+        <navigator class='bline rline' url='/pages/order/order' open-type="switchTab" hover-class='nav-touch'>
             <view class='ico icon-cash'></view>收款</navigator>
-        <navigator url='/pages/checkCoupon/checkCoupon' class='bline lline' hover-class='nav-touch'>
+        <navigator url='/pages/checkCoupon/checkCoupon' class='bline ' hover-class='nav-touch'>
             <view class='ico icon-checkcoupon'></view>核券</navigator>
+        <view class='rline ' bindtap='checkTimesCard' hover-class='nav-touch'>
+            <view class='ico icon-timescard'></view>计次卡核销</view>
+                <navigator class=' rline' url='/pages/help/help' hover-class='nav-touch'>
+            <view class='ico icon-books'></view>帮助</navigator>
+    </view>
+
+    <view wx:else class='grid'>
+        <navigator url='/pages/pos/pos' class='bline rline' hover-class='nav-touch'>
+            <view class='ico icon-cash'></view>收款</navigator>
+        <navigator url='/pages/checkCoupon/checkCoupon' class='bline ' hover-class='nav-touch'>
+            <view class='ico icon-checkcoupon'></view>核券</navigator>
+        <view class='rline ' bindtap='checkTimesCard' hover-class='nav-touch'>
+            <view class='ico icon-timescard'></view>计次卡核销</view>
+        <navigator url='/pages/staff/staff' hover-class='nav-touch'>
+            <view class='ico icon-staff'></view>员工管理</navigator>
+        <!-- <navigator url='/pages/checkCoupon/checkCoupon' class='rline'  hover-class='nav-touch'>
+            <view class='ico icon-vipes'></view>会员管理</navigator> -->
     </view>
     <view class='bank-list' wx:if="{{!hideBank}}" bindtap='showBanks'>
         <scroll-view class='bank-listcont {{bag.length > 4 ? "height-fixed":""}}' scroll-y>

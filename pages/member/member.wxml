@@ -1,8 +1,9 @@
 <view class='m-head-warp'>
     <view class='m-head' bindtap='clipNo' data-id="{{member.merchantCode}}">
-        <view class='ico '> <image src='../../assets/images/member-sel.png' style='width:66rpx;height:66rpx;'></image> </view>
+        <view class='ico icon-user-sel'></view>
         <view class='m-info'>
             <view class='m-name'>{{member.merchantName}}</view>
+             <view class="m-ts">账号：{{loginName}} </view>
             <view class="m-ts">编号：{{member.merchantCode}} </view>
             <!-- <text>复制</text> -->
         </view>
@@ -42,16 +43,16 @@
             <text>提现</text>
         </navigator> -->
     <block wx:if="{{member.role!=0}}">
-        <navigator url='/pages/setAudio/setAudio' hover-class='nav-touch'>
+        <navigator url='/pages/setAudio/setAudio' hover-class='nav-touch'  wx:if="{{member.role!=2}}">
             <view class='ico icon-sound'></view>
             <view class='m-name'>云喇叭设置</view>
         </navigator>
         <navigator url='/pages/payCard/payCard' hover-class='nav-touch'>
             <view class='ico icon-paycode'></view>
-            <view class='m-name'>店码设置</view>
+            <view class='m-name'>绑定收款码</view>
         </navigator>
 
-        <navigator url='/pages/payQrcode/payQrcode' hover-class='nav-touch'>
+        <navigator url='/pages/payQrcode/payQrcode' hover-class='nav-touch' wx:if="{{member.role!=2}}">
             <view class='ico icon-setcode'></view>
             <view class='m-name'>收款码</view>
         </navigator>
@@ -82,7 +83,6 @@
             <view class='ico icon-setting'></view>
             <view class='m-name'>桌码设置</view>
         </navigator> -->
-
     <view class='phones' hover-class='nav-touch'>
         <view class='ico icon-about'></view>
         <view class='m-name'>关于</view>

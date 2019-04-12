@@ -1,6 +1,7 @@
 <scroll-view class='scrolls' 
 bindscrolltolower="scrolltolower"
 bindscrolltoupper="scrolltoupper"
+bindscroll="scroll"
 style='top:{{top}}px'
 scroll-y scroll-with-animation>
     <!-- <view class='scroll-top' wx:if="{{istoupper}}">

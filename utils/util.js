@@ -11,14 +11,14 @@ const formatNumber = n => {
     n = n.toString()
     return n[1] ? n : '0' + n
 }
-Date.prototype.Format = function(fmt) { //author: meizz
+Date.prototype.Format = function(fmt) {
     var o = {
         "M+": this.getMonth() + 1, //月份
-        "d+": this.getDate(),      //日
-        "h+": this.getHours(),     //小时
-        "m+": this.getMinutes(),   //分
-        "s+": this.getSeconds(),   //秒 //季度
-        "q+": Math.floor((this.getMonth() + 3) / 3),    
+        "d+": this.getDate(), //日
+        "h+": this.getHours(), //小时
+        "m+": this.getMinutes(), //分
+        "s+": this.getSeconds(), //秒 //季度
+        "q+": Math.floor((this.getMonth() + 3) / 3),
         "S": this.getMilliseconds() //毫秒
     };
     if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
@@ -31,17 +31,21 @@ let startDate = (num, format) => {
     let dayValue = 24 * 60 * 60 * 1000
     return new Date(new Date().getTime() - dayValue * num).Format(format)
 }
+
 function strDateFormat(str) {
     return str.replace(/^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/, "$1-$2-$3 $4:$5:$6");
 }
 
-function batFormatDate(list,attr){
+function batFormatDate(list, attr) {
     for (let i in list) {
         if (list[i][attr]) {
-            list[i][attr] = new Date(list[i][attr]).Format('yyyy-MM-dd')
+            let date = list[i][attr],
+                newDate = date.replace(/-/g, "/")
+            list[i][attr] = new Date(newDate).Format('yyyy-MM-dd')
         }
     }
 }
+
 function formatDate(dates, types) {
     return new Date(dates || '').Format(types)
 }
@@ -71,6 +75,10 @@ function XMLtoJSON(xml) {
     }
     return xmlToJSON.xmlToJSON.parseString(xml, myOptions);
 }
+const reg = {
+    mobile: phone => /^1[34578]\d{9}$/.test(phone),
+    password: word => /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/.test(word)
+}
 module.exports = {
     formatTime,
     formatDate,
@@ -79,5 +87,6 @@ module.exports = {
     strDateFormat,
     randomNum,
     batFormatDate,
+    reg,
     XMLtoJSON
 }

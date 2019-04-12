@@ -7,18 +7,20 @@
 }
 
 .scan {
-    width:68rpx;
-    height:68rpx;
+    width:80rpx;
+    height:80rpx;
     position: relative;
-    font-size:34rpx;
-    color:#fff;
-    background:#0ec695;
+    font-size:52rpx;
+    color:#0ec695;
     border-radius:90px;
     display: flex;
     align-items:center;
+    transition:.3s;
     justify-content:center;
 }
-
+.scan-touch{
+    opacity:.5;
+}
 .check input {
     flex:1;
 }

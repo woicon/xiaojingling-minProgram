@@ -1,21 +1,28 @@
 const app = getApp()
 var base = require('../../utils/util.js')
-
 Page({
     data: {
-        totalPrice: "0",
-        priceEmpty: true,
+        amt: "0",
+        discountAmt: "0",
+        amtEmpty: true,
         loadPay: false,
         couponList: null,
         payMsg: '等待输入密码',
         couponChannel: ["微信可用", "支付宝可用"],
         goodsDetail: [],
         borderHeight: null,
-        hideBorder:false
+        hideBorder: false,
+        amtHand: true,
+        discountStatus: false
     },
     onLoad(options) {
+        let coupon = null
+        if (options.coupon) {
+            coupon = wx.getStorageSync("selectCoupon")
+        }
         this.setData({
-            isPX: app.systemInfo.isPX
+            isPX: app.systemInfo.isPX,
+            coupon
         })
     },
     onReady() {
@@ -39,9 +46,9 @@ Page({
             })
         })
     },
-    showKeybord(){
+    showKeybord() {
         this.setData({
-            hideBorder:false
+            hideBorder: false
         })
     },
     onShow() {
@@ -65,66 +72,60 @@ Page({
             })
         }
     },
-
+    inputDiscount() {
+        this.setData({
+            discountStatus: !this.data.discountStatus,
+            amtHand: !this.data.amtHand
+        })
+    },
+    discountInput(e) {
+        let discountAmt = e.detail.value
+        if (Number(discountAmt) > this.data.amt) {
+            app.tip('优惠金额不可超过消费金额')
+        } else {
+            this.setData({
+                discountAmt
+            })
+        }
+    },
+    discountBlur(e) {
+        let value = e.detail.value
+        if (value != '' && Number(value) > 0) {
+            this.setData({
+                discountStatus: false
+            })
+        }
+    },
     cooseCoupon() {
         this.setData({
             showCoupon: true
         })
     },
-
-    couponTotal(e) {
-        let that = this
-        let couponList = that.data.couponList
-        let couponItem = couponList[e.currentTarget.id]
-        let goodsDetail = that.data.goodsDetail
-        let detailItem = goodsDetail[couponItem.detail] || null
-        couponItem.quantity = couponItem.quantity || 0
-
-        function changeTotal(doit) {
-            couponItem.quantity = couponItem.quantity + doit
-            detailItem.quantity = couponItem.quantity
-        }
-        if (e.target.id === "min") {
-            if (couponItem.quantity === 1) {
-                goodsDetail.splice([couponItem.detail], 1) // 删除 
-                changeTotal(-1)
-            } else if (couponItem.quantity > 0) {
-                changeTotal(-1)
-            }
-        } else if (e.target.id === "add") {
-            if (couponItem.quantity === 0) {
-                goodsDetail.push({
-                    goods_id: couponItem.no,
-                    goods_name: couponItem.name,
-                    quantity: 1,
-                    price: couponItem.price
-                })
-                couponItem.detail = goodsDetail.length - 1
-                couponItem.quantity = 1
-            } else {
-                changeTotal(+1)
-            }
-        }
-        that.setData({
-            goodsDetail: goodsDetail,
-            couponList: couponList
-        })
-    },
-
     touchKey(e) {
-        console.log(e)
-        let total = this.data.totalPrice,
-            num = e.target.dataset.number,
-            decimalReg = /^\d{0,8}\.{0,1}(\d{1,2})?$/
+        let num = e.target.dataset.number,
+            amt = this.data.amt,
+            discountAmt = this.data.discountAmt,
+            hideBorder = num != 'h' ? false : true,
+            inputValue = (oldnum) => {
+                let addAmt = `${oldnum}${num}`,
+                    amtReg = /^\d{0,8}\.{0,1}(\d{1,2})?$/,
+                    nums = (oldnum == "0" && num == "0") ? oldnum : num,
+                    _amt = oldnum == "0" ? (num == '.' ? "0." : num) : (amtReg.test(addAmt) ? addAmt : oldnum)
+                console.log(oldnum, num, nums, _amt)
+                return _amt.length < 10 ? _amt : oldnum
+            }
         if (num != 'h') {
-            let _total = `${total}${num}`,
-                nums = (total == "0" && num == 0) ? total : num,
-                newTotal = total == "0" ? (nums != '.' ? nums : "0.") : (decimalReg.test(_total) ? _total : total)
-            console.log(nums)
-            this.setData({
-                priceEmpty: false,
-                totalPrice: newTotal.length < 8 ? newTotal : total
-            })
+            if (this.data.amtHand) {
+                this.setData({
+                    amtEmpty: false,
+                    hideBorder,
+                    amt: inputValue(amt)
+                })
+            } else {
+                this.setData({
+                    discountAmt: inputValue(discountAmt)
+                })
+            }
         } else {
             this.setData({
                 hideBorder: !this.data.hideBorder
@@ -143,15 +144,15 @@ Page({
     },
     createPay(e) {
         let that = this
-        let totalPrice = Number(this.data.totalPrice).toFixed(2)
-        if (totalPrice == 0.00) {
+        let amt = Number(this.data.amt).toFixed(2)
+        if (amt == 0.00) {
             wx.showToast({
                 title: '请输入收款金额',
                 icon: "none"
             })
         } else {
             wx.navigateTo({
-                url: `/pages/posToPay/posToPay?total=${this.data.totalPrice}&mark=${this.data.orderRemark ? this.data.orderRemark : ''}`,
+                url: `/pages/posToPay/posToPay?total=${this.data.amt}&mark=${this.data.orderRemark ? this.data.orderRemark : ''}`,
             })
             // wx.scanCode({
             //     onlyFromCamera: true,
@@ -170,7 +171,7 @@ Page({
             orderRemark: e.detail.value
         })
     },
-    creatPay: function(payerAccount) {
+    creatPay(payerAccount) {
         let that = this
         wx.showLoading({
             title: '收款中',
@@ -185,7 +186,7 @@ Page({
             merchantId: app.member("merchantId"),
             departmentNo: departmentNo,
             departmentName: app.member("departmentName"),
-            realAmt: Number(that.data.totalPrice).toFixed(2),
+            realAmt: Number(that.data.amt).toFixed(2),
             codeName: app.member("codeName")
         }
         //支付检测参数
@@ -233,12 +234,12 @@ Page({
                         break
                 }
                 this.setData({
-                    totalPrice: "0",
-                    priceEmpty: true,
+                    amt: "0",
+                    amtEmpty: true,
                 })
             })
     },
-    checkPay: function(checkParmas) {
+    checkPay(checkParmas) {
         wx.setStorageSync("checkParmas", checkParmas)
         api.checkPay(checkParmas)
             .then(res => {
@@ -290,33 +291,18 @@ Page({
         })
     },
 
-    delNumber: function() {
-        let totals = this.data.totalPrice
-        let strTotals = totals.toString()
-        let totalsLength = strTotals.length
-        let totalPrice = strTotals.substring(0, totalsLength - 1)
-        this.setData({
-            priceEmpty: totalPrice.length == 0 ? true : false,
-            totalPrice: totalPrice == '' ? "0" : totalPrice
-        })
-    },
-    lessInput(e) {
-
-    },
-    onHide: function() {
-
-    },
-    onUnload: function() {
-
-    },
-    onPullDownRefresh: function() {
-
-    },
-
-    onReachBottom: function() {
-
-    },
-    onShareAppMessage: function() {
-
+    delNumber() {
+        let amt = this.data.amt,
+            discountAmt = this.data.discountAmt,
+            del = (str, amt, status) => {
+                let strLength = str.length,
+                    _amt = str.substring(0, strLength - 1),
+                    _status = _amt == 0 ? false : true
+                this.setData({
+                    [status]: _status,
+                    [amt]: _amt == '' ? "0" : _amt
+                })
+            }
+        this.data.amtHand ? del(amt, "amt", "amtEmpty") : del(discountAmt, "discountAmt", "discountAmt")
     }
 })

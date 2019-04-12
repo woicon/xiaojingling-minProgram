@@ -11,7 +11,7 @@
 		"newFeature": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.6.4",
+	"libVersion": "2.6.5",
 	"appid": "wx9785e4edfb5ab220",
 	"projectname": "%E6%94%B6%E6%AC%BE%E5%B0%8F%E7%B2%BE%E7%81%B5-%E5%95%86%E6%88%B7%E9%80%9A",
 	"isGameTourist": false,
@@ -33,7 +33,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 25,
+			"current": 13,
 			"list": [
 				{
 					"id": -1,
@@ -119,7 +119,8 @@
 					"id": 13,
 					"name": "pos",
 					"pathName": "pages/pos/pos",
-					"query": ""
+					"query": "coupon=true",
+					"scene": null
 				},
 				{
 					"id": 14,
@@ -195,6 +196,41 @@
 					"name": "reportDetail",
 					"pathName": "pages/reportDetail/reportDetail",
 					"query": "type=terminal&reportTab=1&searchDate={\"beginDate\":\"20190406\",\"endDate\":\"20190409\",\"beg…04581\",\"sign\":\"d7ea0840cc8e209a4e1bc1beb96f4942\"}&reportDateFormat=2019-04-08&title=款台统计",
+					"scene": null
+				},
+				{
+					"id": 26,
+					"name": "timesCardDetail",
+					"pathName": "pages/timesCardDetail/timesCardDetail",
+					"query": "cardNo=917801951479184401",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "checkRes",
+					"pathName": "pages/checkRes/checkRes",
+					"query": "cardNo=910230380869024351",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "staff",
+					"pathName": "pages/staff/staff",
+					"query": "cardNo=917801951479184401",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "staffModify",
+					"pathName": "pages/staffModify/staffModify",
+					"query": "cardNo=917801951479184401",
+					"scene": null
+				},
+				{
+					"id": 30,
+					"name": "staffModify",
+					"pathName": "pages/staffModify/staffModify",
+					"query": "id=10599636",
 					"scene": null
 				}
 			]

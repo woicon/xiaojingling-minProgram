@@ -1,0 +1,78 @@
+<Contents loading="{{loading}}" icon="icon-staff">
+    <form bindsubmit="{{detail ? 'editStaff':'addSatff'}}">
+        <view class='form'>
+            <view class='form-item'>
+                <view class='form-attr'>
+                    <text wx:if="{{!detail}}">*</text> 员工姓名</view>
+                <view class='form-input'>
+                    <input name="operatorName" placeholder='输入员工姓名' value='{{detail.operatorName ? detail.operatorName : ""}}' />
+                </view>
+            </view>
+
+            <view class='form-item'>
+                <view class='form-attr'>
+                    <text wx:if="{{!detail}}">*</text> 手机号</view>
+                <view class='form-input'>
+                    <input name="mobile" maxlength='11' type='number' placeholder='输入手机号' value='{{detail.mobile ? detail.mobile : ""}}' />
+                </view>
+            </view>
+
+            <view class='form-item {{!detail ? "noborder":""}}'>
+                <view class='form-attr'>
+                    <text wx:if="{{!detail}}">*</text> 登录名</view>
+                <view class='form-input'>
+                    <view class='form-value disable' wx:if="{{detail.loginName}}">{{detail.loginName}}</view>
+                    <input wx:else placeholder='输入登录名' name="loginName" maxlength='30' />
+                </view>
+            </view>
+
+            <block wx:if="{{!detail}}">
+                <view class='form-info'>
+                    <view class='ico icon-info'></view> 登录名至少6位</view>
+                <view class='form-item'>
+                    <view class='form-attr'>
+                        <text wx:if="{{!detail}}">*</text> 密码</view>
+                    <view class='form-input'>
+                        <input type='{{viewPassword ?"text" : "password"}}' bindinput='inputPassword' bindblur='passwordBlur' placeholder='输入密码' maxlength='20' />
+                        <view class='icon-viewpassword ico {{viewPassword ?"active" : ""}}' bindtap='viewPassword'></view>
+                    </view>
+                </view>
+                <view class='form-item noborder'>
+                    <view class='form-attr'>
+                        <text wx:if="{{!detail}}">*</text> 确认密码</view>
+                    <view class='form-input'>
+                        <input type='{{viewPassword ?"text" : "password"}}' bindinput='checkPassword' name="password" placeholder='确认密码' maxlength='20' />
+                    </view>
+                </view>
+                <view class='form-info'>
+                    <view class='ico icon-info'></view> 密码为6-20位的字符，需由数字、大小写字母及符号中的至少两种组成</view>
+            </block>
+                <view class='form-item'>
+                <view class='form-attr'>性别</view>
+                <view class='form-input'>
+                    <picker range='{{sex}}' bindchange='changeSex' name="sexId" mode="selector" value="{{detail.sexId ? detail.sexId : sexId}}">
+                        <view class='picker-value'>{{ sex[detail.sexIndex]|| sex[sexIndex] ||  "选择"}}</view>
+                    </picker>
+                </view>
+            </view>
+            <view class='form-item' wx:if="{{!detail}}">
+                <view class='form-attr'>角色</view>
+                <view class='form-input'>
+                    <picker bindchange='changeRole' name="roleId" range='{{roleList}}' mode="selector" range-key='roleName' value="{{roleList[roleValue].roleId}}">
+                        <view class='picker-value'>{{roleList[roleValue].roleName ||"选择"}}</view>
+                    </picker>
+                </view>
+            </view>
+
+            <view wx:if="{{detail}}" class='form-item'>
+                <view class='form-attr'>状态</view>
+                   <view class='form-input'>
+                    <picker range='{{status}}' bindchange='changeStatus' name="status" mode="selector" value="{{detail.status}}">
+                        <view class='picker-value'>{{status[detail.status]}}</view>
+                    </picker>
+                </view>
+            </view>
+        </view>
+        <button class='button' hover-class='button-touch' form-type='submit'>保存</button>
+    </form>
+</Contents>

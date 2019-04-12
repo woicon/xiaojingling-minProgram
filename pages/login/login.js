@@ -18,6 +18,7 @@ Page({
             .then(res => {
                 console.log(res)
                 wx.setStorageSync("login", res)
+                wx.setStorageSync("loginName",parmas.userName)
                 if (res.code == 'FAILED') {
                     wx.showToast({
                         title: res.subMsg,

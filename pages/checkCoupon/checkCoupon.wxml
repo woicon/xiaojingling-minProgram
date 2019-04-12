@@ -1,5 +1,5 @@
 <view class='check'>
-    <input placeholder='优惠券号' value='{{couponNo}}'></input>
-    <view bindtap='scanCopuon' class='icon-scans scan' hover-class='button-touch'></view>
+    <input placeholder='优惠券号' bindinput='couponInput' value='{{couponNo}}'></input>
+    <view bindtap='scanCopuon' class='icon-scan scan' hover-class='scan-touch'></view>
 </view>
-<view class='button' hover-class='button-touch' bindtap='giftConsume'>核销优惠券</view>
+<view class='button' hover-class='button-touch' bindtap='checkCoupon'>核销优惠券</view>

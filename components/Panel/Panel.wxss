@@ -1,0 +1,28 @@
+.panel {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    z-index: 10000;
+}
+
+.panel-content {
+    width: 580rpx;
+    margin: 20% auto 0;
+    background: #fff;
+    padding: 40rpx;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8rpx;
+    z-index:1;
+    position:relative;
+}
+.panel-mask{
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index:0;
+}

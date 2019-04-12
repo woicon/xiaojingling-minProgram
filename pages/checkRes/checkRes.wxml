@@ -1,0 +1,26 @@
+<view class='head'>
+    <view class="ico icon-timescard"></view>
+    <view>次卡核销成功</view>
+</view>
+
+<view class='list'>
+    <view class='bline'>会员名称
+        <view>{{card.memberName}}</view>
+    </view>
+    <view class='bline'>门店名称
+        <view>{{merchantName}}</view>
+    </view>
+    <view class='bline'>核销员工
+        <view>{{operatorName}}</view>
+    </view>
+    <view class='bline'>次卡名称
+        <view>{{card.cardName}}</view>
+    </view>
+    <view class='bline'> 核销次数
+        <view>{{checkTimes}}次</view>
+    </view>
+    <view>剩余次数
+        <view>{{card.suplusTimes - checkTimes}}次 </view>
+    </view>
+</view>
+<view bindtap='goBack' class='button' hover-class='button-touch'>完成</view>

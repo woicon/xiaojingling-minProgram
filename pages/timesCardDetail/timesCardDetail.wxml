@@ -1,0 +1,34 @@
+<Contents loading="{{loading}}" error="{{error}}" error-msg="{{errorMsg}}" icon="icon-timescard">
+    <view class='card' style='background:url({{card.bgImg}}) no-repeat center center;background-size:cover'>
+        <view class='card-head'>
+            <view class='card-img'>
+                <image wx:if="{{card.logo}}" src="{{card.logo}}"></image>
+                <view wx:else class='ico icon-level'></view>
+            </view>
+            <view class='card-name'>{{card.cardName}}</view>
+        </view>
+        <view>
+            <view class='card-no'>{{card.cardNos}}</view>
+            <view class='card-time'>有效期至 {{card.endDate}}</view>
+        </view>
+    </view>
+    <view class='list'>
+         <view class='bline'>剩余使用次数
+            <text>{{card.memberName}}次</text>
+        </view>
+        <view class='bline'>会员名称
+            <text>{{card.memberName}}</text>
+        </view>
+        <view class='bline'>会员手机号
+            <text> {{card.memberMobile}}</text>
+        </view>
+        <view class='bline'>核销次数
+            <view class='check' bindtap='checkTotal'>
+                <view class='ico icon-min' id="min" wx:if="{{checkTimes>1}}"></view>
+                <view class='check-value'>{{checkTimes}}</view>
+                <view class='ico icon-add' id='add' wx:if="{{checkTimes<card.suplusTimes}}"></view>
+            </view>
+        </view>
+    </view>
+    <view class='button' hover-class='button-touch' bindtap='checkTimesCard'>核销</view>
+</Contents>

@@ -38,11 +38,11 @@
     align-items: center;
 }
 .m-head .ico{
-    font-size:50rpx;
+    font-size:60rpx;
     width:100rpx;
     height:100rpx;
-    background:#fff;
     color:#0ec695;
+    background:#fff;
     border-radius:90px;
     display: flex;
     align-items:center;

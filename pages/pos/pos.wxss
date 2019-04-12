@@ -1,9 +1,10 @@
 page {
-    background: #0ec695;
+    background: #fff;
     box-sizing: border-box;
-    overflow:hidden;
-    background-image: linear-gradient(0deg, #0ec695 0%, #0ec695 100%);
+    overflow: hidden;
+    color: #555;
 }
+@import "../../nid.wxss";
 
 .border-r {
     border-right: 1px solid #eee;
@@ -68,9 +69,11 @@ page {
 .key-border.hide {
     animation: sliderDown ease-out 0.4s forwards;
 }
-.key-numbergroup>view.hidekey{
-    font-size:60rpx;
+
+.key-numbergroup>view.hidekey {
+    font-size: 60rpx;
 }
+
 @keyframes sliderDown {
     0% {
         transform: translateY(0);
@@ -80,12 +83,13 @@ page {
         transform: translateY(100%);
     }
 }
+
 @keyframes sliderUp {
     0% {
         transform: translateY(100%);
     }
+
     100% {
-        
         transform: translateY(0);
     }
 }
@@ -104,7 +108,7 @@ page {
 }
 
 .px .key-border {
-    padding-bottom: 90rpx;
+    padding-bottom: 34px;
 }
 
 .key-numbergroup {
@@ -113,6 +117,18 @@ page {
     background: #fff;
     overflow: hidden;
     height: 100%;
+}
+
+.key-price {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 30rpx;
+}
+
+.key-price>view {
+    width: 50%;
+    text-align: center;
+    padding: 20rpx 0;
 }
 
 .key-numbergroup>view {
@@ -124,10 +140,16 @@ page {
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    font-size: 70rpx;
+    font-size: 72rpx;
     transition: 0.2s;
-    font-weight: 400;
     position: relative;
+    font-family: 'Mono';
+}
+
+.addnum {
+    font-family: 'Mono';
+    color: #666;
+    font-size: 72rpx;
 }
 
 .key-numbergroup>view:after {
@@ -194,13 +216,16 @@ page {
 .total {
     background: #0ec695;
     display: flex;
-    padding: 40rpx 30rpx;
     justify-content: space-between;
     align-items: center;
-    background: rgba(0, 0, 0, 0.1);
+    background-image: linear-gradient(0deg, #0ec695 0%, #0ec695 100%);
+    position: relative;
+}
+
+.total-inner {
     border-radius: 10rpx;
     margin: 40rpx;
-    position: relative;
+    padding: 40rpx 0;
 }
 
 .total-warp {
@@ -208,7 +233,6 @@ page {
     left: 0;
     right: 0;
     top: 0;
-    background-image: linear-gradient(0deg, #0ec695 0%, #0ec695 100%);
 }
 
 .total-title {
@@ -218,12 +242,13 @@ page {
 
 .total-price {
     text-align: right;
-    font-size: 66rpx;
+    font-size: 90rpx;
     color: #fff;
-    transition: 0.05s;
     display: flex;
     align-items: center;
     line-height: normal;
+    font-family: 'Mono';
+    height: 88rpx;
 }
 
 .price-empty {
@@ -232,7 +257,8 @@ page {
 }
 
 .total-price text {
-    font-size: 40rpx;
+    font-size: 45rpx;
+    margin-right: 8rpx;
 }
 
 .total-check {
@@ -242,7 +268,7 @@ page {
     bottom: 0;
     width: 120rpx;
     color: #fff;
-    font-size: 40rpx;
+    font-size: 52rpx;
     text-align: center;
     display: flex;
     align-items: center;
@@ -257,8 +283,8 @@ page {
 }
 
 .price-line {
-    width: 4rpx;
-    height: 76rpx;
+    width: 6rpx;
+    height: 56rpx;
     background: #fff;
     animation: ops 1s ease-in-out infinite;
     margin-left: 8rpx;
@@ -364,18 +390,62 @@ page {
     background: #eee;
 }
 
-.mark {
-    margin: 40rpx;
-    background: rgba(0, 0, 0, 0.1);
-    border-radius: 8rpx;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.pos-cont {
+    background: #fff;
+    color: #444;
+    margin: 10rpx 40rpx;
 }
 
-.mark .ico {
+.mark {
+    border-radius: 8rpx;
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+    color: #666;
+}
+
+.mark input {
+    text-align: right;
+}
+
+.mark-value {
+    text-align: right;
+    font-size: 32rpx;
+    display: flex;
+    align-items: center;
+}
+
+.mark-value .price-line {
+    width: 4rpx;
+    height: 40rpx;
+}
+
+.mark::before {
+}
+
+.mark-attr {
+    font-size: 30rpx;
+    padding: 30rpx 0;
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.mark-arr::after {
+    content: '';
+    display: block;
+    width: 14rpx;
+    height: 14rpx;
+    border: 2px solid #ccc;
+    border-left: none;
+    border-bottom: none;
+    transform: rotate(45deg) scale(0.8);
+    margin-left: 20rpx;
+}
+
+.mark-attr .ico {
     margin: 0 20rpx;
-    color: #fff;
+    font-size: 41rpx;
 }
 
 .mark-input {

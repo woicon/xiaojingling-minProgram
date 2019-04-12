@@ -1,0 +1,35 @@
+/* pages/checkRes/checkRes.wxss */
+
+.list>view {
+    display: flex;
+    justify-content: space-between;
+    padding: 30rpx 0;
+    font-size: 30rpx;
+    color: #999;
+}
+
+.list>view view {
+    color: #444;
+}
+
+.list {
+    padding: 0 40rpx;
+    background: #fff;
+}
+
+.head {
+    text-align: center;
+    justify-content: center;
+    flex-direction: column;
+    background: #fff;
+    padding:70rpx 0 50rpx;
+    color: #0ec695;
+}
+
+.head .ico {
+    font-size: 120rpx;
+    margin-bottom:15rpx;
+}
+.button{
+    margin:40rpx;
+}
