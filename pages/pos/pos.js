@@ -15,7 +15,11 @@ Page({
         amtHand: true,
         discountStatus: false,
         couponType: app.types.couponType,
-        couponStatus: false
+        couponStatus: false,
+        leastMax: 0,
+        realAmt: 0,
+        discountAll: 0
+
     },
     onLoad(options) {
         let coupon = null
@@ -26,7 +30,7 @@ Page({
             isPX: app.systemInfo.isPX,
             coupon
         })
-        this.discountRes()
+     
     },
     onReady() {
         let that = this
@@ -48,6 +52,8 @@ Page({
                 keyHeight: fheight
             })
         })
+
+        this.discountRes()
     },
     showKeybord(e) {
         let amtHand = e.currentTarget.id == "amt" ? true : false
@@ -115,10 +121,10 @@ Page({
     },
     discountRes(amts, coupon) {
         let c = this.data.coupon,
-            a = this.data.amt,
-            discountAmt = 0,
+            a = amts ||this.data.amt,
             discount = [],
             leastArr = [],
+            discountAll = 0,
             leastMax = 0,
             realAmt = 0
         // 0代金券 1折扣券 2兑换券 5单品代金券 6会员卡 7单品折扣 8单品特价券 9全场满减券
@@ -142,33 +148,43 @@ Page({
         if (leastArr.length > 0) {
             let m = leastArr[0]
             leastArr.forEach(item => {
-                if(item>m){
+                if (item > m) {
                     m = item
                 }
             })
             leastMax = m
         }
+
         //discount amt math
         let amt = Number(a)
         console.log(amt)
-        c.forEach((item,index) => {
-            let type = item.cardTemplate.type
-         
-            if (type == 7 || type == 1) {
-                console.log(item,index)
-                discount.push(amt - (amt * (item.cardTemplate.discount * 0.1)))
-            } else if(type != 2){
-                console.log(item.cardTemplate.type, item.cardTemplate.specialPrice || item.cardTemplate.reduceCost, index)
-                discount.push(item.cardTemplate.reduceCost || item.cardTemplate.specialPrice)
+        c.forEach((item, index) => {
+            let card = item.cardTemplate,
+                type = card.type
+            //console.log("least::", card.leastCost)
+            console.log("cost::", card.reduceCost || card.specialPrice)
+            if (amt >= card.leastCost){
+                //discount coupon
+                if (type == 7 || type == 1) {
+                    discount.push(amt - (Number(amt * (card.discount * 0.1))))
+                } else if (type != 2  && card.reduceCost && amt > card.reduceCost) {
+                    //reduce coupon
+                    discount.push(card.reduceCost || card.specialPrice)
+                }
             }
         })
-       let allDiscount =  discount.reduce((acc,cur) => acc + cur)
-       realAmt = (amt - allDiscount).toFixed(2)
-       let amtes = {
-           allDiscount,
-           realAmt
+        console.log(discount)
+       if(discount.length>0){
+            discountAll = discount.reduce((acc, cur) => acc + cur)
        }
-        console.log(discount, allDiscount.toFixed(2),amtes)
+        realAmt = (amt - discountAll).toFixed(2)
+        let amtes = {
+            discountAll: discountAll.toFixed(2),
+            realAmt,
+            leastMax
+        }
+        this.setData(amtes)
+        console.log(discount, discountAll.toFixed(2), amtes)
     },
     touchKey(e) {
         let num = e.target.dataset.number,
@@ -185,10 +201,12 @@ Page({
             }
         if (num != 'h') {
             if (this.data.amtHand) {
+                const amts = inputValue(amt)
+                this.discountRes(amts)
                 this.setData({
                     amtEmpty: false,
                     hideBorder,
-                    amt: inputValue(amt)
+                    amt: amts
                 })
             } else {
                 this.setData({
@@ -372,6 +390,8 @@ Page({
                     [amt]: _amt == '' ? "0" : _amt
                 })
             }
-        this.data.amtHand ? del(amt, "amt", "amtEmpty") : del(discountAmt, "discountAmt", "discountAmt")
+        let amtValue = del(amt, "amt", "amtEmpty")
+        this.discountRes(amtValue)
+        this.data.amtHand ? amtValue : del(discountAmt, "discountAmt", "discountAmt")
     }
 })

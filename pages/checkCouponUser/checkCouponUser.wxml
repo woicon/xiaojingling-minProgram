@@ -44,10 +44,19 @@
                     <view wx:elif="{{item.cardTemplate.type == 1 || item.cardTemplate.type == 7  }}">{{item.cardTemplate.discount}}
                         <text>折</text> </view>
                     <view wx:elif="{{item.cardTemplate.type == 2}}" class='icon-gift-sel'></view>
-                    <view class='coupon-type'>{{couponType[item.cardTemplate.type]}}</view>
+                    <!-- <view class='coupon-type'>{{couponType[item.cardTemplate.type]}}</view> -->
                 </view>
                 <view class='coupon-content'>
                     <view class='coupon-title'>{{item.cardTemplate.title}}</view>
+
+                        <view class='coupon-type'>
+                        <view class='coupon-type-txt'>{{couponType[item.cardTemplate.type]}}</view>
+                        <view class='coupon-least' wx:if="{{item.cardTemplate.leastCost>0}}">
+                           消费满{{item.cardTemplate.leastCost>0 ? item.cardTemplate.leastCost : ""}}元可用
+                            </view>
+                        </view>
+
+                       
                     <view class='coupon-date'>有效期至 {{item.endDate}}</view>
                 </view>
                 <view wx:if="{{item.checked}}" class='ico icon-checked'></view>

@@ -505,6 +505,7 @@ scroll-view {
     border-radius: 14rpx;
     height: 150rpx;
     background:#fff;
+    position:relative;
 }
 
 .coupon-list-info {

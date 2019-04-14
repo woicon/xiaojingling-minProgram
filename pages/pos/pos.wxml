@@ -10,6 +10,7 @@
                     <text>核券</text>
                 </view>
             </view>
+            <!-- <view wx:if="{{leastMax>0}}">满{{leastMax}}元，可使用优惠券</view> -->
         </view>
         <view class='pos-cont'>
             <view class='mark bline mark-arr'>
@@ -40,7 +41,7 @@
         </view>
         <view class='coupon-list' wx:if="{{couponStatus}}">
             <scroll-view scroll-y scroll-with-animation>
-                <view wx:for="{{coupon}}" class='bline coupon-list-item' wx:key="selectCoupon">
+                <view wx:for="{{coupon}}" class='coupon-list-item' wx:key="selectCoupon">
                     <view class='coupon-num'>
                         <!-- style='background:{{item.cardTemplate.color}}' -->
                         <view wx:if="{{item.cardTemplate.type == 0 || item.cardTemplate.type == 9  ||  item.cardTemplate.type == 5 ||  item.cardTemplate.type == -1 ||  item.cardTemplate.type == 8}}">
@@ -68,13 +69,13 @@
     <view class='key-border {{hideBorder? "hide" : "show"}}'>
         <view class='bline'></view>
         <view class='bline key-price'>
-            <view>原价
+            <view>实际支付
                 <view>
-                    <text>¥</text> {{amt}}</view>
+                    <text>¥</text> {{realAmt}}</view>
             </view>
             <view class='lline'>优惠金额
                 <view>
-                    <text>¥</text>{{discount}}</view>
+                    <text>¥</text>{{discountAll}}</view>
             </view>
         </view>
         <view class='key-warp {{isPX?"bline":""}}'>
