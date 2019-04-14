@@ -124,9 +124,15 @@
     margin-top: 20rpx;
     opacity: 0.9;
 }
-
+.card-subtitle{
+    font-size:26rpx;
+    margin-top:8rpx;
+}
 .card-no {
     color: #fff;
     font-size: 48rpx;
     font-family: 'Mono';
+}
+.card-title{
+    flex:1;
 }

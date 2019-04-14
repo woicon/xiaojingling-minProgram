@@ -1,11 +1,13 @@
 <Contents loading="{{loading}}" error="{{error}}" error-msg="{{errorMsg}}" icon="icon-timescard">
-    <view class='card' style='background:url({{card.bgImg}}) no-repeat center center;background-size:cover'>
+    <view class='card' style='background:{{card.color}} url({{card.bgImg}}) no-repeat center center;background-size:cover'>
         <view class='card-head'>
             <view class='card-img'>
                 <image wx:if="{{card.logo}}" src="{{card.logo}}"></image>
                 <view wx:else class='ico icon-level'></view>
             </view>
-            <view class='card-name'>{{card.cardName}}</view>
+            <view class='card-title'>
+                <view class='card-name'>{{card.cardName}} <view class='card-subtitle' wx:if="{{card.subTitle}}">{{card.subTitle}}</view> </view>
+            </view>
         </view>
         <view>
             <view class='card-no'>{{card.cardNos}}</view>
