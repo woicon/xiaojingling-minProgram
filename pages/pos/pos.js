@@ -2,7 +2,7 @@ const app = getApp()
 var base = require('../../utils/util.js')
 Page({
     data: {
-        amt: "0",
+        amt: "1000",
         discountAmt: "0",
         amtEmpty: true,
         loadPay: false,
@@ -11,9 +11,11 @@ Page({
         couponChannel: ["微信可用", "支付宝可用"],
         goodsDetail: [],
         borderHeight: null,
-        hideBorder: false,
+        hideBorder: true,
         amtHand: true,
-        discountStatus: false
+        discountStatus: false,
+        couponType: app.types.couponType,
+        couponStatus: false
     },
     onLoad(options) {
         let coupon = null
@@ -24,6 +26,7 @@ Page({
             isPX: app.systemInfo.isPX,
             coupon
         })
+        this.discountRes()
     },
     onReady() {
         let that = this
@@ -46,9 +49,18 @@ Page({
             })
         })
     },
-    showKeybord() {
+    showKeybord(e) {
+        let amtHand = e.currentTarget.id == "amt" ? true : false
         this.setData({
-            hideBorder: false
+            hideBorder: false,
+            couponStatus: false,
+            amtHand
+        })
+    },
+    toggleCoupon(e) {
+        this.setData({
+            hideBorder: true,
+            couponStatus: !this.data.couponStatus,
         })
     },
     onShow() {
@@ -100,6 +112,63 @@ Page({
         this.setData({
             showCoupon: true
         })
+    },
+    discountRes(amts, coupon) {
+        let c = this.data.coupon,
+            a = this.data.amt,
+            discountAmt = 0,
+            discount = [],
+            leastArr = [],
+            leastMax = 0,
+            realAmt = 0
+        // 0代金券 1折扣券 2兑换券 5单品代金券 6会员卡 7单品折扣 8单品特价券 9全场满减券
+        //兑换  types = (item) => item.cardTemplate.type == 2
+        //单品 types = (item) => item.cardTemplate.type == 5 || item.cardTemplate.type == 7 || item.cardTemplate.type == 8 || item.cardTemplate.type == -1
+        //全场 types = (item) => item.cardTemplate.type == 0 || item.cardTemplate.type == 9 || item.cardTemplate.type == 1 || item.cardTemplate.type == -2
+        // 全场券 只能核销一张
+        // 单品券 不限制核销数量
+        // 兑换券 不限制核销数量
+        // 兑换券 可 与单品券混核 也可以与全场券
+        // 单品 全场 不能混核
+        //leastCost math
+        let least = c.filter(item => {
+            let leastCost = item.cardTemplate.leastCost
+            if (leastCost > 0) {
+                leastArr.push(leastCost)
+                return leastCost
+            }
+        })
+        console.log(least, leastArr)
+        if (leastArr.length > 0) {
+            let m = leastArr[0]
+            leastArr.forEach(item => {
+                if(item>m){
+                    m = item
+                }
+            })
+            leastMax = m
+        }
+        //discount amt math
+        let amt = Number(a)
+        console.log(amt)
+        c.forEach((item,index) => {
+            let type = item.cardTemplate.type
+         
+            if (type == 7 || type == 1) {
+                console.log(item,index)
+                discount.push(amt - (amt * (item.cardTemplate.discount * 0.1)))
+            } else if(type != 2){
+                console.log(item.cardTemplate.type, item.cardTemplate.specialPrice || item.cardTemplate.reduceCost, index)
+                discount.push(item.cardTemplate.reduceCost || item.cardTemplate.specialPrice)
+            }
+        })
+       let allDiscount =  discount.reduce((acc,cur) => acc + cur)
+       realAmt = (amt - allDiscount).toFixed(2)
+       let amtes = {
+           allDiscount,
+           realAmt
+       }
+        console.log(discount, allDiscount.toFixed(2),amtes)
     },
     touchKey(e) {
         let num = e.target.dataset.number,

@@ -1,6 +1,6 @@
 <view class='get-monty {{isPX?"px":""}}'>
     <view class='total-warp'>
-        <view class='total' bindtap='showKeybord'>
+        <view class='total' bindtap='showKeybord' id='amt'>
             <view class='total-inner'>
                 <view class='total-price {{amt=="0"?"price-empty":""}}'>
                     <text wx:if="{{amt!='0'}}">¥</text>{{amt!="0"?amt:"请输入消费总额"}}
@@ -14,45 +14,67 @@
         <view class='pos-cont'>
             <view class='mark bline mark-arr'>
                 <view class='mark-attr'>
-                 <!-- <view class='ico icon-mark'></view> -->
-                   备注</view>
+                    <!-- <view class='ico icon-mark'></view> -->
+                    备注</view>
                 <view class='mark-value'></view>
                 <!-- <input placeholder='订单备注' bindinput='markInput' value='{{orderRemark}}' class='mark-input' placeholder-class="phcolor"></input> -->
             </view>
             <block wx:if="{{coupon}}">
                 <view class='mark bline' bindtap='showKeybord'>
-                    <view class='mark-attr' bindtap='inputDiscount'>
-                    <!-- <view class='ico icon-check{{discountAmt !="0"?"ed":""}}'></view> -->
-                    不参与优惠金额</view>
+                    <view class='mark-attr'>
+                        <!-- <view class='ico icon-check{{discountAmt !="0"?"ed":""}}'></view> -->
+                        不参与优惠金额</view>
                     <view class='mark-value'>
-                        <block wx:if="{{discountAmt !='0'}}">
-                            ¥ {{discountAmt}}
-                        </block>
-                        <block wx:elif="{{discountStatus}}">
-                            输入不优惠金额
-                        </block>
+                        <block wx:if="{{discountAmt != '0'}}">¥</block>
+                        {{discountAmt === '0' ? '' : discountAmt}}
                         <view wx:if="{{!hideBorder &&  !amtHand}}" class='price-line'></view>
                     </view>
                 </view>
-                <view class='mark bline coupon-head mark-arr'>
+                <view class='mark coupon-head mark-arr' bindtap='toggleCoupon'>
                     <view class='mark-attr'>
                         <!-- <view class='ico icon-poscoupon'></view>  -->
                         已选优惠券</view>
                     <view class='mark-value'>{{coupon.length}}张</view>
                 </view>
-                <view class='coupon-lists'></view>
             </block>
         </view>
-
+        <view class='coupon-list' wx:if="{{couponStatus}}">
+            <scroll-view scroll-y scroll-with-animation>
+                <view wx:for="{{coupon}}" class='bline coupon-list-item' wx:key="selectCoupon">
+                    <view class='coupon-num'>
+                        <!-- style='background:{{item.cardTemplate.color}}' -->
+                        <view wx:if="{{item.cardTemplate.type == 0 || item.cardTemplate.type == 9  ||  item.cardTemplate.type == 5 ||  item.cardTemplate.type == -1 ||  item.cardTemplate.type == 8}}">
+                            <text>¥</text> {{item.cardTemplate.specialPrice || item.cardTemplate.reduceCost}} </view>
+                        <view wx:elif="{{item.cardTemplate.type == 1 || item.cardTemplate.type == 7  }}">{{item.cardTemplate.discount}}
+                            <text>折</text> </view>
+                        <view wx:elif="{{item.cardTemplate.type == 2}}" class='icon-gift-sel'></view>
+                        <!-- <view class='coupon-type'>{{couponType[item.cardTemplate.type]}}</view> -->
+                    </view>
+                    <view catchtap='couponDetail' data-index="{{index}}" class='coupon-list-info'>
+                        <view class='coupon-list-title '>{{item.cardTemplate.title}}</view>
+                        <view class='coupon-list-date '>有效期至 {{item.endDate}}
+                            <view class='coupon-least' wx:if="{{item.cardTemplate.leastCost>0}}">
+                                满{{item.cardTemplate.leastCost>0 ? item.cardTemplate.leastCost : ""}}元可用
+                            </view>
+                        </view>
+                        <!-- <view class='coupon-list-type'>{{couponType[item.cardTemplate.type]}}</view> -->
+                    </view>
+                    <view catchtap='delChoose' data-no="{{item.couponNo}}" class='ico icon-clear f-c-c'></view>
+                </view>
+            </scroll-view>
+        </view>
         <!-- <view class='getcoupon' bindtap='cooseCoupon'>选择优惠券</view> -->
     </view>
     <view class='key-border {{hideBorder? "hide" : "show"}}'>
         <view class='bline'></view>
         <view class='bline key-price'>
             <view>原价
-            <view><text>¥</text> {{amt}}</view>
+                <view>
+                    <text>¥</text> {{amt}}</view>
             </view>
-            <view class='lline'>优惠金额<view><text>¥</text>{{discount}}</view>
+            <view class='lline'>优惠金额
+                <view>
+                    <text>¥</text>{{discount}}</view>
             </view>
         </view>
         <view class='key-warp {{isPX?"bline":""}}'>
@@ -71,36 +93,6 @@
             </view>
         </view>
     </view>
-    <block wx:if="{{showCoupon}}">
-
-        <view class='coupon-list'>
-            <scroll-view scroll-y class='coupon-scroll'>
-                <view class='coupon-item' wx:for="{{couponList}}" wx:key="couponList" data-no="{{item.no}}" id="{{index}}">
-                    <!-- <block wx:if="{{item.couponType === 0}}"> <!--单品代金券
-                        </block>
-                        <block wx:elif="{{item.couponType === 1}}"><!--单品折扣
-                        </block> -->
-                    <view class='coupon-name'>{{item.name}}</view>
-                    <view class='coupon-info'>
-                        <view wx:if="{{item.couponType === 0}}" class='coupon-price'>
-                            <text>原价：<text class='aprice'>{{item.price}}</text></text> 现价：{{item.reduceCost}}</view>
-                        <view wx:elif="{{item.couponType === 1}}" class='coupon-price'>
-                            <text>原价：<text class='aprice'>{{item.price}}</text></text> 现价：{{item.discount}}折</view>
-                        <view class='coupon-least' wx:if="{{item.leastCost != 0}}">
-                            <text>最低消费：{{item.leastCost}}</text>
-                        </view>
-                    </view>
-                    <view class='coupon-type'>{{couponChannel[item.couponChannel]}}</view>
-                    <view class='coupon-add' bindtap='couponTotal' id="{{index}}">
-                        <view class='cbtn coupon-m' id="min">-</view>
-                        <view class="coupon-total">{{item.quantity || '0'}}</view>
-                        <view class='cbtn coupon-a' id="add">+</view>
-                    </view>
-                </view>
-            </scroll-view>
-        </view>
-        <view class='mask' bindtap='hideCoupon'></view>
-    </block>
 </view>
 
 <view wx:if="{{loadPay}}" class='load'>

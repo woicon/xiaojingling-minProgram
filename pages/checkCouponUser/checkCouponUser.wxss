@@ -91,6 +91,7 @@
     top: 480rpx;
 }
 
+
 .coupon-type {
     font-size: 22rpx;
     margin-bottom: 20rpx;
@@ -100,7 +101,9 @@
     bottom: 0;
     line-height: 28rpx;
 }
-
+.couponlist{
+    padding-bottom:80rpx;
+}
 .coupon-item {
     margin: 30rpx 30rpx 0;
     color: #444;
@@ -217,7 +220,7 @@
 .coupon-list-item .ico {
     font-size: 38rpx;
     padding: 20rpx;
-    color:#888;
+    color: #888;
 }
 
 .coupon-list .coupon-list-title {
@@ -288,7 +291,7 @@
     box-shadow: 0 12rpx 12rpx rgba(90, 90, 90, 0.1);
     z-index: 10;
     position: relative;
-    height:90rpx;
+    height: 90rpx;
 }
 
 .tabs>view {
@@ -299,8 +302,8 @@
     font-weight: 800;
     padding: 0 0;
     position: relative;
-    height:90rpx;
-    line-height:90rpx;
+    height: 90rpx;
+    line-height: 90rpx;
 }
 
 .tabs>view.active {

@@ -12,9 +12,6 @@
     color:#888;
     font-size:24rpx;
 }
-scroll-view{
-    position:relative;
-}
 .scroll-bottom{
     padding:60rpx 0;
 }

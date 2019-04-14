@@ -171,9 +171,9 @@ Page({
                 app.tip('全场券只能使用一张')
                 selectCoupon.pop()
             } else {
-                if (selCoupon.cardTemplate.goodItems.length > 1) {
+                // if (selCoupon.cardTemplate.goodItems && selCoupon.cardTemplate.goodItems.length > 1) {
 
-                }
+                // }
                 selCoupon.checked = true
             }
             this.setData({

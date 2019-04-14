@@ -341,8 +341,10 @@ page {
 }
 
 .nomore {
-    animation: sliderInUp linear 0.4s;
+    animation: sliderUp linear 0.4s;
 }
+
+
 
 .button-loading {
     transform: scale(0.7);
@@ -378,7 +380,19 @@ page {
         transform: translateY(0);
     }
 }
-
+@keyframes sliderInUp{
+    0%{
+        transform: translateY(50rpx);
+        opacity:0;
+    }
+    100%{
+        transform: translateY(0);
+        opacity:1;
+    }
+}
+.sliderInUp{
+    animation: sliderInUp ease-in .3s forwards;
+}
 .f-c-c {
     display: flex;
     align-items: center;

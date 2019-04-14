@@ -35,6 +35,7 @@
     </view>
     <view class='scroll-cont' style='{{selectCoupon.length > 0 ? "bottom:100rpx;":""}}{{hideTop?"top:90rpx":""}}'>
         <Scrolls wx:if="{{coupon.length>0}}" list="{{couponList}}" listloading="{{listloading}}" bindscrolltoupper="toUpper" bindscrolltolower="toLower" bind:scroll="couponScroll">
+            <view class='couponlist'>
             <view wx:for="{{coupon}}" bindtap='selCoupon' data-index="{{index}}" class='coupon-item {{item.checked ? "active" : ""}}' wx:key="couponList" wx:if="{{item.isUsed}}" data-type="{{item.cardTemplate.type}}">
                 <view class='coupon-num'>
                     <!-- style='background:{{item.cardTemplate.color}}' -->
@@ -51,6 +52,7 @@
                 </view>
                 <view wx:if="{{item.checked}}" class='ico icon-checked'></view>
                 <view wx:else class='ico disable icon-check '></view>
+            </view>
             </view>
         </Scrolls>
     </view>
@@ -69,7 +71,6 @@
             </view>
         </scroll-view>
     </view>
-
     <!-- <view class='panel'>
         <view class='panel-content'>
           <view>选择核销商品</view>

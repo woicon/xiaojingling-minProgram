@@ -1,7 +1,7 @@
 /* pages/timesCardDetail/timesCardDetail.wxss */
 @import "../../nid.wxss";
 .card {
-    margin: 80rpx 40rpx 0 40rpx;
+    margin: 80rpx 40rpx 60rpx 40rpx;
     height: 310rpx;
     background: #222;
     color: #fff;

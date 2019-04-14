@@ -284,7 +284,7 @@ page {
 
 .price-line {
     width: 6rpx;
-    height: 56rpx;
+    height: 62rpx;
     background: #fff;
     animation: ops 1s ease-in-out infinite;
     margin-left: 8rpx;
@@ -309,11 +309,14 @@ page {
     position: fixed;
     left: 0;
     right: 0;
-    top: 40%;
     bottom: 0;
+    top:560rpx;
     z-index: 100;
+    overflow:hidden;
 }
-
+.px .coupon-list{
+    bottom:34px;
+}
 .coupon-item {
     font-size: 26rpx;
     padding: 30rpx;
@@ -417,7 +420,8 @@ page {
 
 .mark-value .price-line {
     width: 4rpx;
-    height: 40rpx;
+    height: 32rpx;
+    background: #666;
 }
 
 .mark::before {
@@ -453,4 +457,89 @@ page {
     font-size: 26rpx;
     color: #fff;
     flex-grow: 2;
+}
+
+
+
+scroll-view {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top:0;
+    bottom: 0;
+    background: #fafafa;
+    max-height: 1100rpx;
+    animation: sliderUp ease-in 0.3s forwards;
+}
+
+.coupon-num {
+    background: #0ec695;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 150rpx;
+    height: 150rpx;
+    font-size: 50rpx;
+    font-family: 'mono';
+    letter-spacing: -2px;
+    margin: -1rpx;
+    margin-right: 26rpx;
+    border-radius: 14rpx 0 0 14rpx;
+}
+
+.coupon-num text {
+    font-size: 28rpx;
+}
+
+.coupon-list-item {
+    padding: 0 0;
+    font-size: 24rpx;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 30rpx 40rpx;
+    border: 1rpx solid #eee;
+    border-radius: 14rpx;
+    height: 150rpx;
+    background:#fff;
+}
+
+.coupon-list-info {
+    flex: 1;
+    padding: 0 0;
+}
+.coupon-list-date{
+    display: flex;
+    justify-content:space-between;
+    padding-right:20rpx;
+}
+.coupon-least{
+    color:#ff6d50;
+}
+.coupon-list-item .ico {
+    font-size: 32rpx;
+    color: #ccc;
+    position:absolute;
+    right:0;
+    top:0;
+    width:70rpx;
+    height:70rpx;
+}
+
+.coupon-list-title {
+    font-size: 34rpx;
+    margin-bottom: 16rpx;
+    color:#444;
+}
+
+.coupon-date {
+    font-size: 22rpx;
+    color: #999;
+}
+
+.coupon-list-type {
+    color: #888;
 }
