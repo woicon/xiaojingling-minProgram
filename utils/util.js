@@ -36,12 +36,12 @@ function strDateFormat(str) {
     return str.replace(/^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/, "$1-$2-$3 $4:$5:$6");
 }
 
-function batFormatDate(list, attr) {
+function batFormatDate(list, attr, type) {
     for (let i in list) {
         if (list[i][attr]) {
             let date = list[i][attr],
                 newDate = date.replace(/-/g, "/")
-            list[i][attr] = new Date(newDate).Format('yyyy-MM-dd')
+            list[i][attr] = new Date(newDate).Format(type || 'yyyy-MM-dd')
         }
     }
 }

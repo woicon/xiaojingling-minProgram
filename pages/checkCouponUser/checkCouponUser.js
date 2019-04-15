@@ -8,7 +8,8 @@ Page({
         couponType: ['全部', '兑换券', '单品券', '全场券'],
         currentTab: 0,
         selectCoupon: [],
-        selStatus: false
+        selStatus: false,
+        px:app.isPX
         // 0代金券 1折扣券 2兑换券 5单品代金券 6会员卡 7单品折扣 8单品特价券 9全场满减券
     },
     onLoad(options) {
@@ -34,8 +35,8 @@ Page({
                 }).then(couponList => {
                     console.log(couponList)
                     const coupon = couponList.items
-                    base.batFormatDate(coupon, 'getDate')
-                    base.batFormatDate(coupon, 'endDate')
+                    base.batFormatDate(coupon, 'getDate','yyyy/MM/dd')
+                    base.batFormatDate(coupon, 'endDate','yyyy/MM/dd')
                     let selCoupon = coupon.filter(item => {
                         return item.couponNo == couponId
                     })
@@ -43,7 +44,7 @@ Page({
                     this.setData({
                         coupon,
                         member,
-                        showDetail: true,
+                        showDetail: false,
                         selectCoupon: selCoupon,
                         selCoupon: selCoupon[0],
                         loading: false,
@@ -90,6 +91,16 @@ Page({
             hideTop
         })
     },
+    selGoods(e) {
+        let goods = this.data.goods,
+            index = e.currentTarget.dataset.index
+        goods.sel = goods.sel == index ? -1 : index
+        this.setData({
+            goods
+        })
+    },
+
+
     toggleCouponType(e) {
         console.log(e)
         this.setData({
@@ -127,6 +138,34 @@ Page({
             })
             this.checkSelCopuon(coupon)
         })
+    },
+    closeGooods() {
+        let selectCoupon = this.data.selectCoupon
+        selectCoupon.pop()
+        this.setData({
+            goods: null,
+            selectCoupon
+        })
+    },
+    chooseGoods(e) {
+        console.log(e)
+        let data = e.currentTarget.dataset,
+            index = data.index,
+            sel = data.sel,
+            coupon= this.data.coupon,
+            selectCoupon = this.data.selectCoupon
+            console.log(e)
+        if (sel >= 0) {
+            coupon[index].checked = true
+            selectCoupon[selectCoupon.length-1].cardTemplate.goodItem = this.data.goods.cardTemplate.goodItems[sel]
+            this.setData({
+                goods:null,
+                coupon,
+                selectCoupon
+            })
+        } else {
+            app.tip('选择要核销的商品')
+        }
     },
     selCoupon(e) {
         let coupon = this.data.coupon,
@@ -170,6 +209,12 @@ Page({
             } else if (isAllOnly.length > 1) {
                 app.tip('全场券只能使用一张')
                 selectCoupon.pop()
+            } else if (type == 8 && selCoupon.cardTemplate.goodItems.length > 1) {
+                console.log("ss")
+                selCoupon.index = index
+                this.setData({
+                    goods: selCoupon
+                })
             } else {
                 // if (selCoupon.cardTemplate.goodItems && selCoupon.cardTemplate.goodItems.length > 1) {
 
@@ -184,6 +229,7 @@ Page({
             this.fliterSelectCoupon(selCoupon.couponNo)
         }
     },
+
     delChoose(e) {
         this.fliterSelectCoupon(e.currentTarget.dataset.no)
     },
@@ -234,7 +280,7 @@ Page({
             selCoupon: false
         })
         wx.redirectTo({
-            url:'/pages/pos/pos?coupon=true'
+            url: '/pages/pos/pos?coupon=true'
         })
     },
     toggleSel() {

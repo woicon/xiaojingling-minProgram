@@ -22,7 +22,7 @@
             <view class='ico icon-books'></view>帮助</navigator>
     </view>
       <view wx:elif="{{role == 2}}" class='grid'>
-        <navigator class='bline rline' url='/pages/order/order' open-type="switchTab" hover-class='nav-touch'>
+        <navigator class='bline rline' url='/pages/pos/pos' open-type="switchTab" hover-class='nav-touch'>
             <view class='ico icon-cash'></view>收款</navigator>
         <navigator url='/pages/checkCoupon/checkCoupon' class='bline ' hover-class='nav-touch'>
             <view class='ico icon-checkcoupon'></view>核券</navigator>

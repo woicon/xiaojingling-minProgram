@@ -2,7 +2,7 @@
 bindscrolltolower="scrolltolower"
 bindscrolltoupper="scrolltoupper"
 bindscroll="scroll"
-style='top:{{top}}px'
+style='top:{{top}}px;bottom:{{bottom}}px'
 scroll-y scroll-with-animation>
     <!-- <view class='scroll-top' wx:if="{{istoupper}}">
         <Load wx:if="{{refreshing}}">下拉加载更多</Load>

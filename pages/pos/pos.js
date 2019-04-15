@@ -11,7 +11,7 @@ Page({
         couponChannel: ["微信可用", "支付宝可用"],
         goodsDetail: [],
         borderHeight: null,
-        hideBorder: true,
+        hideBorder: false,
         amtHand: true,
         discountStatus: false,
         couponType: app.types.couponType,
@@ -30,10 +30,9 @@ Page({
             isPX: app.systemInfo.isPX,
             coupon
         })
-     
+
     },
     onReady() {
-        let that = this
         wx.setNavigationBarColor({
             frontColor: '#ffffff',
             backgroundColor: '#0EC695',
@@ -47,12 +46,11 @@ Page({
         query.exec((res) => {
             let bheight = res[0].width
             let fheight = bheight.toFixed()
-            that.setData({
+            this.setData({
                 borderHeight: fheight * 4,
                 keyHeight: fheight
             })
         })
-
         this.discountRes()
     },
     showKeybord(e) {
@@ -63,32 +61,12 @@ Page({
             amtHand
         })
     },
+    currHand(e) {},
     toggleCoupon(e) {
         this.setData({
             hideBorder: true,
             couponStatus: !this.data.couponStatus,
         })
-    },
-    onShow() {
-        let that = this
-        try {
-            const loginData = wx.getStorageSync("loginData")
-            if (loginData) {
-                that.setData({
-                    isLogin: false,
-                    pageLoading: false
-                })
-            } else {
-                that.setData({
-                    isLogin: true,
-                    pageLoading: false
-                })
-            }
-        } catch (error) {
-            this.setData({
-                isLogin: true
-            })
-        }
     },
     inputDiscount() {
         this.setData({
@@ -120,71 +98,85 @@ Page({
         })
     },
     discountRes(amts, coupon) {
-        let c = this.data.coupon,
-            a = amts ||this.data.amt,
-            discount = [],
-            leastArr = [],
-            discountAll = 0,
-            leastMax = 0,
-            realAmt = 0
-        // 0代金券 1折扣券 2兑换券 5单品代金券 6会员卡 7单品折扣 8单品特价券 9全场满减券
-        //兑换  types = (item) => item.cardTemplate.type == 2
-        //单品 types = (item) => item.cardTemplate.type == 5 || item.cardTemplate.type == 7 || item.cardTemplate.type == 8 || item.cardTemplate.type == -1
-        //全场 types = (item) => item.cardTemplate.type == 0 || item.cardTemplate.type == 9 || item.cardTemplate.type == 1 || item.cardTemplate.type == -2
-        // 全场券 只能核销一张
-        // 单品券 不限制核销数量
-        // 兑换券 不限制核销数量
-        // 兑换券 可 与单品券混核 也可以与全场券
-        // 单品 全场 不能混核
-        //leastCost math
-        let least = c.filter(item => {
-            let leastCost = item.cardTemplate.leastCost
-            if (leastCost > 0) {
-                leastArr.push(leastCost)
-                return leastCost
-            }
-        })
-        console.log(least, leastArr)
-        if (leastArr.length > 0) {
-            let m = leastArr[0]
-            leastArr.forEach(item => {
-                if (item > m) {
-                    m = item
+        if (this.data.coupon) {
+            let c = this.data.coupon,
+                a = amts || this.data.amt,
+                discount = [],
+                leastArr = [],
+                discountAll = 0,
+                leastMax = 0,
+                realAmt = 0
+            // 0代金券 1折扣券 2兑换券 5单品代金券 6会员卡 7单品折扣 8单品特价券 9全场满减券
+            //兑换  types = (item) => item.cardTemplate.type == 2
+            //单品 types = (item) => item.cardTemplate.type == 5 || item.cardTemplate.type == 7 || item.cardTemplate.type == 8 || item.cardTemplate.type == -1
+            //全场 types = (item) => item.cardTemplate.type == 0 || item.cardTemplate.type == 9 || item.cardTemplate.type == 1 || item.cardTemplate.type == -2
+            // 全场券 只能核销一张
+            // 单品券 不限制核销数量
+            // 兑换券 不限制核销数量
+            // 兑换券 可 与单品券混核 也可以与全场券
+            // 单品 全场 不能混核
+            //leastCost math
+            let least = c.filter(item => {
+                let leastCost = item.cardTemplate.leastCost
+                if (leastCost > 0) {
+                    leastArr.push(leastCost)
+                    return leastCost
                 }
             })
-            leastMax = m
-        }
-
-        //discount amt math
-        let amt = Number(a)
-        console.log(amt)
-        c.forEach((item, index) => {
-            let card = item.cardTemplate,
-                type = card.type
-            //console.log("least::", card.leastCost)
-            console.log("cost::", card.reduceCost || card.specialPrice)
-            if (amt >= card.leastCost){
-                //discount coupon
-                if (type == 7 || type == 1) {
-                    discount.push(amt - (Number(amt * (card.discount * 0.1))))
-                } else if (type != 2  && card.reduceCost && amt > card.reduceCost) {
-                    //reduce coupon
-                    discount.push(card.reduceCost || card.specialPrice)
-                }
+            console.log(least, leastArr)
+            if (leastArr.length > 0) {
+                let m = leastArr[0]
+                leastArr.forEach(item => {
+                    if (item > m) {
+                        m = item
+                    }
+                })
+                leastMax = m
             }
-        })
-        console.log(discount)
-       if(discount.length>0){
-            discountAll = discount.reduce((acc, cur) => acc + cur)
-       }
-        realAmt = (amt - discountAll).toFixed(2)
-        let amtes = {
-            discountAll: discountAll.toFixed(2),
-            realAmt,
-            leastMax
+            //discount amt math
+            let amt = Number(a)
+            console.log(amt)
+            c.forEach((item, index) => {
+                let card = item.cardTemplate,
+                    type = card.type
+                //console.log("least::", card.leastCost)
+                if (amt >= card.leastCost) {
+                    //discount coupon
+                    if (type == 7 || type == 1) {
+                        discount.push(amt - (Number(amt * (card.discount * 0.1))))
+                    } else if (type == 5) {
+                        discount.push(card.reduceCost)
+                    } else if (type == 8) {
+                        discount.push(card.goodItem.itemPrice - card.specialPrice)
+                        //  || card.specialPrice
+                    } else if (type != 2 && card.reduceCost) {
+                        //reduce coupon
+                        discount.push(card.reduceCost)
+                    }
+                }
+            })
+            console.log("discount：：：：", discount)
+            if (discount.length > 0) {
+                discountAll = discount.reduce((acc, cur) => acc + cur)
+                realAmt = (amt - discountAll).toFixed(2)
+            }
+            let amtes = {
+                discountAll: discountAll.toFixed(2),
+                realAmt,
+                leastMax,
+                leastAmt: null
+            }
+            if (amt > discountAll && amt > leastMax) {
+                this.setData(amtes)
+            }  else {
+                this.setData({
+                    realAmt: 0,
+                    discountAll: 0,
+                    leastAmt: leastMax > discountAll - amt ? leastMax.toFixed(2) : (discountAll - amt).toFixed(2)
+                })
+            }
+            console.log(discount, discountAll.toFixed(2), amtes)
         }
-        this.setData(amtes)
-        console.log(discount, discountAll.toFixed(2), amtes)
     },
     touchKey(e) {
         let num = e.target.dataset.number,
@@ -202,7 +194,9 @@ Page({
         if (num != 'h') {
             if (this.data.amtHand) {
                 const amts = inputValue(amt)
-                this.discountRes(amts)
+                if (this.data.coupon) {
+                    this.discountRes(amts)
+                }
                 this.setData({
                     amtEmpty: false,
                     hideBorder,
@@ -229,6 +223,15 @@ Page({
             }
         })
     },
+    delChoose(e) {
+        console.log(e)
+        let coupon = this.data.coupon
+        coupon.splice(e.currentTarget.dataset.index, 1);
+        this.discountRes()
+        this.setData({
+            coupon
+        })
+    },
     createPay(e) {
         let that = this
         let amt = Number(this.data.amt).toFixed(2)
@@ -238,9 +241,10 @@ Page({
                 icon: "none"
             })
         } else {
-            wx.navigateTo({
-                url: `/pages/posToPay/posToPay?total=${this.data.amt}&mark=${this.data.orderRemark ? this.data.orderRemark : ''}`,
-            })
+            // wx.navigateTo({
+            //     url: `/pages/posToPay/posToPay?total=${this.data.amt}&mark=${this.data.orderRemark ? this.data.orderRemark : ''}`,
+            // })
+            scanPay()
             // wx.scanCode({
             //     onlyFromCamera: true,
             //     success: (res) => {
@@ -258,102 +262,49 @@ Page({
             orderRemark: e.detail.value
         })
     },
-    creatPay(payerAccount) {
-        let that = this
-        wx.showLoading({
-            title: '收款中',
-            mask: true
-        })
-        console.log("::付款码::", payerAccount)
-        var departmentNo = app.member("departmentNo")
-        //下单支付参数
-        let payParmas = {
-            operatorNo: app.member("operatorNo"),
-            operatorCn: app.member("operatorCn"),
-            merchantId: app.member("merchantId"),
-            departmentNo: departmentNo,
-            departmentName: app.member("departmentName"),
-            realAmt: Number(that.data.amt).toFixed(2),
-            codeName: app.member("codeName")
-        }
-        //支付检测参数
-        let checkParmas = {
-            creatorNo: app.member("operatorNo"),
-            creatorCn: app.member("operatorCn"),
-            codeName: app.member("codeName")
-        }
-        //创建订单号 年月日+随机4位数+门店编号
-        let orderDate = new Date().Format("yyyyMMddhhmmss.S")
-        let orderDates = orderDate.split("").map(n => n != '.' ? n : '').join("")
-        let mtNo = departmentNo.split("")
-        mtNo.splice(0, 4)
-        const orderNo = orderDates + mtNo.join("") + base.randomNum(4)
-        //end 创建订单号
-        payParmas.payerAccount = payerAccount
-        payParmas.orderNo = orderNo
-        checkParmas.orderNo = orderNo
-        api.createOrderPayByQrcode(payParmas)
-            .then((res) => {
-                console.log(":::::::支付结果::::::>>", res.data)
-                let data = res.data
-                switch (data.state) {
-                    case 1: //支付成功
-                        wx.hideLoading()
-                        wx.setStorageSync("pos", JSON.parse(data.obj))
-                        this.paySuccess(data.obj)
-                        break
-                    case -1: //支付失败
-                        wx.showModal({
-                            title: '提示',
-                            content: data.obj,
-                            showCancel: false,
-                        })
-                        wx.hideLoading()
-                        break
-                    case -2: //支付等待 输入密码 等待 检测
-                        wx.showLoading({
-                            title: data.obj,
-                            mask: true
-                        })
-                        this.checkPay(checkParmas)
-                        break
-                    case 0:
-                        break
+
+    scanPay() {
+        wx.scanCode({
+            success: (res) => {
+                let outTradeNo = `${new Date().Format('yyyyMMddhhmmss')}${app.base.randomNum(4)}`
+                let params = {
+                    merchantCode: app.commonParams('merchantCode'),
+                    outTradeNo: outTradeNo,
+                    totalAmount: this.data.amt,
+                    authCode: res.result,
+                    operatorId: app.commonParams('operatorId'),
                 }
-                this.setData({
-                    amt: "0",
-                    amtEmpty: true,
+                if (this.data.discountAmt && this.data.discountAmt > 0) {
+                    params.unDiscountAmount = (this.data.discountAmt).toFixed(2)
+                }
+                if (this.data.orderRemark && this.data.orderRemark > 0) {
+                    params.orderRemark = this.data.orderRemark
+                }
+                console.log(res)
+                api.pay(params).then(res => {
+                    console.log(res)
+                    if (res.code == 'FAILED') {
+                        wx.showModal({
+                            title: res.subMsg,
+                            content: res.msg,
+                            success: (res) => {
+                                if (res.confirm) {
+                                    this.scanPay()
+                                }
+                            }
+                        })
+                    } else if (res.code == 'SUCCESS') {
+                        wx.setStorageSync('payDetail', res)
+                        wx.redirectTo({
+                            url: '/pages/posPaySuccess/posPaySuccess',
+                        })
+                    }
                 })
-            })
+            }
+        })
     },
-    checkPay(checkParmas) {
-        wx.setStorageSync("checkParmas", checkParmas)
-        api.checkPay(checkParmas)
-            .then(res => {
-                console.log('支付检测结果>>>>>>>>', res)
-                let payResult = res.data
-                switch (payResult.state) {
-                    case 1: //支付成功
-                        wx.hideLoading()
-                        wx.setStorageSync("pos", JSON.parse(payResult.obj))
-                        this.paySuccess(payResult.obj)
-                        break
-                    case 0: //支付失败
-                        wx.showModal({
-                            title: '支付结果',
-                            content: payResult.obj,
-                            showCancel: false,
-                        })
-                        break
-                    case -1: //需要等待检测
-                        setTimeout(() => {
-                            this.checkPay(wx.getStorageSync("checkParmas"))
-                        }, 3000)
-                        break
-                }
-            })
-    },
-    paySuccess: function(data) {
+
+    paySuccess(data) {
         console.log("POSDATA::::", JSON.parse(data))
         wx.redirectTo({
             url: '/pages/posOk/posOk'
@@ -364,34 +315,24 @@ Page({
             showCoupon: false
         })
     },
-    getCoupon: function(arg) {
-        let that = this
-        const loginData = arg
-        let parmas = {
-            codeName: base.getValue(loginData, "codeName"),
-            departmentId: base.getValue(loginData, "departmentId"),
-        }
-        api.getCoupon(parmas).then((res) => {
-            that.setData({
-                couponList: res.data.obj
-            })
-        })
-    },
-
     delNumber() {
         let amt = this.data.amt,
             discountAmt = this.data.discountAmt,
             del = (str, amt, status) => {
                 let strLength = str.length,
-                    _amt = str.substring(0, strLength - 1),
-                    _status = _amt == 0 ? false : true
+                    _amt = str.substring(0, strLength - 1)
                 this.setData({
-                    [status]: _status,
                     [amt]: _amt == '' ? "0" : _amt
                 })
             }
-        let amtValue = del(amt, "amt", "amtEmpty")
-        this.discountRes(amtValue)
-        this.data.amtHand ? amtValue : del(discountAmt, "discountAmt", "discountAmt")
+
+        if (this.data.amtHand) {
+            let amtValue = del(amt, "amt")
+            if (this.data.coupon) {
+                this.discountRes(amtValue)
+            }
+        } else {
+            del(discountAmt, "discountAmt")
+        }
     }
 })

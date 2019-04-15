@@ -5,6 +5,7 @@ export default {
         "ALIPAY": "支付宝支付",
         "MPAY": '会员支付'
     },
+    roles: ['总部 ', '门店 ', '员工 ', '店长'],
     couponType: {
         '0': '代金券',
         '1': '折扣券',

@@ -4,24 +4,22 @@ Page({
     data: {
         status: ['启用', '禁用', '删除'],
         type: ['聚合支付', '绑定码'],
-        list: []
+        roles:app.types.roles,
+        role: app.commonParams('role'),
+        list: [],
+        login: wx.getStorageSync("login")
     },
     onLoad(options) {
         this.payCodeList()
     },
-    onShow() {
-        this.setData({
-            login: wx.getStorageSync("login")
-        })
-        wx.setNavigationBarTitle({
-            title: "店码设置",
-        })
-    },
     payCodeList() {
-        api.payCodeList({
+        let params = {
             merchantCode: app.commonParams("merchantCode")
-        }).then(res => {
-            console.log(res)
+        }
+        if (this.data.role == '2') {
+            params.operatorId = app.commonParams("operatorId")
+        }
+        api.payCodeList(params).then(res => {
             this.setData({
                 list: res.payCodeList
             })
@@ -32,14 +30,14 @@ Page({
             success: (code) => {
                 console.log(code.result)
                 let cardUrl = code.result
-                if (cardUrl.indexOf('pay?code=')!=-1){
+                if (cardUrl.indexOf('pay?code=') != -1) {
                     let cardCode = app.getQueryString(cardUrl)
                     console.log(cardCode)
                     let params = {
                         payCode: cardCode.code,
                         merchantCode: app.commonParams("merchantCode")
                     }
-                   app.commonParams('role') == 2 ? params.operatorId = app.commonParams('operatorId') : ''
+                    app.commonParams('role') == 2 ? params.operatorId = app.commonParams('operatorId') : ''
                     api.bindPayCode(params).then(res => {
                         wx.showModal({
                             title: res.msg,
@@ -52,13 +50,13 @@ Page({
                         })
                         this.payCodeList()
                     })
-                }else{
+                } else {
                     wx.showToast({
                         title: '该店码不存在',
-                        icon:"none"
+                        icon: "none"
                     })
                 }
-               
+
             }
         })
     },
@@ -71,6 +69,11 @@ Page({
                     this.delPayCode(e)
                 }
             }
+        })
+    },
+    toPayCode(e){
+        wx.navigateTo({
+            url: `/pages/payQrcode/payQrcode?code=${e.currentTarget.dataset.code}`,
         })
     },
     delPayCode(e) {

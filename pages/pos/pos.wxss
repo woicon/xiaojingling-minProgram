@@ -120,14 +120,33 @@ page {
 }
 
 .key-price {
+    font-size:28rpx;
+    background: #fff;
     display: flex;
-    flex-wrap: wrap;
-    font-size: 30rpx;
 }
 
 .key-price>view {
-    width: 50%;
     text-align: center;
+    padding: 20rpx 40rpx;
+    display: flex;
+    width: 50%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.key-price>view view {
+    display: block;
+    font-size:32rpx;
+}
+
+.key-numbergroup>view text, .warn text, .key-price .value {
+    color: #ff6d50;
+}
+
+.warn {
+    text-align: center;
+    font-size: 24rpx;
     padding: 20rpx 0;
 }
 
@@ -310,13 +329,15 @@ page {
     left: 0;
     right: 0;
     bottom: 0;
-    top:560rpx;
+    top: 560rpx;
     z-index: 100;
-    overflow:hidden;
+    overflow: hidden;
 }
-.px .coupon-list{
-    bottom:34px;
+
+.px .coupon-list {
+    bottom: 34px;
 }
+
 .coupon-item {
     font-size: 26rpx;
     padding: 30rpx;
@@ -459,13 +480,11 @@ page {
     flex-grow: 2;
 }
 
-
-
 scroll-view {
     position: absolute;
     left: 0;
     right: 0;
-    top:0;
+    top: 0;
     bottom: 0;
     background: #fafafa;
     max-height: 1100rpx;
@@ -504,36 +523,39 @@ scroll-view {
     border: 1rpx solid #eee;
     border-radius: 14rpx;
     height: 150rpx;
-    background:#fff;
-    position:relative;
+    background: #fff;
+    position: relative;
 }
 
 .coupon-list-info {
     flex: 1;
     padding: 0 0;
 }
-.coupon-list-date{
+
+.coupon-list-date {
     display: flex;
-    justify-content:space-between;
-    padding-right:20rpx;
+    justify-content: space-between;
+    padding-right: 20rpx;
 }
-.coupon-least{
-    color:#ff6d50;
+
+.coupon-least {
+    color: #ff6d50;
 }
+
 .coupon-list-item .ico {
     font-size: 32rpx;
     color: #ccc;
-    position:absolute;
-    right:0;
-    top:0;
-    width:70rpx;
-    height:70rpx;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 70rpx;
+    height: 70rpx;
 }
 
 .coupon-list-title {
     font-size: 34rpx;
     margin-bottom: 16rpx;
-    color:#444;
+    color: #444;
 }
 
 .coupon-date {

@@ -1,7 +1,7 @@
 /* components/Bar/Bar.wxss */
 .page-bar{
     background:#fff;
-    height:100rpx;
+    height:50px;
     position: fixed;
     left:0;
     right:0;

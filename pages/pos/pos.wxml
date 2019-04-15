@@ -1,4 +1,4 @@
-<view class='get-monty {{isPX?"px":""}}'>
+<view class='get-monty {{isPX?"px":""}}' bindtap='currHand'>
     <view class='total-warp'>
         <view class='total' bindtap='showKeybord' id='amt'>
             <view class='total-inner'>
@@ -10,18 +10,15 @@
                     <text>核券</text>
                 </view>
             </view>
-            <!-- <view wx:if="{{leastMax>0}}">满{{leastMax}}元，可使用优惠券</view> -->
         </view>
         <view class='pos-cont'>
             <view class='mark bline mark-arr'>
                 <view class='mark-attr'>
-                    <!-- <view class='ico icon-mark'></view> -->
                     备注</view>
-                <view class='mark-value'></view>
-                <!-- <input placeholder='订单备注' bindinput='markInput' value='{{orderRemark}}' class='mark-input' placeholder-class="phcolor"></input> -->
+                <view class='mark-value'><input placeholder='订单备注' bindinput='markInput' value='{{orderRemark}}' class='mark-input' placeholder-class="phcolor"></input></view>
             </view>
             <block wx:if="{{coupon}}">
-                <view class='mark bline' bindtap='showKeybord'>
+                <view class='mark bline' bindtap='showKeybord' id='undiscount'>
                     <view class='mark-attr'>
                         <!-- <view class='ico icon-check{{discountAmt !="0"?"ed":""}}'></view> -->
                         不参与优惠金额</view>
@@ -31,7 +28,7 @@
                         <view wx:if="{{!hideBorder &&  !amtHand}}" class='price-line'></view>
                     </view>
                 </view>
-                <view class='mark coupon-head mark-arr' bindtap='toggleCoupon'>
+                <view class='mark coupon-head mark-arr' bindtap='toggleCoupon' wx:if="{{coupon&& coupon.length > 0}}">
                     <view class='mark-attr'>
                         <!-- <view class='ico icon-poscoupon'></view>  -->
                         已选优惠券</view>
@@ -60,7 +57,7 @@
                         </view>
                         <!-- <view class='coupon-list-type'>{{couponType[item.cardTemplate.type]}}</view> -->
                     </view>
-                    <view catchtap='delChoose' data-no="{{item.couponNo}}" class='ico icon-clear f-c-c'></view>
+                    <view catchtap='delChoose' data-index="{{index}}" data-no="{{item.couponNo}}" class='ico icon-clear f-c-c'></view>
                 </view>
             </scroll-view>
         </view>
@@ -68,16 +65,20 @@
     </view>
     <view class='key-border {{hideBorder? "hide" : "show"}}'>
         <view class='bline'></view>
-        <view class='bline key-price'>
-            <view>实际支付
-                <view>
-                    <text>¥</text> {{realAmt}}</view>
+        <block wx:if="{{coupon&& coupon.length > 0}}">
+            <view class='bline warn' wx:if="{{leastAmt}}">还需消费
+                <text class='price'>{{leastAmt}}</text>元，可使用所选优惠券</view>
+            <view class='bline key-price' wx:else>
+                <view  class='rline'>实际支付
+                    <view class='value'>
+                        <text>¥</text> {{realAmt}}</view>
+                </view>
+                <view>优惠金额
+                    <view class='value'>
+                        <text>¥</text>{{discountAll}}</view>
+                </view>
             </view>
-            <view class='lline'>优惠金额
-                <view>
-                    <text>¥</text>{{discountAll}}</view>
-            </view>
-        </view>
+        </block>
         <view class='key-warp {{isPX?"bline":""}}'>
             <view class='key-numbergroup' bindtap='touchKey'>
                 <view wx:for="123456789" class='bline rline' wx:key="keybord" data-number="{{item}}" hover-class='key-touch' style='height:{{keyHeight*1.4}}rpx'>{{item}}</view>

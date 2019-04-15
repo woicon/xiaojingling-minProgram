@@ -4,18 +4,23 @@ const qrcode = require('../../libs/qrcode/code.js')
 console.log(app)
 Page({
     data: {
-        loading:true
+        loading:true,
+        role:app.commonParams('role')
     },
     onLoad(options) {
-        let merchantCode = app.commonParams('merchantCode')
-        api.getPayQrcode({
-            merchantCode
-        }).then(res => {
+        if(options.code){
             this.setData({
-                qrCode: res.url,
+                qrCode: options.code,
                 loading: false
             })
-        })
+        }else{
+            api.getPayQrcode(merchantCode).then(res => {
+                this.setData({
+                    qrCode: res.url,
+                    loading: false
+                })
+            })
+        }
     },
     onReady(){
         wx.showLoading()

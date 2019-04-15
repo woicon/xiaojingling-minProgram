@@ -51,7 +51,6 @@
             <view class='ico icon-paycode'></view>
             <view class='m-name'>绑定收款码</view>
         </navigator>
-
         <navigator url='/pages/payQrcode/payQrcode' hover-class='nav-touch' wx:if="{{member.role!=2}}">
             <view class='ico icon-setcode'></view>
             <view class='m-name'>收款码</view>
