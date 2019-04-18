@@ -21,7 +21,7 @@
                 <view class='mark bline' bindtap='showKeybord' id='undiscount'>
                     <view class='mark-attr'>
                         <!-- <view class='ico icon-check{{discountAmt !="0"?"ed":""}}'></view> -->
-                        不参与优惠金额</view>
+                        不参优惠金额</view>
                     <view class='mark-value'>
                         <block wx:if="{{discountAmt != '0'}}">¥</block>
                         {{discountAmt === '0' ? '' : discountAmt}}

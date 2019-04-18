@@ -74,12 +74,13 @@
         ]
     },
     "usingComponents": {
-        "Contents":"components/Contents/Contents",
-        "Load":"components/loading/loading",
-        "Scrolls":"components/Scrolls/Scrolls",
-        "Empty":"components/Empty/Empty",
-        "ReportDetail":"components/ReportDetail/ReportDetail",
-        "Panel":"components/Panel/Panel",
-        "Bar":"components/Bar/Bar"
-    }
+        "Contents": "components/Contents/Contents",
+        "Load": "components/loading/loading",
+        "Scrolls": "components/Scrolls/Scrolls",
+        "Empty": "components/Empty/Empty",
+        "ReportDetail": "components/ReportDetail/ReportDetail",
+        "Panel": "components/Panel/Panel",
+        "Bar": "components/Bar/Bar"
+    },
+    "sitemapLocation": "sitemap.json"
 }
